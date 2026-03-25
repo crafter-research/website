@@ -1,0 +1,105 @@
+---
+import type { Lang } from "../i18n/ui";
+import { useTranslations } from "../i18n/utils";
+import LanguagePicker from "./LanguagePicker.astro";
+import Layout from "../layouts/Layout.astro";
+
+interface Props {
+	lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<Layout title={t("site.title")} description={t("site.description")}>
+	<main class="mx-auto max-w-2xl px-6 py-24">
+		<header class="mb-20">
+			<div class="mb-6 flex items-center justify-between">
+				<p class="text-(--color-muted) font-mono text-sm tracking-widest uppercase">
+					{t("site.label")}
+				</p>
+				<LanguagePicker />
+			</div>
+			<h1 class="mb-6 text-4xl font-bold tracking-tight sm:text-5xl">
+				{t("hero.title")}
+			</h1>
+			<p class="text-(--color-accent) text-lg leading-relaxed">
+				{t("hero.description")}
+			</p>
+			<p class="text-(--color-muted) mt-4 text-sm">
+				{t("hero.started")}
+			</p>
+		</header>
+
+		<section class="mb-20">
+			<h2 class="text-(--color-muted) mb-8 font-mono text-xs tracking-widest uppercase">
+				{t("section.active")}
+			</h2>
+			<a
+				href="https://peru-financia.crafter.ing"
+				target="_blank"
+				rel="noopener noreferrer"
+				class="border-(--color-border) hover:border-(--color-muted) block rounded-lg border p-5 transition-colors"
+			>
+				<div class="mb-2 flex items-center gap-3">
+					<h3 class="font-medium">{t("project.pf.name")}</h3>
+					<span class="bg-(--color-surface) text-(--color-muted) rounded-full px-2 py-0.5 font-mono text-xs">
+						{t("project.pf.badge")}
+					</span>
+				</div>
+				<p class="text-(--color-muted) text-sm leading-relaxed">
+					{t("project.pf.description")}
+				</p>
+			</a>
+			<a
+				href="https://github.com/crafter-research/political-graph"
+				target="_blank"
+				rel="noopener noreferrer"
+				class="border-(--color-border) hover:border-(--color-muted) mt-4 block rounded-lg border p-5 transition-colors"
+			>
+				<div class="mb-2 flex items-center gap-3">
+					<h3 class="font-medium">{t("project.pg.name")}</h3>
+					<span class="bg-(--color-surface) text-(--color-muted) rounded-full px-2 py-0.5 font-mono text-xs">
+						{t("project.pg.badge")}
+					</span>
+				</div>
+				<p class="text-(--color-muted) text-sm leading-relaxed">
+					{t("project.pg.description")}
+				</p>
+			</a>
+		</section>
+
+		<section class="border-(--color-border) mb-20 border-t pt-10">
+			<h2 class="text-(--color-muted) mb-4 font-mono text-xs tracking-widest uppercase">
+				{t("section.next")}
+			</h2>
+			<ul class="text-(--color-accent) space-y-3 text-sm leading-relaxed">
+				<li>{t("next.congreso")}</li>
+				<li>{t("next.score")}</li>
+				<li>{t("next.listening")}</li>
+			</ul>
+		</section>
+
+		<footer class="border-(--color-border) text-(--color-muted) flex items-center justify-between border-t pt-8 text-sm">
+			<a
+				href="https://crafterstation.com"
+				target="_blank"
+				rel="noopener noreferrer"
+				class="hover:text-(--color-text) transition-colors"
+			>
+				{t("footer.cs")}
+			</a>
+			<div class="flex gap-4">
+				<a
+					href="https://github.com/crafter-research"
+					target="_blank"
+					rel="noopener noreferrer"
+					class="hover:text-(--color-text) transition-colors"
+				>
+					{t("footer.github")}
+				</a>
+			</div>
+		</footer>
+	</main>
+</Layout>

@@ -1,0 +1,60 @@
+---
+import { getLangFromUrl, getRouteFromUrl, languages } from "../i18n/utils";
+import { getRelativeLocaleUrl } from "astro:i18n";
+
+const lang = getLangFromUrl(Astro.url);
+const route = getRouteFromUrl(Astro.url);
+---
+
+<div class="relative" id="lang-wrapper">
+	<button
+		type="button"
+		class="text-(--color-muted) hover:text-(--color-text) flex items-center gap-1 font-mono text-xs transition-colors"
+		id="lang-btn"
+	>
+		{lang.toUpperCase()}
+		<svg width="10" height="6" viewBox="0 0 10 6" fill="none" class="transition-transform" id="lang-chevron">
+			<path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+		</svg>
+	</button>
+
+	<div
+		id="lang-dropdown"
+		class="bg-(--color-surface) border-(--color-border) absolute right-0 top-full mt-2 hidden min-w-[120px] rounded-lg border"
+	>
+		{Object.entries(languages).map(([code, label]) => (
+			<a
+				href={getRelativeLocaleUrl(code, route)}
+				class:list={[
+					"block px-4 py-2 text-sm transition-colors",
+					code === lang
+						? "text-(--color-text) font-medium"
+						: "text-(--color-muted) hover:text-(--color-text)"
+				]}
+				hreflang={code}
+			>
+				{label}
+			</a>
+		))}
+	</div>
+</div>
+
+<script>
+	const btn = document.getElementById("lang-btn");
+	const dropdown = document.getElementById("lang-dropdown");
+	const chevron = document.getElementById("lang-chevron");
+
+	btn?.addEventListener("click", () => {
+		const isOpen = !dropdown?.classList.contains("hidden");
+		dropdown?.classList.toggle("hidden");
+		chevron?.classList.toggle("rotate-180");
+	});
+
+	document.addEventListener("click", (e) => {
+		const wrapper = document.getElementById("lang-wrapper");
+		if (!wrapper?.contains(e.target as Node)) {
+			dropdown?.classList.add("hidden");
+			chevron?.classList.remove("rotate-180");
+		}
+	});
+</script>
