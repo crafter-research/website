@@ -1,29 +1,5 @@
 ---
 import Layout from "../layouts/Layout.astro";
-
-const projects = [
-	{
-		name: "Congreso Legible",
-		description:
-			"LLM-powered plain-language summaries of Peruvian congressional bills. Real-time status tracking, semantic search, and RSS alerts.",
-		status: "Shaping",
-		repo: "crafter-research/ley-clara",
-	},
-	{
-		name: "Plata.pe",
-		description:
-			"Political finance transparency via Sankey diagrams. Structured extraction from ONPE/JNE data into queryable, open datasets.",
-		status: "Shaping",
-		repo: "crafter-research/plata-pe",
-	},
-	{
-		name: "Capibarismo",
-		description:
-			"Gamified civic engagement platform for Peru's 2026 elections. Candidate comparison through an interactive voting game.",
-		status: "Active",
-		repo: "crafter-station/capibarismo",
-	},
-];
 ---
 
 <Layout
@@ -45,36 +21,34 @@ const projects = [
 				open-source civic technology for Peru — tools that make political
 				behavior transparent, legislation legible, and public data queryable.
 			</p>
+			<p class="text-(--color-muted) mt-4 text-sm">
+				We're just getting started.
+			</p>
 		</header>
 
 		<section class="mb-20">
 			<h2
 				class="text-(--color-muted) mb-8 font-mono text-xs tracking-widest uppercase"
 			>
-				Currently exploring
+				Active
 			</h2>
-			<div class="space-y-6">
-				{
-					projects.map((project) => (
-						<a
-							href={`https://github.com/${project.repo}`}
-							target="_blank"
-							rel="noopener noreferrer"
-							class="border-(--color-border) hover:border-(--color-muted) block rounded-lg border p-5 transition-colors"
-						>
-							<div class="mb-2 flex items-center gap-3">
-								<h3 class="font-medium">{project.name}</h3>
-								<span class="bg-(--color-surface) text-(--color-muted) rounded-full px-2 py-0.5 font-mono text-xs">
-									{project.status}
-								</span>
-							</div>
-							<p class="text-(--color-muted) text-sm leading-relaxed">
-								{project.description}
-							</p>
-						</a>
-					))
-				}
-			</div>
+			<a
+				href="https://peru-financia.crafter.ing"
+				target="_blank"
+				rel="noopener noreferrer"
+				class="border-(--color-border) hover:border-(--color-muted) block rounded-lg border p-5 transition-colors"
+			>
+				<div class="mb-2 flex items-center gap-3">
+					<h3 class="font-medium">peru-financia</h3>
+					<span class="bg-(--color-surface) text-(--color-muted) rounded-full px-2 py-0.5 font-mono text-xs">
+						Live
+					</span>
+				</div>
+				<p class="text-(--color-muted) text-sm leading-relaxed">
+					Mapa open-source de financiamiento politico peruano. Sankey diagrams,
+					donantes, partidos — datos ONPE 1995-2026.
+				</p>
+			</a>
 		</section>
 
 		<section class="border-(--color-border) mb-20 border-t pt-10">
@@ -84,9 +58,9 @@ const projects = [
 				What's next
 			</h2>
 			<ul class="text-(--color-accent) space-y-2 text-sm">
+				<li>Congreso Legible — plain-language summaries of Peruvian congressional bills</li>
 				<li>Congresista Score — legislator profiles by output, not credentials</li>
 				<li>Broad Listening AI — opinion clustering for public consultations</li>
-				<li>AI Fact Checker — claim verification against structured civic data</li>
 			</ul>
 		</section>
 
@@ -109,14 +83,6 @@ const projects = [
 					class="hover:text-(--color-text) transition-colors"
 				>
 					GitHub
-				</a>
-				<a
-					href="https://x.com/crafaboratorio"
-					target="_blank"
-					rel="noopener noreferrer"
-					class="hover:text-(--color-text) transition-colors"
-				>
-					X
 				</a>
 			</div>
 		</footer>
