@@ -27,7 +27,7 @@ export const ui = {
 		"project.pf.description":
 			"Open-source map of Peruvian political financing. Sankey diagrams, donors, parties. ONPE data 1995-2026.",
 		"project.pg.name": "political-graph",
-		"project.pg.badge": "In progress",
+		"project.pg.badge": "Live",
 		"project.pg.description":
 			"Interactive graph of relationships between Peruvian politicians and corruption cases. 69 nodes, 37 connections, 112 supporting documents.",
 		"section.tools": "Tools",
@@ -60,7 +60,7 @@ export const ui = {
 		"project.pf.description":
 			"Mapa open-source de financiamiento político peruano. Diagramas Sankey, donantes, partidos. Datos ONPE 1995-2026.",
 		"project.pg.name": "political-graph",
-		"project.pg.badge": "En progreso",
+		"project.pg.badge": "Live",
 		"project.pg.description":
 			"Grafo interactivo de relaciones entre políticos peruanos y casos de corrupción. 69 nodos, 37 conexiones, 112 documentos de respaldo.",
 		"section.tools": "Herramientas",
@@ -93,7 +93,7 @@ export const ui = {
 		"project.pf.description":
 			"Mapa open-source do financiamento político peruano. Diagramas Sankey, doadores, partidos. Dados ONPE 1995-2026.",
 		"project.pg.name": "political-graph",
-		"project.pg.badge": "Em progresso",
+		"project.pg.badge": "Live",
 		"project.pg.description":
 			"Grafo interativo de relações entre políticos peruanos e casos de corrupção. 69 nós, 37 conexões, 112 documentos de apoio.",
 		"section.tools": "Ferramentas",
@@ -125,7 +125,7 @@ export const ui = {
 		"project.pf.description":
 			"秘鲁政治资金开源地图。桑基图、捐赠者、政党。ONPE数据 1995-2026。",
 		"project.pg.name": "political-graph",
-		"project.pg.badge": "开发中",
+		"project.pg.badge": "Live",
 		"project.pg.description":
 			"秘鲁政治家与腐败案件关系的交互式图谱。69个节点、37个连接、112份支持文件。",
 		"section.tools": "工具",
