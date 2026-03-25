@@ -1,1 +1,13 @@
-{"framework":"astro","buildCommand":"bun run build","outputDirectory":"dist"}
+{
+	"framework": "astro",
+	"buildCommand": "bun run build",
+	"outputDirectory": "dist",
+	"redirects": [
+		{
+			"source": "/(.*)",
+			"has": [{ "type": "host", "value": "crafter.ing" }],
+			"destination": "https://crafterstation.com/$1",
+			"permanent": true
+		}
+	]
+}
