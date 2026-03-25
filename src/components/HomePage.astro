@@ -71,6 +71,28 @@ const t = useTranslations(lang);
 		</section>
 
 		<section class="border-(--color-border) mb-20 border-t pt-10">
+			<h2 class="text-(--color-muted) mb-8 font-mono text-xs tracking-widest uppercase">
+				{t("section.tools")}
+			</h2>
+			<a
+				href="https://sunat-cli.crafter.ing"
+				target="_blank"
+				rel="noopener noreferrer"
+				class="border-(--color-border) hover:border-(--color-muted) block rounded-lg border p-5 transition-colors"
+			>
+				<div class="mb-2 flex items-center gap-3">
+					<h3 class="font-medium">{t("project.sc.name")}</h3>
+					<span class="bg-(--color-surface) text-(--color-muted) rounded-full px-2 py-0.5 font-mono text-xs">
+						{t("project.sc.badge")}
+					</span>
+				</div>
+				<p class="text-(--color-muted) text-sm leading-relaxed">
+					{t("project.sc.description")}
+				</p>
+			</a>
+		</section>
+
+		<section class="border-(--color-border) mb-20 border-t pt-10">
 			<h2 class="text-(--color-muted) mb-4 font-mono text-xs tracking-widest uppercase">
 				{t("section.next")}
 			</h2>

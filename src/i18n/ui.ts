@@ -30,6 +30,11 @@ export const ui = {
 		"project.pg.badge": "In progress",
 		"project.pg.description":
 			"Interactive graph of relationships between Peruvian politicians and corruption cases. 69 nodes, 37 connections, 112 supporting documents.",
+		"section.tools": "Tools",
+		"project.sc.name": "sunat-cli",
+		"project.sc.badge": "Live",
+		"project.sc.description":
+			"Agent-first CLI for SUNAT tax automation. Reverse-engineered 3 government portals, cracked cross-origin iframe input masks via CDP, bypassed reCAPTCHA through OAuth state exploitation.",
 		"next.congreso":
 			"Congreso Legible: translates congressional bills into plain language using AI, so any citizen can understand what's being legislated.",
 		"next.score":
@@ -58,6 +63,11 @@ export const ui = {
 		"project.pg.badge": "En progreso",
 		"project.pg.description":
 			"Grafo interactivo de relaciones entre políticos peruanos y casos de corrupción. 69 nodos, 37 conexiones, 112 documentos de respaldo.",
+		"section.tools": "Herramientas",
+		"project.sc.name": "sunat-cli",
+		"project.sc.badge": "Live",
+		"project.sc.description":
+			"CLI agent-first para automatizar SUNAT. Ingeniería inversa de 3 portales gubernamentales, cracking de input masks en iframes cross-origin via CDP, bypass de reCAPTCHA mediante explotación del parámetro OAuth state.",
 		"next.congreso":
 			"Congreso Legible: traduce los proyectos de ley del Congreso a lenguaje simple usando IA, para que cualquier ciudadano entienda qué se está legislando.",
 		"next.score":
@@ -86,6 +96,11 @@ export const ui = {
 		"project.pg.badge": "Em progresso",
 		"project.pg.description":
 			"Grafo interativo de relações entre políticos peruanos e casos de corrupção. 69 nós, 37 conexões, 112 documentos de apoio.",
+		"section.tools": "Ferramentas",
+		"project.sc.name": "sunat-cli",
+		"project.sc.badge": "Live",
+		"project.sc.description":
+			"CLI agent-first para automação fiscal SUNAT. Engenharia reversa de 3 portais governamentais, cracking de input masks em iframes cross-origin via CDP, bypass de reCAPTCHA por exploração de parâmetro OAuth state.",
 		"next.congreso":
 			"Congreso Legible: traduz projetos de lei do Congresso para linguagem simples usando IA, para que qualquer cidadão entenda o que está sendo legislado.",
 		"next.score":
@@ -113,6 +128,11 @@ export const ui = {
 		"project.pg.badge": "开发中",
 		"project.pg.description":
 			"秘鲁政治家与腐败案件关系的交互式图谱。69个节点、37个连接、112份支持文件。",
+		"section.tools": "工具",
+		"project.sc.name": "sunat-cli",
+		"project.sc.badge": "上线",
+		"project.sc.description":
+			"面向AI代理的SUNAT税务自动化CLI。逆向工程3个政府门户，通过CDP破解跨域iframe输入掩码，利用OAuth state参数绕过reCAPTCHA。",
 		"next.congreso":
 			"Congreso Legible：使用AI将国会法案翻译成通俗语言，让任何公民都能理解正在立法的内容。",
 		"next.score":
