@@ -1,5 +1,5 @@
 ---
-import type { Lang } from "../i18n/ui";
+import type { Lang, UiKey } from "../i18n/ui";
 import { useTranslations } from "../i18n/utils";
 import LanguagePicker from "./LanguagePicker.astro";
 import Layout from "../layouts/Layout.astro";
@@ -10,6 +10,9 @@ interface Props {
 
 const { lang } = Astro.props;
 const t = useTranslations(lang);
+const cliProjects = ["sc", "bc", "jn", "os", "sn", "sd", "mt"] as const;
+const projectKey = (code: string, field: string) =>
+	`project.${code}.${field}` as UiKey;
 ---
 
 <Layout title={t("site.title")} description={t("site.description")}>
@@ -72,24 +75,52 @@ const t = useTranslations(lang);
 
 		<section class="border-(--color-border) mb-20 border-t pt-10">
 			<h2 class="text-(--color-muted) mb-8 font-mono text-xs tracking-widest uppercase">
-				{t("section.tools")}
+				{t("section.platform")}
 			</h2>
 			<a
-				href="https://sunat-cli.crafter.ing"
+				href={t("project.andenar.url")}
 				target="_blank"
 				rel="noopener noreferrer"
-				class="border-(--color-border) hover:border-(--color-muted) block rounded-lg border p-5 transition-colors"
+				class="border-(--color-border) hover:border-(--color-muted) block rounded-lg border p-6 transition-colors"
 			>
-				<div class="mb-2 flex items-center gap-3">
-					<h3 class="font-medium">{t("project.sc.name")}</h3>
+				<div class="mb-3 flex items-center gap-3">
+					<h3 class="text-xl font-semibold">{t("project.andenar.name")}</h3>
 					<span class="bg-(--color-surface) text-(--color-muted) rounded-full px-2 py-0.5 font-mono text-xs">
-						{t("project.sc.badge")}
+						{t("project.andenar.badge")}
 					</span>
 				</div>
 				<p class="text-(--color-muted) text-sm leading-relaxed">
-					{t("project.sc.description")}
+					{t("project.andenar.description")}
 				</p>
 			</a>
+		</section>
+
+		<section class="border-(--color-border) mb-20 border-t pt-10">
+			<h2 class="text-(--color-muted) mb-8 font-mono text-xs tracking-widest uppercase">
+				{t("section.tools")}
+			</h2>
+			<div class="grid gap-4 sm:grid-cols-2">
+				{
+					cliProjects.map((project) => (
+						<a
+							href={t(projectKey(project, "url"))}
+							target="_blank"
+							rel="noopener noreferrer"
+							class="border-(--color-border) hover:border-(--color-muted) block rounded-lg border p-5 transition-colors"
+						>
+							<div class="mb-2 flex items-center gap-3">
+								<h3 class="font-medium">{t(projectKey(project, "name"))}</h3>
+								<span class="bg-(--color-surface) text-(--color-muted) rounded-full px-2 py-0.5 font-mono text-xs">
+									{t(projectKey(project, "badge"))}
+								</span>
+							</div>
+							<p class="text-(--color-muted) text-sm leading-relaxed">
+								{t(projectKey(project, "description"))}
+							</p>
+						</a>
+					))
+				}
+			</div>
 		</section>
 
 		<section class="border-(--color-border) mb-20 border-t pt-10">
