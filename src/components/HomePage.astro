@@ -71,6 +71,22 @@ const projectKey = (code: string, field: string) =>
 					{t("project.pg.description")}
 				</p>
 			</a>
+			<a
+				href="https://legalize-pe.crafter.ing"
+				target="_blank"
+				rel="noopener noreferrer"
+				class="border-(--color-border) hover:border-(--color-muted) mt-4 block rounded-lg border p-5 transition-colors"
+			>
+				<div class="mb-2 flex items-center gap-3">
+					<h3 class="font-medium">{t("project.lp.name")}</h3>
+					<span class="bg-(--color-surface) text-(--color-muted) rounded-full px-2 py-0.5 font-mono text-xs">
+						{t("project.lp.badge")}
+					</span>
+				</div>
+				<p class="text-(--color-muted) text-sm leading-relaxed">
+					{t("project.lp.description")}
+				</p>
+			</a>
 		</section>
 
 		<section class="border-(--color-border) mb-20 border-t pt-10">
@@ -135,15 +151,31 @@ const projectKey = (code: string, field: string) =>
 		</section>
 
 		<footer class="border-(--color-border) text-(--color-muted) flex items-center justify-between border-t pt-8 text-sm">
-			<a
-				href="https://crafterstation.com"
-				target="_blank"
-				rel="noopener noreferrer"
-				class="hover:text-(--color-text) transition-colors"
-			>
-				{t("footer.cs")}
-			</a>
+			<p>
+				{t("footer.madeBy")}{" "}
+				<a
+					href="https://shiara.design"
+					target="_blank"
+					rel="noopener noreferrer"
+					class="hover:text-(--color-text) transition-colors"
+				>Shiara Arauzo</a>
+				{t("footer.and")}
+				<a
+					href="https://railly.dev"
+					target="_blank"
+					rel="noopener noreferrer"
+					class="hover:text-(--color-text) transition-colors"
+				>Railly Hugo</a>{t("footer.madeSuffix")}
+			</p>
 			<div class="flex gap-4">
+				<a
+					href="https://crafterstation.com"
+					target="_blank"
+					rel="noopener noreferrer"
+					class="hover:text-(--color-text) transition-colors"
+				>
+					{t("footer.cs")}
+				</a>
 				<a
 					href="https://github.com/crafter-research"
 					target="_blank"

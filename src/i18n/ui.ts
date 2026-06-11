@@ -31,6 +31,10 @@ export const ui = {
 		"project.pg.badge": "Live",
 		"project.pg.description":
 			"Interactive graph of relationships between Peruvian politicians and corruption cases. 69 nodes, 37 connections, 112 supporting documents.",
+		"project.lp.name": "legalize-pe",
+		"project.lp.badge": "Live",
+		"project.lp.description":
+			"Peruvian corpus for the legalize.dev federation. 21,244 legal norms in Markdown, versioned in Git — national tier from SPIJ plus 26 regional jurisdictions.",
 		"section.tools": "Tools",
 		"project.andenar.name": "andenar",
 		"project.andenar.badge": "Live",
@@ -78,6 +82,9 @@ export const ui = {
 			"Congresista Score: public profiles of legislators based on attendance, voting record, and consistency between discourse and vote.",
 		"next.listening":
 			"Broad Listening AI: clusters citizen opinions by actual meaning, detects coordinated spam in public consultations, and surfaces genuine diverse views.",
+		"footer.madeBy": "Made by",
+		"footer.and": "and",
+		"footer.madeSuffix": "",
 		"footer.cs": "Crafter Station",
 		"footer.github": "GitHub",
 	},
@@ -101,6 +108,10 @@ export const ui = {
 		"project.pg.badge": "Live",
 		"project.pg.description":
 			"Grafo interactivo de relaciones entre políticos peruanos y casos de corrupción. 69 nodos, 37 conexiones, 112 documentos de respaldo.",
+		"project.lp.name": "legalize-pe",
+		"project.lp.badge": "Live",
+		"project.lp.description":
+			"Corpus peruano para la federación legalize.dev. 21,244 normas legales en Markdown, versionadas en Git — tier nacional desde SPIJ más 26 jurisdicciones regionales.",
 		"section.tools": "Herramientas",
 		"project.andenar.name": "andenar",
 		"project.andenar.badge": "Live",
@@ -148,6 +159,9 @@ export const ui = {
 			"Congresista Score: perfiles públicos de legisladores basados en asistencia, historial de votaciones y coherencia entre discurso y voto.",
 		"next.listening":
 			"Broad Listening AI: agrupa opiniones ciudadanas por significado real, detecta spam coordinado en consultas públicas y visibiliza las voces genuinas.",
+		"footer.madeBy": "Hecho por",
+		"footer.and": "y",
+		"footer.madeSuffix": "",
 		"footer.cs": "Crafter Station",
 		"footer.github": "GitHub",
 	},
@@ -171,6 +185,10 @@ export const ui = {
 		"project.pg.badge": "Live",
 		"project.pg.description":
 			"Grafo interativo de relações entre políticos peruanos e casos de corrupção. 69 nós, 37 conexões, 112 documentos de apoio.",
+		"project.lp.name": "legalize-pe",
+		"project.lp.badge": "Live",
+		"project.lp.description":
+			"Corpus peruano para a federação legalize.dev. 21.244 normas legais em Markdown, versionadas em Git — tier nacional do SPIJ mais 26 jurisdições regionais.",
 		"section.tools": "Ferramentas",
 		"project.andenar.name": "andenar",
 		"project.andenar.badge": "Live",
@@ -218,6 +236,9 @@ export const ui = {
 			"Congresista Score: perfis públicos de legisladores baseados em presença, histórico de votação e coerência entre discurso e voto.",
 		"next.listening":
 			"Broad Listening AI: agrupa opiniões cidadãs por significado real, detecta spam coordenado em consultas públicas e torna visíveis as vozes genuínas.",
+		"footer.madeBy": "Feito por",
+		"footer.and": "e",
+		"footer.madeSuffix": "",
 		"footer.cs": "Crafter Station",
 		"footer.github": "GitHub",
 	},
@@ -240,6 +261,10 @@ export const ui = {
 		"project.pg.badge": "Live",
 		"project.pg.description":
 			"秘鲁政治家与腐败案件关系的交互式图谱。69个节点、37个连接、112份支持文件。",
+		"project.lp.name": "legalize-pe",
+		"project.lp.badge": "上线",
+		"project.lp.description":
+			"面向 legalize.dev 联邦的秘鲁法律语料库。21,244条法律规范以Markdown存储、用Git版本化——国家级（来自SPIJ）加26个地区辖区。",
 		"section.tools": "工具",
 		"project.andenar.name": "andenar",
 		"project.andenar.badge": "Live",
@@ -287,6 +312,9 @@ export const ui = {
 			"Congresista Score：基于出席率、投票记录和言行一致性的立法者公开档案。",
 		"next.listening":
 			"Broad Listening AI：按实际含义聚类公民意见，检测公众咨询中的协调垃圾信息，展现真实多元的声音。",
+		"footer.madeBy": "由",
+		"footer.and": "和",
+		"footer.madeSuffix": "制作",
 		"footer.cs": "Crafter Station",
 		"footer.github": "GitHub",
 	},
