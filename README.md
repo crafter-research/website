@@ -1,43 +1,37 @@
-# Astro Starter Kit: Minimal
+# Crafter Research Website
 
-```sh
-bun create astro@latest -- --template minimal
+Public website for [research.crafter.ing](https://research.crafter.ing).
+
+The site presents Crafter Research as a public-interest lab for inspectable corpora, evaluation runs, agent interfaces, and civic evidence systems.
+
+## Visual System
+
+- Theme-aware lab images: `public/gen/research-lab-{dark,light}.png`
+- Local glyph favicon: `public/favicon.svg`
+- Global tokens and shared components: `src/styles/global.css`
+
+## Local Development
+
+```bash
+bun install
+bun run dev
+bun run build
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## Content
 
-## 🚀 Project Structure
+- Home page: `src/components/HomePage.astro`
+- Research log: `src/content/research/{en,es}/`
+- Research routes: `src/pages/research/` and `src/pages/es/research/`
+- Global visual system: `src/styles/global.css`
 
-Inside of your Astro project, you'll see the following folders and files:
+## Research Log Standard
 
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
-```
+Research log entries should state:
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+- The claim.
+- The artifact that supports it.
+- What changed from the previous belief.
+- What is still weak or unverified.
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
-
-Any static assets, like images, can be placed in the `public/` directory.
-
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `bun install`             | Installs dependencies                            |
-| `bun dev`             | Starts local dev server at `localhost:4321`      |
-| `bun build`           | Build your production site to `./dist/`          |
-| `bun preview`         | Preview your build locally, before deploying     |
-| `bun astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `bun astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+Public claims should link to a repo, corpus, live interface, benchmark, or specific research artifact.

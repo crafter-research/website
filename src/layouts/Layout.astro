@@ -4,13 +4,14 @@ import "../styles/global.css";
 interface Props {
 	title: string;
 	description: string;
+	lang?: string;
 }
 
-const { title, description } = Astro.props;
+const { title, description, lang = "en" } = Astro.props;
 const canonicalURL = new URL(Astro.url.pathname, "https://research.crafter.ing");
 ---
 
-<html lang="en">
+<html lang={lang}>
 	<head>
 		<meta charset="utf-8" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -22,7 +23,7 @@ const canonicalURL = new URL(Astro.url.pathname, "https://research.crafter.ing")
 		<meta property="og:description" content={description} />
 		<meta property="og:url" content={canonicalURL.href} />
 		<meta property="og:site_name" content="Crafter Research" />
-		<meta property="og:locale" content="en" />
+		<meta property="og:locale" content={lang === "es" ? "es_PE" : "en_US"} />
 		<meta property="og:type" content="website" />
 		<meta property="og:image" content="https://research.crafter.ing/og.png" />
 		<meta property="og:image:width" content="1200" />
@@ -35,7 +36,7 @@ const canonicalURL = new URL(Astro.url.pathname, "https://research.crafter.ing")
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 		<link
-			href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+			href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500;600&display=swap"
 			rel="stylesheet"
 		/>
 		<title>{title}</title>

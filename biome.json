@@ -1,12 +1,29 @@
 {
-	"$schema": "https://biomejs.dev/schemas/2.0.0/schema.json",
-	"organizeImports": {
-		"enabled": true
+	"$schema": "https://biomejs.dev/schemas/2.4.8/schema.json",
+	"assist": { "actions": { "source": { "organizeImports": "on" } } },
+	"files": {
+		"includes": [
+			"README.md",
+			"astro.config.mjs",
+			"package.json",
+			"tsconfig.json",
+			"src/**",
+			"public/**",
+			"!dist",
+			"!.astro",
+			"!.vercel",
+			"!node_modules"
+		]
 	},
 	"linter": {
 		"enabled": true,
 		"rules": {
 			"recommended": true
+		}
+	},
+	"css": {
+		"parser": {
+			"tailwindDirectives": true
 		}
 	},
 	"formatter": {

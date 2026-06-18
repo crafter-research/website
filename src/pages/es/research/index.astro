@@ -7,48 +7,51 @@ const posts = (await getCollection("research"))
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 
 const fmtDate = (d: Date) =>
-  d.toLocaleDateString("es-PE", { year: "numeric", month: "short", day: "numeric" });
+  d.toLocaleDateString("es-PE", { year: "numeric", month: "short", day: "numeric", timeZone: "UTC" });
 ---
 
 <Layout
   title="Registro de Investigación · Crafter Research"
   description="Hitos del laboratorio, escritos sobre la marcha. Hipótesis, mediciones, y las conclusiones que se movieron."
+  lang="es"
 >
-  <main class="mx-auto max-w-2xl px-6 py-24">
-    <header class="mb-20">
-      <p class="text-(--color-muted) mb-6 font-mono text-sm tracking-widest uppercase">
+  <main class="mx-auto max-w-5xl px-5 py-10 sm:px-8 lg:px-10">
+    <header class="rounded-lg border border-(--color-border) bg-(--color-panel) p-6 sm:p-10">
+      <p class="text-(--color-muted) mb-8 font-mono text-sm tracking-widest uppercase">
         <a href="/es" class="hover:text-(--color-text) transition-colors">crafter research</a> / registro
       </p>
-      <h1 class="mb-6 text-4xl font-bold tracking-tight sm:text-5xl">Registro de Investigación</h1>
-      <p class="text-(--color-accent) text-lg leading-relaxed">
+      <h1 class="max-w-3xl text-5xl font-semibold leading-[1.02] text-(--color-text) sm:text-6xl">
+        Registro de Investigación
+      </h1>
+      <p class="mt-6 max-w-2xl text-lg leading-8 text-(--color-muted-strong)">
         Hitos del laboratorio, escritos sobre la marcha. Hipótesis, mediciones, y las conclusiones que se movieron.
       </p>
     </header>
 
-    <section>
+    <section class="mt-8 grid gap-4">
       {
         posts.map((post) => (
           <a
             href={`/es/research/${post.data.urlSlug}`}
-            class="border-(--color-border) hover:border-(--color-muted) mb-4 block rounded-lg border p-5 transition-colors"
+            class="log-card"
           >
-            <div class="mb-2 flex items-center gap-3">
-              <h2 class="font-medium">{post.data.title}</h2>
-              <span class="bg-(--color-surface) text-(--color-muted) rounded-full px-2 py-0.5 font-mono text-xs">
+            <div class="mb-4 flex flex-wrap items-center gap-3">
+              <span class="pill">
                 {post.data.status}
               </span>
+              <span class="text-(--color-muted) font-mono text-xs">
+                {fmtDate(post.data.date)} / {post.data.project}
+              </span>
             </div>
-            <p class="text-(--color-muted) mb-3 text-sm leading-relaxed">{post.data.description}</p>
-            <p class="text-(--color-muted) font-mono text-xs">
-              {fmtDate(post.data.date)} · {post.data.project}
-            </p>
+            <h2 class="text-2xl font-semibold leading-tight text-(--color-text)">{post.data.title}</h2>
+            <p class="text-(--color-muted-strong) mt-3 text-sm leading-6">{post.data.description}</p>
           </a>
         ))
       }
     </section>
 
     <footer class="border-(--color-border) text-(--color-muted) mt-20 border-t pt-8 text-sm">
-      <a href="/es" class="hover:text-(--color-text) transition-colors">← volver al lab</a>
+      <a href="/es" class="hover:text-(--color-text) transition-colors">Volver al lab</a>
     </footer>
   </main>
 </Layout>

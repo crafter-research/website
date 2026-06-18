@@ -14,26 +14,25 @@ const { post } = Astro.props;
 const { Content } = await render(post);
 
 const fmtDate = (d: Date) =>
-  d.toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" });
+  d.toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric", timeZone: "UTC" });
 
-// Does a Spanish version exist? Link to it if so.
 const hasEs = (await getCollection("research")).some(
   (p) => p.data.urlSlug === post.data.urlSlug && p.data.lang === "es",
 );
 ---
 
-<Layout title={`${post.data.title} · Crafter Research`} description={post.data.description}>
-  <main class="mx-auto max-w-2xl px-6 py-24">
-    <header class="mb-12">
+<Layout title={`${post.data.title} · Crafter Research`} description={post.data.description} lang="en">
+  <main class="mx-auto max-w-3xl px-5 py-10 sm:px-8 lg:px-10">
+    <header class="rounded-lg border border-(--color-border) bg-(--color-panel) p-6 sm:p-10">
       <p class="text-(--color-muted) mb-6 font-mono text-sm tracking-widest uppercase">
         <a href="/research" class="hover:text-(--color-text) transition-colors">research log</a>
       </p>
       <div class="mb-4 flex items-center gap-3">
-        <span class="bg-(--color-surface) text-(--color-muted) rounded-full px-2 py-0.5 font-mono text-xs">
+        <span class="pill">
           {post.data.status}
         </span>
         <span class="text-(--color-muted) font-mono text-xs">
-          {fmtDate(post.data.date)} · {post.data.project}
+          {fmtDate(post.data.date)} / {post.data.project}
         </span>
         {hasEs && (
           <a
@@ -44,15 +43,16 @@ const hasEs = (await getCollection("research")).some(
           </a>
         )}
       </div>
-      <h1 class="text-3xl font-bold tracking-tight sm:text-4xl">{post.data.title}</h1>
+      <h1 class="text-4xl font-semibold leading-[1.04] text-(--color-text) sm:text-5xl">{post.data.title}</h1>
+      <p class="mt-5 text-base leading-7 text-(--color-muted-strong)">{post.data.description}</p>
     </header>
 
-    <article class="research-prose text-(--color-accent) leading-relaxed">
+    <article class="research-prose mt-10 text-(--color-muted-strong) leading-relaxed">
       <Content />
     </article>
 
     <footer class="border-(--color-border) text-(--color-muted) mt-20 border-t pt-8 text-sm">
-      <a href="/research" class="hover:text-(--color-text) transition-colors">← all milestones</a>
+      <a href="/research" class="hover:text-(--color-text) transition-colors">All milestones</a>
     </footer>
   </main>
 </Layout>
@@ -62,7 +62,7 @@ const hasEs = (await getCollection("research")).some(
     color: var(--color-text);
     font-size: 1.4rem;
     font-weight: 600;
-    letter-spacing: -0.01em;
+    letter-spacing: 0;
     margin-top: 2.5rem;
     margin-bottom: 1rem;
   }
@@ -100,7 +100,7 @@ const hasEs = (await getCollection("research")).some(
     background: var(--color-surface);
     border-radius: 4px;
     padding: 0.1rem 0.35rem;
-    font-family: "JetBrains Mono", monospace;
+    font-family: "Geist Mono", monospace;
     font-size: 0.85em;
     color: var(--color-text);
   }

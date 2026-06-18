@@ -1,197 +1,513 @@
 ---
-import type { Lang, UiKey } from "../i18n/ui";
-import { useTranslations } from "../i18n/utils";
-import LanguagePicker from "./LanguagePicker.astro";
+import { getCollection } from "astro:content";
+import type { Lang } from "../i18n/ui";
 import Layout from "../layouts/Layout.astro";
+import LanguagePicker from "./LanguagePicker.astro";
 
 interface Props {
 	lang: Lang;
 }
 
 const { lang } = Astro.props;
-const t = useTranslations(lang);
-const cliProjects = ["sc", "bc", "jn", "os", "sn", "sd", "mt"] as const;
-const projectKey = (code: string, field: string) =>
-	`project.${code}.${field}` as UiKey;
+const contentLang = lang === "es" ? "es" : "en";
+
+const copy = {
+	en: {
+		description:
+			"Crafter Research is a public-interest lab for inspectable corpora, evaluation runs, agent interfaces, and civic evidence systems.",
+		label: "Crafter Research",
+		navLog: "Research log",
+		heroKicker: "Public-interest lab",
+		heroTitle: "Research systems that can be inspected.",
+		heroBody:
+			"We turn messy public records into corpora, tests, interfaces, and notes. The standard is simple: every claim should point back to a source, a run, a repository, or a live surface.",
+		heroNote:
+			"Current field: legal retrieval, citizen service maps, Latin American Spanish evals, and civic data interfaces.",
+		primaryCta: "Read the log",
+		secondaryCta: "Open GitHub",
+		sourceLine: "Source visible by default",
+		runLine: "Runs before claims",
+		interfaceLine: "Interfaces as evidence",
+		thesisLabel: "Lab thesis",
+		thesisTitle: "The artifact is the argument.",
+		thesisBody:
+			"A report is not enough. A useful research system leaves behind a corpus, an eval, a graph, an SDK, an interface, or a log that someone else can inspect.",
+		artifactsLabel: "What we make",
+		artifactsTitle: "Four surfaces, one standard.",
+		methodLabel: "Operating model",
+		methodTitle: "Collect, test, publish, repeat.",
+		methodBody:
+			"The lab rhythm is deliberately narrow. We keep provenance close, run small tests early, and publish the shape of the work while the conclusion is still moving.",
+		workbenchLabel: "Workbench",
+		workbenchTitle: "Repos are instruments, not trophies.",
+		workbenchBody:
+			"The GitHub org is treated as a lab bench: each repo should hold one inspectable role in the chain from raw record to public interface.",
+		recentLabel: "Recent signals",
+		recentTitle: "What the latest repo pass changed.",
+		recentBody:
+			"The recent work points away from demos and toward stronger substrates: blind annotation, separated corpus truth, graph-derived paths, and clearer evaluation accounting.",
+		logLabel: "Research log",
+		logTitle: "Notes from live work.",
+		logCta: "All research logs",
+		nextLabel: "Next",
+		nextTitle: "Make the lab easier to audit.",
+		footerMade: "Made by",
+		footerAnd: "and",
+		footerStation: "Crafter Station",
+	},
+	es: {
+		description:
+			"Crafter Research es un laboratorio de interes publico para corpora inspeccionables, runs de evaluacion, interfaces de agentes y sistemas de evidencia civica.",
+		label: "Crafter Research",
+		navLog: "Registro",
+		heroKicker: "Laboratorio de interes publico",
+		heroTitle: "Sistemas de investigacion que se pueden inspeccionar.",
+		heroBody:
+			"Convertimos registros publicos desordenados en corpora, pruebas, interfaces y notas. El estandar es simple: cada claim debe volver a una fuente, un run, un repo o una superficie viva.",
+		heroNote:
+			"Campo actual: retrieval legal, mapas de servicios ciudadanos, evals en espanol latinoamericano e interfaces de data civica.",
+		primaryCta: "Leer registro",
+		secondaryCta: "Abrir GitHub",
+		sourceLine: "Fuente visible por defecto",
+		runLine: "Runs antes que claims",
+		interfaceLine: "Interfaces como evidencia",
+		thesisLabel: "Tesis del lab",
+		thesisTitle: "El artefacto es el argumento.",
+		thesisBody:
+			"Un reporte no basta. Un sistema de investigacion util deja un corpus, un eval, un grafo, un SDK, una interfaz o un log que otra persona puede inspeccionar.",
+		artifactsLabel: "Que hacemos",
+		artifactsTitle: "Cuatro superficies, un estandar.",
+		methodLabel: "Modelo operativo",
+		methodTitle: "Recolectar, probar, publicar, repetir.",
+		methodBody:
+			"El ritmo del lab es deliberadamente estrecho. Mantenemos la procedencia cerca, corremos pruebas pequenas temprano y publicamos la forma del trabajo mientras la conclusion todavia se mueve.",
+		workbenchLabel: "Banco de trabajo",
+		workbenchTitle: "Los repos son instrumentos, no trofeos.",
+		workbenchBody:
+			"El org de GitHub funciona como mesa de laboratorio: cada repo debe sostener un rol inspeccionable en la cadena desde registro crudo hasta interfaz publica.",
+		recentLabel: "Senales recientes",
+		recentTitle: "Que cambio la ultima pasada de repos.",
+		recentBody:
+			"El trabajo reciente apunta menos a demos y mas a sustratos fuertes: anotacion ciega, verdad de corpus separada, rutas derivadas de grafos y contabilidad de evaluacion mas clara.",
+		logLabel: "Registro de investigacion",
+		logTitle: "Notas desde trabajo vivo.",
+		logCta: "Todos los registros",
+		nextLabel: "Siguiente",
+		nextTitle: "Hacer que el lab sea mas facil de auditar.",
+		footerMade: "Hecho por",
+		footerAnd: "y",
+		footerStation: "Crafter Station",
+	},
+} as const;
+
+const c = copy[contentLang];
+const homeHref = contentLang === "es" ? "/es" : "/";
+const researchHref = contentLang === "es" ? "/es/research" : "/research";
+
+const artifactCopy = {
+	en: [
+		{
+			kicker: "corpus",
+			title: "Records with provenance",
+			body: "Raw public material is cleaned into versioned datasets without hiding the source trail.",
+		},
+		{
+			kicker: "eval",
+			title: "Tests that can fail",
+			body: "Retrieval, graph, and interface claims are forced through runs that expose misses, abstentions, and weak edges.",
+		},
+		{
+			kicker: "interface",
+			title: "Tools that reveal evidence",
+			body: "Agents and public surfaces should show why an answer was assembled, not just present the answer.",
+		},
+		{
+			kicker: "log",
+			title: "Notes while it moves",
+			body: "Research logs capture the conclusion changing in public, with links back to code and artifacts.",
+		},
+	],
+	es: [
+		{
+			kicker: "corpus",
+			title: "Registros con procedencia",
+			body: "El material publico crudo se limpia en datasets versionados sin esconder el rastro de fuente.",
+		},
+		{
+			kicker: "eval",
+			title: "Pruebas que pueden fallar",
+			body: "Los claims de retrieval, grafo e interfaz pasan por runs que muestran fallos, abstenciones y bordes debiles.",
+		},
+		{
+			kicker: "interfaz",
+			title: "Herramientas que revelan evidencia",
+			body: "Los agentes y superficies publicas deben mostrar por que se armo una respuesta, no solo presentar la respuesta.",
+		},
+		{
+			kicker: "log",
+			title: "Notas mientras se mueve",
+			body: "Los registros capturan la conclusion cambiando en publico, con enlaces a codigo y artefactos.",
+		},
+	],
+} as const;
+
+const methodCopy = {
+	en: [
+		["Collect", "Capture records, keep IDs, preserve provenance, and mark what is missing."],
+		["Test", "Run small evaluations before the interface looks convincing."],
+		["Publish", "Expose the repo, artifact, note, or public surface that lets others inspect the claim."],
+	],
+	es: [
+		["Recolectar", "Capturar registros, mantener IDs, preservar procedencia y marcar lo que falta."],
+		["Probar", "Correr evaluaciones pequenas antes de que la interfaz parezca convincente."],
+		["Publicar", "Exponer el repo, artefacto, nota o superficie publica que permite inspeccionar el claim."],
+	],
+} as const;
+
+const workbenchCopy = {
+	en: [
+		{
+			title: "Legal retrieval",
+			body: "Legal corpora, search engines, SDKs, and agent interfaces for source-backed answers.",
+			links: [
+				["legalize-pe", "https://github.com/crafter-research/legalize-pe"],
+				["legalize-pe-engine", "https://github.com/crafter-research/legalize-pe-engine"],
+				["amicus-sdk", "https://github.com/crafter-research/amicus-sdk"],
+			],
+		},
+		{
+			title: "Citizen services",
+			body: "Public-service pages, procedure graphs, prerequisites, deadlines, and pathfinding experiments.",
+			links: [
+				["tramites-pe", "https://github.com/crafter-research/tramites-pe"],
+				["tramites-pe-engine", "https://github.com/crafter-research/tramites-pe-engine"],
+			],
+		},
+		{
+			title: "Evaluation harnesses",
+			body: "Benchmarks and logs for Latin American Spanish, retrieval behavior, abstention, and judge calibration.",
+			links: [
+				["latambench", "https://github.com/crafter-research/latambench"],
+				["retrieval log", "/research/measuring-legal-retrieval"],
+			],
+		},
+		{
+			title: "Civic data interfaces",
+			body: "Public data surfaces and CLIs for political finance, corruption graphs, elections, and tax automation.",
+			links: [
+				["peru-financia", "https://peru-financia.crafter.ing"],
+				["political-graph", "https://github.com/crafter-research/political-graph"],
+				["sunat-cli", "https://sunat-cli.crafter.ing"],
+			],
+		},
+	],
+	es: [
+		{
+			title: "Retrieval legal",
+			body: "Corpora legales, motores de busqueda, SDKs e interfaces de agente para respuestas con fuente.",
+			links: [
+				["legalize-pe", "https://github.com/crafter-research/legalize-pe"],
+				["legalize-pe-engine", "https://github.com/crafter-research/legalize-pe-engine"],
+				["amicus-sdk", "https://github.com/crafter-research/amicus-sdk"],
+			],
+		},
+		{
+			title: "Servicios ciudadanos",
+			body: "Paginas de servicios publicos, grafos de tramites, prerequisitos, plazos y experimentos de rutas.",
+			links: [
+				["tramites-pe", "https://github.com/crafter-research/tramites-pe"],
+				["tramites-pe-engine", "https://github.com/crafter-research/tramites-pe-engine"],
+			],
+		},
+		{
+			title: "Harnesses de evaluacion",
+			body: "Benchmarks y logs para espanol latinoamericano, retrieval, abstencion y calibracion de jueces.",
+			links: [
+				["latambench", "https://github.com/crafter-research/latambench"],
+				["log de retrieval", "/research/measuring-legal-retrieval"],
+			],
+		},
+		{
+			title: "Interfaces de data civica",
+			body: "Superficies publicas y CLIs para financiamiento politico, grafos de corrupcion, elecciones e impuestos.",
+			links: [
+				["peru-financia", "https://peru-financia.crafter.ing"],
+				["political-graph", "https://github.com/crafter-research/political-graph"],
+				["sunat-cli", "https://sunat-cli.crafter.ing"],
+			],
+		},
+	],
+} as const;
+
+const recentCopy = {
+	en: [
+		{
+			kicker: "retrieval",
+			title: "The legal assistant work moved from demo confidence to blind annotation and ablation.",
+			url: "https://amicus.crafter.ing",
+		},
+		{
+			kicker: "process graph",
+			title: "Citizen-service mapping split raw corpus truth from derived pathfinding signals.",
+			url: "https://github.com/crafter-research/tramites-pe-engine",
+		},
+		{
+			kicker: "benchmarks",
+			title: "Evaluation work tightened what counts as valid, missing, hallucinated, or abstained.",
+			url: "https://github.com/crafter-research/latambench",
+		},
+	],
+	es: [
+		{
+			kicker: "retrieval",
+			title: "El trabajo del asistente legal paso de confianza de demo a anotacion ciega y ablation.",
+			url: "https://amicus.crafter.ing",
+		},
+		{
+			kicker: "grafo de tramites",
+			title: "El mapeo de servicios ciudadanos separo verdad de corpus de senales derivadas de pathfinding.",
+			url: "https://github.com/crafter-research/tramites-pe-engine",
+		},
+		{
+			kicker: "benchmarks",
+			title: "La evaluacion ajusto que cuenta como valido, faltante, alucinado o abstencion.",
+			url: "https://github.com/crafter-research/latambench",
+		},
+	],
+} as const;
+
+const nextCopy = {
+	en: [
+		"Turn more repo work into public research logs.",
+		"Expose clearer artifact contracts for corpora, evals, graphs, and interfaces.",
+		"Keep civic systems source-backed without making the interface feel like paperwork.",
+	],
+	es: [
+		"Convertir mas trabajo de repos en registros publicos de investigacion.",
+		"Exponer contratos de artefacto mas claros para corpora, evals, grafos e interfaces.",
+		"Mantener sistemas civicos con fuente visible sin hacer que la interfaz se sienta como tramite.",
+	],
+} as const;
+
+const artifacts = artifactCopy[contentLang];
+const method = methodCopy[contentLang];
+const workbench = workbenchCopy[contentLang];
+const recent = recentCopy[contentLang];
+const next = nextCopy[contentLang];
+
+const posts = (await getCollection("research"))
+	.filter((post) => post.data.lang === contentLang)
+	.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+	.slice(0, 3);
+
+const fmtDate = (d: Date) =>
+	d.toLocaleDateString(contentLang === "es" ? "es-PE" : "en-US", {
+		day: "numeric",
+		month: "short",
+		timeZone: "UTC",
+		year: "numeric",
+	});
 ---
 
-<Layout title={t("site.title")} description={t("site.description")}>
-	<main class="mx-auto max-w-2xl px-6 py-24">
-		<header class="mb-20">
-			<div class="mb-6 flex items-center justify-between">
-				<p class="text-(--color-muted) font-mono text-sm tracking-widest uppercase">
-					{t("site.label")}
-				</p>
-				<div class="flex items-center gap-4">
-					<a
-						href={lang === "en" ? "/research" : `/${lang}/research`}
-						class="text-(--color-muted) hover:text-(--color-text) font-mono text-sm tracking-widest uppercase transition-colors"
-					>
-						{t("nav.research")}
+<Layout title={c.label} description={c.description} lang={contentLang}>
+	<main class="min-h-screen overflow-hidden">
+		<header class="relative mx-auto flex w-full max-w-7xl flex-col gap-12 px-5 py-6 sm:px-8 lg:px-10">
+			<nav class="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
+				<a href={homeHref} class="flex min-w-0 items-center gap-3 text-(--color-text)">
+					<img src="/favicon.svg" alt="" class="size-8" />
+					<span class="font-mono text-xs tracking-[0.18em] uppercase">{c.label}</span>
+				</a>
+				<div class="flex max-w-full flex-wrap items-center gap-3 sm:justify-end">
+					<a href={researchHref} class="nav-link">{c.navLog}</a>
+					<a href="https://github.com/crafter-research" class="nav-link" target="_blank" rel="noreferrer">
+						GitHub
 					</a>
 					<LanguagePicker />
 				</div>
-			</div>
-			<h1 class="mb-6 text-4xl font-bold tracking-tight sm:text-5xl">
-				{t("hero.title")}
-			</h1>
-			<p class="text-(--color-accent) text-lg leading-relaxed">
-				{t("hero.description")}
-			</p>
-			<p class="text-(--color-muted) mt-4 text-sm">
-				{t("hero.started")}
-			</p>
+			</nav>
+
+			<section class="grid min-w-0 items-center gap-10 py-12 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:py-16">
+				<div class="relative z-10 min-w-0 max-w-4xl">
+					<p class="section-label">{c.heroKicker}</p>
+					<h1 class="mt-5 max-w-4xl text-5xl font-semibold leading-[0.98] text-(--color-text) sm:text-6xl lg:text-7xl">
+						{c.heroTitle}
+					</h1>
+					<p class="mt-7 max-w-2xl text-lg leading-8 text-(--color-muted-strong) sm:text-xl">
+						{c.heroBody}
+					</p>
+					<div class="mt-8 flex flex-wrap items-center gap-3">
+						<a href={researchHref} class="button-primary">{c.primaryCta}</a>
+						<a href="https://github.com/crafter-research" target="_blank" rel="noreferrer" class="button-secondary">
+							{c.secondaryCta}
+						</a>
+					</div>
+					<div class="mt-9 grid max-w-2xl gap-2 sm:grid-cols-3">
+						<p class="signal-chip">{c.sourceLine}</p>
+						<p class="signal-chip">{c.runLine}</p>
+						<p class="signal-chip">{c.interfaceLine}</p>
+					</div>
+					<p class="mt-6 max-w-2xl font-mono text-xs leading-6 text-(--color-muted)">
+						{c.heroNote}
+					</p>
+				</div>
+
+				<figure class="hero-visual">
+					<picture>
+						<source media="(prefers-color-scheme: dark)" srcset="/gen/research-lab-dark.png" />
+						<img
+							src="/gen/research-lab-light.png"
+							alt="Abstract research workbench with source documents, evaluation traces, and interface surfaces"
+							class="size-full object-cover"
+							loading="eager"
+							fetchpriority="high"
+						/>
+					</picture>
+				</figure>
+			</section>
 		</header>
 
-		<section class="mb-20">
-			<h2 class="text-(--color-muted) mb-8 font-mono text-xs tracking-widest uppercase">
-				{t("section.active")}
-			</h2>
-			<a
-				href="https://peru-financia.crafter.ing"
-				target="_blank"
-				rel="noopener noreferrer"
-				class="border-(--color-border) hover:border-(--color-muted) block rounded-lg border p-5 transition-colors"
-			>
-				<div class="mb-2 flex items-center gap-3">
-					<h3 class="font-medium">{t("project.pf.name")}</h3>
-					<span class="bg-(--color-surface) text-(--color-muted) rounded-full px-2 py-0.5 font-mono text-xs">
-						{t("project.pf.badge")}
-					</span>
-				</div>
-				<p class="text-(--color-muted) text-sm leading-relaxed">
-					{t("project.pf.description")}
-				</p>
-			</a>
-			<a
-				href="https://political-graph.crafter.ing"
-				target="_blank"
-				rel="noopener noreferrer"
-				class="border-(--color-border) hover:border-(--color-muted) mt-4 block rounded-lg border p-5 transition-colors"
-			>
-				<div class="mb-2 flex items-center gap-3">
-					<h3 class="font-medium">{t("project.pg.name")}</h3>
-					<span class="bg-(--color-surface) text-(--color-muted) rounded-full px-2 py-0.5 font-mono text-xs">
-						{t("project.pg.badge")}
-					</span>
-				</div>
-				<p class="text-(--color-muted) text-sm leading-relaxed">
-					{t("project.pg.description")}
-				</p>
-			</a>
-			<a
-				href="https://legalize-pe.crafter.ing"
-				target="_blank"
-				rel="noopener noreferrer"
-				class="border-(--color-border) hover:border-(--color-muted) mt-4 block rounded-lg border p-5 transition-colors"
-			>
-				<div class="mb-2 flex items-center gap-3">
-					<h3 class="font-medium">{t("project.lp.name")}</h3>
-					<span class="bg-(--color-surface) text-(--color-muted) rounded-full px-2 py-0.5 font-mono text-xs">
-						{t("project.lp.badge")}
-					</span>
-				</div>
-				<p class="text-(--color-muted) text-sm leading-relaxed">
-					{t("project.lp.description")}
-				</p>
-			</a>
+		<section class="mx-auto grid max-w-7xl gap-8 px-5 py-16 sm:px-8 lg:grid-cols-[0.8fr_1.2fr] lg:px-10">
+			<div>
+				<p class="section-label">{c.thesisLabel}</p>
+				<h2 class="section-title">{c.thesisTitle}</h2>
+			</div>
+			<p class="max-w-3xl text-xl leading-9 text-(--color-muted-strong)">{c.thesisBody}</p>
 		</section>
 
-		<section class="border-(--color-border) mb-20 border-t pt-10">
-			<h2 class="text-(--color-muted) mb-8 font-mono text-xs tracking-widest uppercase">
-				{t("section.platform")}
-			</h2>
-			<a
-				href={t("project.andenar.url")}
-				target="_blank"
-				rel="noopener noreferrer"
-				class="border-(--color-border) hover:border-(--color-muted) block rounded-lg border p-6 transition-colors"
-			>
-				<div class="mb-3 flex items-center gap-3">
-					<h3 class="text-xl font-semibold">{t("project.andenar.name")}</h3>
-					<span class="bg-(--color-surface) text-(--color-muted) rounded-full px-2 py-0.5 font-mono text-xs">
-						{t("project.andenar.badge")}
-					</span>
-				</div>
-				<p class="text-(--color-muted) text-sm leading-relaxed">
-					{t("project.andenar.description")}
-				</p>
-			</a>
-		</section>
-
-		<section class="border-(--color-border) mb-20 border-t pt-10">
-			<h2 class="text-(--color-muted) mb-8 font-mono text-xs tracking-widest uppercase">
-				{t("section.tools")}
-			</h2>
-			<div class="grid gap-4 sm:grid-cols-2">
+		<section class="mx-auto max-w-7xl px-5 py-16 sm:px-8 lg:px-10">
+			<div class="mb-10 max-w-4xl">
+				<p class="section-label">{c.artifactsLabel}</p>
+				<h2 class="section-title">{c.artifactsTitle}</h2>
+			</div>
+			<div class="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
 				{
-					cliProjects.map((project) => (
-						<a
-							href={t(projectKey(project, "url"))}
-							target="_blank"
-							rel="noopener noreferrer"
-							class="border-(--color-border) hover:border-(--color-muted) block rounded-lg border p-5 transition-colors"
-						>
-							<div class="mb-2 flex items-center gap-3">
-								<h3 class="font-medium">{t(projectKey(project, "name"))}</h3>
-								<span class="bg-(--color-surface) text-(--color-muted) rounded-full px-2 py-0.5 font-mono text-xs">
-									{t(projectKey(project, "badge"))}
-								</span>
+					artifacts.map((item) => (
+						<article class="card min-h-[260px] p-6">
+							<p class="mb-6 font-mono text-xs tracking-[0.16em] text-(--color-accent) uppercase">{item.kicker}</p>
+							<h3 class="text-2xl font-semibold leading-tight text-(--color-text)">{item.title}</h3>
+							<p class="mt-4 text-sm leading-6 text-(--color-muted-strong)">{item.body}</p>
+						</article>
+					))
+				}
+			</div>
+		</section>
+
+		<section class="mx-auto grid max-w-7xl gap-8 px-5 py-16 sm:px-8 lg:grid-cols-[0.85fr_1.15fr] lg:px-10">
+			<div>
+				<p class="section-label">{c.methodLabel}</p>
+				<h2 class="section-title">{c.methodTitle}</h2>
+				<p class="mt-5 max-w-md text-base leading-7 text-(--color-muted-strong)">{c.methodBody}</p>
+			</div>
+			<div class="process-panel">
+				{
+					method.map(([title, body], index) => (
+						<article class="process-step">
+							<span class="process-index">{String(index + 1).padStart(2, "0")}</span>
+							<div>
+								<h3 class="text-2xl font-semibold text-(--color-text)">{title}</h3>
+								<p class="mt-2 text-sm leading-6 text-(--color-muted-strong)">{body}</p>
 							</div>
-							<p class="text-(--color-muted) text-sm leading-relaxed">
-								{t(projectKey(project, "description"))}
-							</p>
+						</article>
+					))
+				}
+			</div>
+		</section>
+
+		<section class="mx-auto grid max-w-7xl gap-8 px-5 py-16 sm:px-8 lg:grid-cols-[0.75fr_1.25fr] lg:px-10">
+			<div>
+				<p class="section-label">{c.workbenchLabel}</p>
+				<h2 class="section-title">{c.workbenchTitle}</h2>
+				<p class="mt-5 max-w-md text-base leading-7 text-(--color-muted-strong)">{c.workbenchBody}</p>
+			</div>
+			<div class="grid gap-3 md:grid-cols-2">
+				{
+					workbench.map((group) => (
+						<article class="workbench-card">
+							<h3 class="text-xl font-semibold text-(--color-text)">{group.title}</h3>
+							<p class="mt-3 text-sm leading-6 text-(--color-muted-strong)">{group.body}</p>
+							<div class="mt-6 flex flex-wrap gap-2">
+								{group.links.map(([label, url]) => (
+									<a href={url} class="pill" target={url.startsWith("http") ? "_blank" : undefined} rel="noreferrer">
+										{label}
+									</a>
+								))}
+							</div>
+						</article>
+					))
+				}
+			</div>
+		</section>
+
+		<section class="mx-auto grid max-w-7xl gap-8 px-5 py-16 sm:px-8 lg:grid-cols-[0.8fr_1.2fr] lg:px-10">
+			<div>
+				<p class="section-label">{c.recentLabel}</p>
+				<h2 class="section-title">{c.recentTitle}</h2>
+				<p class="mt-5 max-w-md text-base leading-7 text-(--color-muted-strong)">{c.recentBody}</p>
+			</div>
+			<div class="grid gap-3">
+				{
+					recent.map((item) => (
+						<a href={item.url} target="_blank" rel="noreferrer" class="timeline-item">
+							<p class="font-mono text-xs tracking-[0.16em] text-(--color-accent) uppercase">{item.kicker}</p>
+							<h3 class="mt-3 text-xl font-semibold leading-snug text-(--color-text)">{item.title}</h3>
 						</a>
 					))
 				}
 			</div>
 		</section>
 
-		<section class="border-(--color-border) mb-20 border-t pt-10">
-			<h2 class="text-(--color-muted) mb-4 font-mono text-xs tracking-widest uppercase">
-				{t("section.next")}
-			</h2>
-			<ul class="text-(--color-accent) space-y-3 text-sm leading-relaxed">
-				<li>{t("next.congreso")}</li>
-				<li>{t("next.score")}</li>
-				<li>{t("next.listening")}</li>
-			</ul>
+		<section class="mx-auto grid max-w-7xl gap-8 px-5 py-16 sm:px-8 lg:grid-cols-[0.75fr_1.25fr] lg:px-10">
+			<div>
+				<p class="section-label">{c.logLabel}</p>
+				<h2 class="section-title">{c.logTitle}</h2>
+				<a href={researchHref} class="mt-6 inline-flex text-sm font-medium text-(--color-text)">{c.logCta}</a>
+			</div>
+			<div class="grid gap-3">
+				{
+					posts.map((post) => (
+						<a href={`${researchHref}/${post.data.urlSlug}`} class="log-card">
+							<div class="flex flex-wrap items-center gap-3">
+								<span class="pill">{post.data.status}</span>
+								<span class="font-mono text-xs text-(--color-muted)">
+									{fmtDate(post.data.date)} / {post.data.project}
+								</span>
+							</div>
+							<h3 class="mt-4 text-2xl font-semibold leading-tight text-(--color-text)">
+								{post.data.title}
+							</h3>
+							<p class="mt-3 text-sm leading-6 text-(--color-muted-strong)">{post.data.description}</p>
+						</a>
+					))
+				}
+			</div>
 		</section>
 
-		<footer class="border-(--color-border) text-(--color-muted) flex items-center justify-between border-t pt-8 text-sm">
+		<section class="mx-auto max-w-7xl px-5 py-16 sm:px-8 lg:px-10">
+			<div class="lab-band">
+				<div>
+					<p class="section-label">{c.nextLabel}</p>
+					<h2 class="section-title">{c.nextTitle}</h2>
+				</div>
+				<div class="grid gap-3 lg:grid-cols-3">
+					{
+						next.map((item) => (
+							<p class="rounded-2xl border border-(--color-border) bg-(--color-surface) p-5 text-sm leading-6 text-(--color-muted-strong)">
+								{item}
+							</p>
+						))
+					}
+				</div>
+			</div>
+		</section>
+
+		<footer class="mx-auto flex max-w-7xl flex-col gap-5 px-5 py-10 text-sm text-(--color-muted) sm:px-8 md:flex-row md:items-center md:justify-between lg:px-10">
 			<p>
-				{t("footer.madeBy")}{" "}
-				<a
-					href="https://shiara.design"
-					target="_blank"
-					rel="noopener noreferrer"
-					class="hover:text-(--color-text) transition-colors"
-				>Shiara Arauzo</a>
-				{t("footer.and")}
-				<a
-					href="https://railly.dev"
-					target="_blank"
-					rel="noopener noreferrer"
-					class="hover:text-(--color-text) transition-colors"
-				>Railly Hugo</a>{t("footer.madeSuffix")}
+				{c.footerMade} <a class="footer-link" href="https://shiara.design" target="_blank" rel="noreferrer">Shiara Arauzo</a> {c.footerAnd} <a class="footer-link" href="https://railly.dev" target="_blank" rel="noreferrer">Railly Hugo</a>
 			</p>
-			<div class="flex gap-4">
-				<a
-					href="https://crafterstation.com"
-					target="_blank"
-					rel="noopener noreferrer"
-					class="hover:text-(--color-text) transition-colors"
-				>
-					{t("footer.cs")}
-				</a>
-				<a
-					href="https://github.com/crafter-research"
-					target="_blank"
-					rel="noopener noreferrer"
-					class="hover:text-(--color-text) transition-colors"
-				>
-					{t("footer.github")}
-				</a>
+			<div class="flex flex-wrap gap-4">
+				<a class="footer-link" href="https://crafterstation.com" target="_blank" rel="noreferrer">{c.footerStation}</a>
+				<a class="footer-link" href="https://github.com/crafter-research" target="_blank" rel="noreferrer">GitHub</a>
+				<a class="footer-link" href={researchHref}>{c.navLog}</a>
 			</div>
 		</footer>
 	</main>

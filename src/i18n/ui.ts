@@ -35,7 +35,7 @@ export const ui = {
 		"project.lp.name": "legalize-pe",
 		"project.lp.badge": "Live",
 		"project.lp.description":
-			"Peruvian corpus for the legalize.dev federation. 21,244 legal norms in Markdown, versioned in Git — national tier from SPIJ plus 26 regional jurisdictions.",
+			"Peruvian corpus for the legalize.dev federation. 21,244 legal norms in Markdown, versioned in Git, national tier from SPIJ plus 26 regional jurisdictions.",
 		"section.tools": "Tools",
 		"project.andenar.name": "andenar",
 		"project.andenar.badge": "Live",
@@ -113,7 +113,7 @@ export const ui = {
 		"project.lp.name": "legalize-pe",
 		"project.lp.badge": "Live",
 		"project.lp.description":
-			"Corpus peruano para la federación legalize.dev. 21,244 normas legales en Markdown, versionadas en Git — tier nacional desde SPIJ más 26 jurisdicciones regionales.",
+			"Corpus peruano para la federación legalize.dev. 21,244 normas legales en Markdown, versionadas en Git, tier nacional desde SPIJ más 26 jurisdicciones regionales.",
 		"section.tools": "Herramientas",
 		"project.andenar.name": "andenar",
 		"project.andenar.badge": "Live",
@@ -191,7 +191,7 @@ export const ui = {
 		"project.lp.name": "legalize-pe",
 		"project.lp.badge": "Live",
 		"project.lp.description":
-			"Corpus peruano para a federação legalize.dev. 21.244 normas legais em Markdown, versionadas em Git — tier nacional do SPIJ mais 26 jurisdições regionais.",
+			"Corpus peruano para a federação legalize.dev. 21.244 normas legais em Markdown, versionadas em Git, tier nacional do SPIJ mais 26 jurisdições regionais.",
 		"section.tools": "Ferramentas",
 		"project.andenar.name": "andenar",
 		"project.andenar.badge": "Live",
@@ -268,7 +268,7 @@ export const ui = {
 		"project.lp.name": "legalize-pe",
 		"project.lp.badge": "上线",
 		"project.lp.description":
-			"面向 legalize.dev 联邦的秘鲁法律语料库。21,244条法律规范以Markdown存储、用Git版本化——国家级（来自SPIJ）加26个地区辖区。",
+			"面向 legalize.dev 联邦的秘鲁法律语料库。21,244条法律规范以Markdown存储、用Git版本化，国家级（来自SPIJ）加26个地区辖区。",
 		"section.tools": "工具",
 		"project.andenar.name": "andenar",
 		"project.andenar.badge": "Live",
