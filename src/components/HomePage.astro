@@ -22,7 +22,15 @@ const projectKey = (code: string, field: string) =>
 				<p class="text-(--color-muted) font-mono text-sm tracking-widest uppercase">
 					{t("site.label")}
 				</p>
-				<LanguagePicker />
+				<div class="flex items-center gap-4">
+					<a
+						href={lang === "en" ? "/research" : `/${lang}/research`}
+						class="text-(--color-muted) hover:text-(--color-text) font-mono text-sm tracking-widest uppercase transition-colors"
+					>
+						{t("nav.research")}
+					</a>
+					<LanguagePicker />
+				</div>
 			</div>
 			<h1 class="mb-6 text-4xl font-bold tracking-tight sm:text-5xl">
 				{t("hero.title")}

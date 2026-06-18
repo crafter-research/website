@@ -1,0 +1,54 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "../../layouts/Layout.astro";
+
+const posts = (await getCollection("research"))
+  .filter((p) => p.data.lang === "en")
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+const fmtDate = (d: Date) =>
+  d.toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" });
+---
+
+<Layout
+  title="Research Log — Crafter Research"
+  description="Milestones from the lab, written as we go. Hypotheses, measurements, and the conclusions that moved."
+>
+  <main class="mx-auto max-w-2xl px-6 py-24">
+    <header class="mb-20">
+      <p class="text-(--color-muted) mb-6 font-mono text-sm tracking-widest uppercase">
+        <a href="/" class="hover:text-(--color-text) transition-colors">crafter research</a> / research log
+      </p>
+      <h1 class="mb-6 text-4xl font-bold tracking-tight sm:text-5xl">Research Log</h1>
+      <p class="text-(--color-accent) text-lg leading-relaxed">
+        Milestones from the lab, written as we go. Hypotheses, measurements, and the conclusions that moved.
+      </p>
+    </header>
+
+    <section>
+      {
+        posts.map((post) => (
+          <a
+            href={`/research/${post.data.urlSlug}`}
+            class="border-(--color-border) hover:border-(--color-muted) mb-4 block rounded-lg border p-5 transition-colors"
+          >
+            <div class="mb-2 flex items-center gap-3">
+              <h2 class="font-medium">{post.data.title}</h2>
+              <span class="bg-(--color-surface) text-(--color-muted) rounded-full px-2 py-0.5 font-mono text-xs">
+                {post.data.status}
+              </span>
+            </div>
+            <p class="text-(--color-muted) mb-3 text-sm leading-relaxed">{post.data.description}</p>
+            <p class="text-(--color-muted) font-mono text-xs">
+              {fmtDate(post.data.date)} · {post.data.project}
+            </p>
+          </a>
+        ))
+      }
+    </section>
+
+    <footer class="border-(--color-border) text-(--color-muted) mt-20 border-t pt-8 text-sm">
+      <a href="/" class="hover:text-(--color-text) transition-colors">← back to lab</a>
+    </footer>
+  </main>
+</Layout>
