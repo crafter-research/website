@@ -1,6 +1,6 @@
 ---
 title: "Measuring whether our legal search actually works"
-description: "We built a hybrid-RAG assistant over 21,000 Peruvian legal norms. Then we measured it — and the conclusion moved three times as the evaluation got more rigorous."
+description: "We built a hybrid-RAG assistant over 21,000 Peruvian legal norms. Then we measured it, and the conclusion moved three times as the evaluation got more rigorous."
 date: 2026-06-18
 status: result
 urlSlug: measuring-legal-retrieval
@@ -9,7 +9,7 @@ project: legalize-pe
 tags: [retrieval, evaluation, rag, ablation, legal-nlp]
 ---
 
-Anyone can build a RAG system. Few measure whether it works. This is the log of measuring ours — and of watching the answer change as the measurement got better.
+Anyone can build a RAG system. Few measure whether it works. This is the log of measuring ours, and of watching the answer change as the measurement got better.
 
 ## The system
 
@@ -35,16 +35,16 @@ The first time we measured, we had a gold set of 19 query→norm pairs, annotate
 
 That is a great tweet. It is also, it turned out, wrong.
 
-The gold set was too small and annotated by a single judge. So we scaled it — and changed the method to defend against our own bias.
+The gold set was too small and annotated by a single judge. So we scaled it, and changed the method to defend against our own bias.
 
 ## Two annotators, blind
 
-We built a sheet of 50 query→norm candidates across six strata (colloquial, technical, multi-norm, core-vs-regulation, subnational, out-of-scope). Then **two models annotated it independently and blind** — neither saw the expected answer, nor the other's annotation:
+We built a sheet of 50 query→norm candidates across six strata (colloquial, technical, multi-norm, core-vs-regulation, subnational, out-of-scope). Then **two models annotated it independently and blind**. Neither saw the expected answer, nor the other's annotation:
 
 - Claude (Opus)
 - Codex (gpt-5.5, high reasoning)
 
-Where they agreed, the pair became gold automatically. Where they diverged, a human arbitrated by reading the norm text (not by picking a favorite). The agreement between the two annotators is itself a measurement — of how hard each stratum is.
+Where they agreed, the pair became gold automatically. Where they diverged, a human arbitrated by reading the norm text (not by picking a favorite). The agreement between the two annotators is itself a measurement of how hard each stratum is.
 
 | Stratum | Inter-annotator agreement |
 |---|---:|
@@ -76,7 +76,7 @@ Read the `rrf+expand` and `best` rows top to bottom. The story rewrote itself:
 - **N=28**: "no, the full pipeline dominates."
 - **N=35**: "the component that carries the result is the **rerank**, and `rrf+rerank` ≈ `best`."
 
-The viral finding from the first run — *your shipped pipeline isn't optimal* — was an artifact of a small, single-annotator gold set. It died on scaling. If we had published it, we would have published noise.
+The viral finding from the first run (*your shipped pipeline isn't optimal*) was an artifact of a small, single-annotator gold set. It died on scaling. If we had published it, we would have published noise.
 
 ## What survived every run
 
@@ -88,16 +88,16 @@ Two results held across N=19, 28, and 35. Those are the ones worth trusting:
 
 ## The lesson
 
-> Tune your baselines until it hurts. Ablate until you know which component carries the result — it's usually one, and it's usually not the one you'd guess.
+> Tune your baselines until it hurts. Ablate until you know which component carries the result. It's usually one, and it's usually not the one you'd guess.
 
 We ran the experiment three times. The conclusion only stopped moving when the baseline stopped being noisy. The first number felt like a result. It was a measurement of our gold set, not of our system.
 
 ## Honest limitations
 
 - **N=35 is small.** Confidence intervals are wide. These are signals, not publishable results yet.
-- **No lawyer on the team.** Norm vigency, repeal, and which norm prevails were marked `needs_lawyer` and excluded from the firm set. The arbitration of divergences was done by reading text, by non-lawyers — flagged as such.
+- **No lawyer on the team.** Norm vigency, repeal, and which norm prevails were marked `needs_lawyer` and excluded from the firm set. The arbitration of divergences was done by reading text, by non-lawyers, flagged as such.
 - **Three subnational queries were discarded** as not-annotatable (generic matter, no single correct norm). That discard is the 22% agreement made concrete.
 
 Next milestone: scale the gold past 100, get legal validation on the `needs_lawyer` set, and re-run. The corpus, the eval harness, and the gold set are all open.
 
-*— Railly Hugo, Crafter Research*
+*Railly Hugo, Crafter Research*

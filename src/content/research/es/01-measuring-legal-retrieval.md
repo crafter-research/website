@@ -100,4 +100,4 @@ Corrimos el experimento tres veces. La conclusión solo dejó de moverse cuando 
 
 Próximo milestone: escalar el gold más allá de 100, conseguir validación legal del set `needs_lawyer`, y re-correr. El corpus, el harness de evaluación y el gold set son todos abiertos.
 
-*— Railly Hugo, Crafter Research*
+*Railly Hugo, Crafter Research*
