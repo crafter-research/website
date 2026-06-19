@@ -1,5 +1,6 @@
 ---
 import "../styles/global.css";
+import ThemeSwitcher from "../components/ThemeSwitcher.astro";
 
 interface Props {
 	title: string;
@@ -8,7 +9,10 @@ interface Props {
 }
 
 const { title, description, lang = "en" } = Astro.props;
-const canonicalURL = new URL(Astro.url.pathname, "https://research.crafter.ing");
+const canonicalURL = new URL(
+	Astro.url.pathname,
+	"https://research.crafter.ing",
+);
 ---
 
 <html lang={lang}>
@@ -33,6 +37,14 @@ const canonicalURL = new URL(Astro.url.pathname, "https://research.crafter.ing")
 		<meta name="twitter:description" content={description} />
 		<meta name="twitter:image" content="https://research.crafter.ing/og.png" />
 		<meta name="generator" content={Astro.generator} />
+		<script is:inline>
+			try {
+				const theme = localStorage.getItem("cr-research-theme");
+				if (theme === "light" || theme === "dark") {
+					document.documentElement.dataset.theme = theme;
+				}
+			} catch {}
+		</script>
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 		<link
@@ -42,6 +54,7 @@ const canonicalURL = new URL(Astro.url.pathname, "https://research.crafter.ing")
 		<title>{title}</title>
 	</head>
 	<body class="bg-(--color-bg) text-(--color-text) font-sans antialiased">
+		<ThemeSwitcher />
 		<slot />
 	</body>
 </html>

@@ -1,0 +1,63 @@
+<div class="theme-switcher" aria-label="Theme mode">
+	<button type="button" data-theme-choice="system">System</button>
+	<button type="button" data-theme-choice="light">Light</button>
+	<button type="button" data-theme-choice="dark">Dark</button>
+</div>
+
+<script>
+	const key = "cr-research-theme";
+	const buttons = Array.from(document.querySelectorAll("[data-theme-choice]"));
+
+	const updateThemePictures = (mode: string) => {
+		for (const picture of document.querySelectorAll("[data-theme-picture]")) {
+			const source = picture.querySelector("source");
+			const img = picture.querySelector("img");
+			const dark = img?.getAttribute("data-dark-src");
+			const light = img?.getAttribute("data-light-src");
+
+			if (!source || !img || !dark || !light) {
+				continue;
+			}
+
+			source.srcset = dark;
+			source.media =
+				mode === "dark"
+					? "all"
+					: mode === "light"
+						? "not all"
+						: "(prefers-color-scheme: dark)";
+			img.src = mode === "dark" ? dark : light;
+		}
+	};
+
+	const applyTheme = (value: string | null) => {
+		const mode = value === "light" || value === "dark" ? value : "system";
+
+		if (mode === "system") {
+			document.documentElement.removeAttribute("data-theme");
+			localStorage.removeItem(key);
+		} else {
+			document.documentElement.dataset.theme = mode;
+			localStorage.setItem(key, mode);
+		}
+
+		for (const button of buttons) {
+			button.toggleAttribute(
+				"aria-pressed",
+				button.getAttribute("data-theme-choice") === mode,
+			);
+		}
+
+		updateThemePictures(mode);
+	};
+
+	applyTheme(localStorage.getItem(key));
+	document.addEventListener("DOMContentLoaded", () => applyTheme(localStorage.getItem(key)));
+	window.setTimeout(() => applyTheme(localStorage.getItem(key)), 0);
+
+	for (const button of buttons) {
+		button.addEventListener("click", () => {
+			applyTheme(button.getAttribute("data-theme-choice"));
+		});
+	}
+</script>

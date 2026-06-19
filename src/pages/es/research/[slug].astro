@@ -3,118 +3,66 @@ import { getCollection, render } from "astro:content";
 import Layout from "../../../layouts/Layout.astro";
 
 export async function getStaticPaths() {
-  const posts = (await getCollection("research")).filter((p) => p.data.lang === "es");
-  return posts.map((post) => ({
-    params: { slug: post.data.urlSlug },
-    props: { post },
-  }));
+	const posts = (await getCollection("research")).filter(
+		(p) => p.data.lang === "es",
+	);
+	return posts.map((post) => ({
+		params: { slug: post.data.urlSlug },
+		props: { post },
+	}));
 }
 
 const { post } = Astro.props;
 const { Content } = await render(post);
 
 const fmtDate = (d: Date) =>
-  d.toLocaleDateString("es-PE", { year: "numeric", month: "short", day: "numeric", timeZone: "UTC" });
+	d.toLocaleDateString("es-PE", {
+		year: "numeric",
+		month: "short",
+		day: "numeric",
+		timeZone: "UTC",
+	});
 
 const hasEn = (await getCollection("research")).some(
-  (p) => p.data.urlSlug === post.data.urlSlug && p.data.lang === "en",
+	(p) => p.data.urlSlug === post.data.urlSlug && p.data.lang === "en",
 );
 ---
 
 <Layout title={`${post.data.title} · Crafter Research`} description={post.data.description} lang="es">
-  <main class="mx-auto max-w-3xl px-5 py-10 sm:px-8 lg:px-10">
-    <header class="rounded-lg border border-(--color-border) bg-(--color-panel) p-6 sm:p-10">
-      <p class="text-(--color-muted) mb-6 font-mono text-sm tracking-widest uppercase">
-        <a href="/es/research" class="hover:text-(--color-text) transition-colors">registro de investigación</a>
-      </p>
-      <div class="mb-4 flex items-center gap-3">
-        <span class="pill">
-          {post.data.status}
-        </span>
-        <span class="text-(--color-muted) font-mono text-xs">
-          {fmtDate(post.data.date)} / {post.data.project}
-        </span>
-        {hasEn && (
-          <a
-            href={`/research/${post.data.urlSlug}`}
-            class="text-(--color-muted) hover:text-(--color-text) font-mono text-xs underline transition-colors"
-          >
-            english
-          </a>
-        )}
-      </div>
-      <h1 class="text-4xl font-semibold leading-[1.04] text-(--color-text) sm:text-5xl">{post.data.title}</h1>
-      <p class="mt-5 text-base leading-7 text-(--color-muted-strong)">{post.data.description}</p>
-    </header>
+	<main class="research-entry">
+		<nav class="article-nav">
+			<a href="/es">Crafter Research</a>
+			<a href="/es/research">Registro</a>
+			{hasEn && <a href={`/research/${post.data.urlSlug}`}>English</a>}
+		</nav>
 
-    <article class="research-prose mt-10 text-(--color-muted-strong) leading-relaxed">
-      <Content />
-    </article>
+		<header class="article-header">
+			<picture class="article-picture" data-theme-picture aria-hidden="true">
+				<source media="(prefers-color-scheme: dark)" srcset="/gen/research-hero-dark.png" />
+				<img
+					src="/gen/research-hero-light.png"
+					data-dark-src="/gen/research-hero-dark.png"
+					data-light-src="/gen/research-hero-light.png"
+					alt=""
+					width="1717"
+					height="916"
+				/>
+			</picture>
+			<div class="article-kicker">
+				<span class="pill">{post.data.status}</span>
+				<span>{fmtDate(post.data.date)}</span>
+				<span>{post.data.project}</span>
+			</div>
+			<h1>{post.data.title}</h1>
+			<p>{post.data.description}</p>
+		</header>
 
-    <footer class="border-(--color-border) text-(--color-muted) mt-20 border-t pt-8 text-sm">
-      <a href="/es/research" class="hover:text-(--color-text) transition-colors">Todos los hitos</a>
-    </footer>
-  </main>
+		<article class="research-prose">
+			<Content />
+		</article>
+
+		<footer class="article-footer">
+			<a href="/es/research">Todos los hitos</a>
+		</footer>
+	</main>
 </Layout>
-
-<style is:global>
-  .research-prose h2 {
-    color: var(--color-text);
-    font-size: 1.4rem;
-    font-weight: 600;
-    letter-spacing: 0;
-    margin-top: 2.5rem;
-    margin-bottom: 1rem;
-  }
-  .research-prose p { margin-bottom: 1.1rem; }
-  .research-prose a {
-    color: var(--color-text);
-    text-decoration: underline;
-    text-underline-offset: 2px;
-  }
-  .research-prose ul, .research-prose ol {
-    margin: 1rem 0 1.1rem 1.25rem;
-    list-style: disc;
-  }
-  .research-prose ol { list-style: decimal; }
-  .research-prose li { margin-bottom: 0.4rem; }
-  .research-prose strong { color: var(--color-text); font-weight: 600; }
-  .research-prose blockquote {
-    border-left: 2px solid var(--color-border);
-    padding-left: 1rem;
-    margin: 1.5rem 0;
-    color: var(--color-muted);
-    font-style: italic;
-  }
-  .research-prose code {
-    background: var(--color-surface);
-    border-radius: 4px;
-    padding: 0.1rem 0.35rem;
-    font-family: "Geist Mono", monospace;
-    font-size: 0.85em;
-    color: var(--color-text);
-  }
-  .research-prose pre {
-    background: var(--color-surface);
-    border: 1px solid var(--color-border);
-    border-radius: 8px;
-    padding: 1rem;
-    overflow-x: auto;
-    margin: 1.5rem 0;
-    font-size: 0.85rem;
-  }
-  .research-prose pre code { background: none; padding: 0; }
-  .research-prose table {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 1.5rem 0;
-    font-size: 0.875rem;
-  }
-  .research-prose th, .research-prose td {
-    border: 1px solid var(--color-border);
-    padding: 0.5rem 0.75rem;
-    text-align: left;
-  }
-  .research-prose th { color: var(--color-text); font-weight: 600; background: var(--color-surface); }
-  .research-prose em { color: var(--color-muted); }
-</style>
