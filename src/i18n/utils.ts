@@ -1,8 +1,8 @@
-import { ui, defaultLang, languages } from "./ui";
 import type { Lang, UiKey } from "./ui";
+import { defaultLang, languages, ui } from "./ui";
 
-export { languages, defaultLang };
 export type { Lang, UiKey };
+export { defaultLang, languages };
 
 export function getLangFromUrl(url: URL): Lang {
 	const [, lang] = url.pathname.split("/");
@@ -12,7 +12,11 @@ export function getLangFromUrl(url: URL): Lang {
 
 export function useTranslations(lang: Lang) {
 	return function t(key: UiKey): string {
-		return (ui[lang] as Record<string, string>)[key] ?? (ui[defaultLang] as Record<string, string>)[key] ?? key;
+		return (
+			(ui[lang] as Record<string, string>)[key] ??
+			(ui[defaultLang] as Record<string, string>)[key] ??
+			key
+		);
 	};
 }
 

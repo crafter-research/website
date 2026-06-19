@@ -18,25 +18,27 @@ const copy = {
 		label: "Crafter Research",
 		navLog: "Research log",
 		kicker: "Crafter Research / Lima, Peru",
-		heroTitle: "AI research from LATAM.",
+		heroTitle: "AI research for public systems.",
 		heroBody:
-			"We turn public systems into datasets, evals, agents, and working prototypes.",
+			"We build corpora, evals, agents, and working interfaces for the messy institutions people actually depend on.",
 		primaryCta: "Read the log",
 		secondaryCta: "GitHub",
-		instrumentLabel: "research line",
-		instrumentTitle: "question -> corpus -> eval -> system",
-		instrumentBody: "Civic tech is the testbed. AI research is the work.",
-		chainLabel: "Research loop",
-		chainTitle: "Question to system.",
-		chainBody: "Corpus, eval, agent, prototype, paper.",
+		instrumentLabel: "Field thesis",
+		instrumentTitle: "Public systems are frontier research environments.",
+		instrumentBody:
+			"LATAM gives us brittle portals, fragmented law, weak APIs, and Spanish-language gaps. We turn those constraints into inspectable AI systems.",
+		chainLabel: "Lab apparatus",
+		chainTitle: "From public friction to reusable evidence.",
+		chainBody: "Question, corpus, eval, agent, interface, research log.",
 		ledgerLabel: "Current programs",
-		ledgerTitle: "Current tracks.",
-		ledgerBody: "Legal AI, language evals, gov adapters, civic data.",
+		ledgerTitle: "Four lines of work.",
+		ledgerBody:
+			"Legal AI, language evals, gov adapters, and civic data systems.",
 		logLabel: "Lab notes",
-		logTitle: "Notes from live work.",
+		logTitle: "Research logs with receipts.",
 		logCta: "Read all notes",
 		stanceLabel: "Operating stance",
-		stanceTitle: "AI research, grounded in public systems.",
+		stanceTitle: "A small lab, built for evidence over theater.",
 		footerMade: "Made by",
 		footerAnd: "and",
 		footerStation: "Crafter Station",
@@ -47,25 +49,27 @@ const copy = {
 		label: "Crafter Research",
 		navLog: "Registro",
 		kicker: "Crafter Research / Lima, Peru",
-		heroTitle: "AI research desde LATAM.",
+		heroTitle: "AI research para sistemas publicos.",
 		heroBody:
-			"Convertimos sistemas publicos en datasets, evals, agentes y prototipos funcionando.",
+			"Construimos corpora, evals, agentes e interfaces funcionando para las instituciones desordenadas de las que la gente depende.",
 		primaryCta: "Leer registro",
 		secondaryCta: "GitHub",
-		instrumentLabel: "research line",
-		instrumentTitle: "pregunta -> corpus -> eval -> sistema",
-		instrumentBody: "Civic tech es el testbed. AI research es el trabajo.",
-		chainLabel: "Loop de research",
-		chainTitle: "Pregunta a sistema.",
-		chainBody: "Corpus, eval, agente, prototipo, paper.",
+		instrumentLabel: "Tesis de campo",
+		instrumentTitle: "Los sistemas publicos son entornos frontier de research.",
+		instrumentBody:
+			"LATAM nos da portales fragiles, ley fragmentada, APIs debiles y gaps en espanol. Convertimos esas restricciones en sistemas de AI inspeccionables.",
+		chainLabel: "Aparato del lab",
+		chainTitle: "De friccion publica a evidencia reusable.",
+		chainBody: "Pregunta, corpus, eval, agente, interfaz, research log.",
 		ledgerLabel: "Programas actuales",
-		ledgerTitle: "Tracks actuales.",
-		ledgerBody: "Legal AI, evals de lenguaje, gov adapters, data civica.",
+		ledgerTitle: "Cuatro lineas de trabajo.",
+		ledgerBody:
+			"Legal AI, evals de lenguaje, gov adapters y sistemas de data civica.",
 		logLabel: "Notas del lab",
-		logTitle: "Notas desde trabajo vivo.",
+		logTitle: "Research logs con recibos.",
 		logCta: "Leer todas las notas",
 		stanceLabel: "Postura operativa",
-		stanceTitle: "AI research anclado en sistemas publicos.",
+		stanceTitle: "Un lab pequeno, hecho para evidencia antes que teatro.",
 		footerMade: "Hecho por",
 		footerAnd: "y",
 		footerStation: "Crafter Station",
@@ -76,18 +80,59 @@ const c = copy[contentLang];
 const homeHref = contentLang === "es" ? "/es" : "/";
 const researchHref = contentLang === "es" ? "/es/research" : "/research";
 
-const heroSignalsByLang = {
+const heroPathByLang = {
 	en: [
-		["corpus", "legalize-pe", "Git-versioned legal data"],
-		["evals", "LatamBench", "Spanish model behavior"],
-		["agents", "Amicus", "Retrieval systems with citations"],
-		["adapters", "*-cli", "Government portals as tools"],
+		"public friction",
+		"corpus",
+		"eval",
+		"agent",
+		"interface",
+		"research log",
 	],
 	es: [
-		["corpus", "legalize-pe", "Data legal git-versionada"],
-		["evals", "LatamBench", "Comportamiento de modelos en espanol"],
-		["agentes", "Amicus", "Retrieval con citas"],
-		["adapters", "*-cli", "Portales de gobierno como tools"],
+		"friccion publica",
+		"corpus",
+		"eval",
+		"agente",
+		"interfaz",
+		"research log",
+	],
+} as const;
+
+const heroSignalsByLang = {
+	en: [
+		[
+			"field",
+			"Public friction",
+			"Government portals, fragmented law, and civic data become research settings.",
+		],
+		[
+			"artifact",
+			"Inspectable systems",
+			"Every claim should point to a corpus, benchmark, run, interface, or repo.",
+		],
+		[
+			"setting",
+			"LATAM Spanish",
+			"Language and institutional gaps are treated as first-class evaluation targets.",
+		],
+	],
+	es: [
+		[
+			"campo",
+			"Friccion publica",
+			"Portales de gobierno, ley fragmentada y data civica se vuelven entornos de research.",
+		],
+		[
+			"artefacto",
+			"Sistemas inspeccionables",
+			"Cada claim debe apuntar a un corpus, benchmark, run, interfaz o repo.",
+		],
+		[
+			"setting",
+			"Espanol LATAM",
+			"Los gaps de lenguaje e instituciones son targets de evaluacion de primer orden.",
+		],
 	],
 } as const;
 
@@ -205,6 +250,7 @@ const stanceByLang = {
 } as const;
 
 const heroSignals = heroSignalsByLang[contentLang];
+const heroPath = heroPathByLang[contentLang];
 const chain = chainByLang[contentLang];
 const ledger = ledgerByLang[contentLang];
 const stance = stanceByLang[contentLang];
@@ -224,25 +270,14 @@ const fmtDate = (d: Date) =>
 ---
 
 <Layout title={c.label} description={c.description} lang={contentLang}>
-	<main class="min-h-screen overflow-x-clip">
-		<header class="site-hero">
-			<picture class="hero-picture" data-theme-picture aria-hidden="true">
-				<source media="(prefers-color-scheme: dark)" srcset="/gen/research-hero-dark.png" />
-				<img
-					src="/gen/research-hero-light.png"
-					data-dark-src="/gen/research-hero-dark.png"
-					data-light-src="/gen/research-hero-light.png"
-					alt=""
-					width="1717"
-					height="916"
-				/>
-			</picture>
-			<nav class="site-nav">
-				<a href={homeHref} class="flex min-w-0 items-center gap-3 text-(--color-text)">
-					<img src="/favicon.svg" alt="" class="size-8" />
-					<span class="font-mono text-xs tracking-[0.18em] uppercase">{c.label}</span>
+	<main class="research-index">
+		<header class="index-shell">
+			<nav class="index-nav">
+				<a href={homeHref} class="index-brand">
+					<span class="brand-glyph" aria-hidden="true"></span>
+					<span>{c.label}</span>
 				</a>
-				<div class="flex max-w-full flex-wrap items-center gap-3 sm:justify-end">
+				<div class="index-links">
 					<a href={researchHref} class="nav-link">{c.navLog}</a>
 					<a href="https://github.com/crafter-research" class="nav-link" target="_blank" rel="noreferrer">
 						GitHub
@@ -251,130 +286,137 @@ const fmtDate = (d: Date) =>
 				</div>
 			</nav>
 
-			<section class="hero-content">
+			<section class="index-hero">
 				<p class="section-label">{c.kicker}</p>
 				<h1>{c.heroTitle}</h1>
 				<p>{c.heroBody}</p>
-				<div class="hero-actions">
-					<a href={researchHref} class="button-primary">{c.primaryCta}</a>
-					<a href="https://github.com/crafter-research" target="_blank" rel="noreferrer" class="button-secondary">
-						{c.secondaryCta}
-					</a>
+				<div class="index-system" aria-label="Research system">
+					{
+						heroPath.map((item) => <span>{item}</span>)
+					}
 				</div>
 			</section>
 		</header>
 
-		<section class="thesis-section">
-			<div class="section-intro">
-				<p class="section-label">{c.instrumentLabel}</p>
-				<h2 class="section-title">{c.instrumentTitle}</h2>
-				<p>{c.instrumentBody}</p>
-			</div>
-			<div class="signal-list">
-				{
-					heroSignals.map(([type, title, body]) => (
-						<article>
-							<span>{type}</span>
-							<strong>{title}</strong>
-							<p>{body}</p>
-						</article>
-					))
-				}
-			</div>
-		</section>
-
-		<section class="program-section">
-			<div class="section-intro">
-				<p class="section-label">{c.ledgerLabel}</p>
-				<h2 class="section-title">{c.ledgerTitle}</h2>
-				<p>{c.ledgerBody}</p>
-			</div>
-			<div class="program-list">
-				{
-					ledger.map(([field, instrument, question, surface], itemIndex) => (
-						<article class="program-row">
-							<span>{String(itemIndex + 1).padStart(2, "0")}</span>
-							<div class="program-name">
-								<strong>{field}</strong>
-								<em>{instrument}</em>
-							</div>
-							<p>{question}</p>
-							<small>{surface}</small>
-						</article>
-					))
-				}
-			</div>
-		</section>
-
-		<section class="method-section">
-			<div class="section-intro">
-				<p class="section-label">{c.chainLabel}</p>
-				<h2 class="section-title">{c.chainTitle}</h2>
-				<p>{c.chainBody}</p>
-			</div>
-			<div class="method-grid">
-				{
-					chain.map(([index, title, body]) => (
-						<article>
-							<span>{index}</span>
-							<strong>{title}</strong>
-							<p>{body}</p>
-						</article>
-					))
-				}
-			</div>
-		</section>
-
-		<section class="log-section">
-			<div class="section-intro">
-				<p class="section-label">{c.logLabel}</p>
-				<h2 class="section-title">{c.logTitle}</h2>
-				<a href={researchHref}>{c.logCta}</a>
-			</div>
-			<div class="notes-list">
-				{
-					posts.map((post, index) => (
-						<a href={`${researchHref}/${post.data.urlSlug}`} class={index === 0 ? "log-card is-featured" : "log-card"}>
-							<div class="log-meta">
-								<span class="pill">{post.data.status}</span>
-								<span class="font-mono text-xs text-(--color-muted)">
-									{fmtDate(post.data.date)} / {post.data.project}
-								</span>
-							</div>
-							<h3 class="mt-4 text-2xl font-semibold leading-tight text-(--color-text)">
-								{post.data.title}
-							</h3>
-							<p class="mt-3 text-sm leading-6 text-(--color-muted-strong)">{post.data.description}</p>
-						</a>
-					))
-				}
-			</div>
-		</section>
-
-		<section class="stance-section">
-			<div class="stance-inner">
-				<div>
-					<p class="section-label">{c.stanceLabel}</p>
-					<h2 class="section-title">{c.stanceTitle}</h2>
+		<section class="research-feed" aria-label="Crafter Research operating system">
+			<article class="feed-entry feed-entry-featured">
+				<div class="feed-node" aria-hidden="true"></div>
+				<div class="feed-panel">
+					<div class="feed-meta">
+						<span>{c.instrumentLabel}</span>
+					</div>
+					<h2>{c.instrumentTitle}</h2>
+					<p>{c.instrumentBody}</p>
+					<div class="signal-strip">
+						{
+							heroSignals.map(([type, title, body]) => (
+								<article>
+									<span>{type}</span>
+									<strong>{title}</strong>
+									<p>{body}</p>
+								</article>
+							))
+						}
+					</div>
 				</div>
-				<div class="stance-list">
-					{
-						stance.map(([title, body]) => (
-							<article>
-								<strong>{title}</strong>
-								<p>{body}</p>
-							</article>
-						))
-					}
+			</article>
+
+			<article class="feed-entry">
+				<div class="feed-node" aria-hidden="true"></div>
+				<div class="feed-panel">
+					<div class="feed-meta">
+						<span>{c.chainLabel}</span>
+					</div>
+					<h2>{c.chainTitle}</h2>
+					<p>{c.chainBody}</p>
+					<ol class="method-list">
+						{
+							chain.map(([_index, title, body]) => (
+								<li>
+									<strong>{title}</strong>
+									<p>{body}</p>
+								</li>
+							))
+						}
+					</ol>
 				</div>
-			</div>
+			</article>
+
+			<article class="feed-entry">
+				<div class="feed-node" aria-hidden="true"></div>
+				<div class="feed-panel">
+					<div class="feed-meta">
+						<span>{c.ledgerLabel}</span>
+					</div>
+					<h2>{c.ledgerTitle}</h2>
+					<p>{c.ledgerBody}</p>
+					<div class="program-feed">
+						{
+							ledger.map(([field, instrument, question, surface]) => (
+								<article>
+									<div>
+										<strong>{field}</strong>
+										<em>{instrument}</em>
+									</div>
+									<p>{question}</p>
+									<small>{surface}</small>
+								</article>
+							))
+						}
+					</div>
+				</div>
+			</article>
+
+			<article class="feed-entry">
+				<div class="feed-node" aria-hidden="true"></div>
+				<div class="feed-panel">
+					<div class="feed-meta">
+						<span>{c.logLabel}</span>
+						<a href={researchHref}>{c.logCta}</a>
+					</div>
+					<h2>{c.logTitle}</h2>
+					<div class="note-feed">
+						{
+							posts.map((post) => (
+								<a href={`${researchHref}/${post.data.urlSlug}`} class="note-row">
+									<div>
+										<strong>{post.data.title}</strong>
+										<span>{fmtDate(post.data.date)} / {post.data.project}</span>
+									</div>
+									<p>{post.data.description}</p>
+								</a>
+							))
+						}
+					</div>
+				</div>
+			</article>
+
+			<article class="feed-entry feed-entry-plain">
+				<div class="feed-node" aria-hidden="true"></div>
+				<div class="feed-panel">
+					<div class="feed-meta">
+						<span>{c.stanceLabel}</span>
+					</div>
+					<h2>{c.stanceTitle}</h2>
+					<div class="stance-feed">
+						{
+							stance.map(([title, body]) => (
+								<article>
+									<strong>{title}</strong>
+									<p>{body}</p>
+								</article>
+							))
+						}
+					</div>
+				</div>
+			</article>
 		</section>
 
-		<footer class="mx-auto flex max-w-7xl flex-col gap-5 px-5 py-10 text-sm text-(--color-muted) sm:px-8 md:flex-row md:items-center md:justify-between lg:px-10">
+		<footer class="index-footer">
 			<p>
 				{c.footerMade} <a class="footer-link" href="https://shiara.design" target="_blank" rel="noreferrer">Shiara Arauzo</a> {c.footerAnd} <a class="footer-link" href="https://railly.dev" target="_blank" rel="noreferrer">Railly Hugo</a>
 			</p>
-			<div class="flex flex-wrap gap-4">
+			<div>
 				<a class="footer-link" href="https://crafterstation.com" target="_blank" rel="noreferrer">{c.footerStation}</a>
 				<a class="footer-link" href="https://github.com/crafter-research" target="_blank" rel="noreferrer">GitHub</a>
 				<a class="footer-link" href={researchHref}>{c.navLog}</a>

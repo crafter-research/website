@@ -37,19 +37,8 @@ const hasEs = (await getCollection("research")).some(
 		</nav>
 
 		<header class="article-header">
-			<picture class="article-picture" data-theme-picture aria-hidden="true">
-				<source media="(prefers-color-scheme: dark)" srcset="/gen/research-hero-dark.png" />
-				<img
-					src="/gen/research-hero-light.png"
-					data-dark-src="/gen/research-hero-dark.png"
-					data-light-src="/gen/research-hero-light.png"
-					alt=""
-					width="1717"
-					height="916"
-				/>
-			</picture>
 			<div class="article-kicker">
-				<span class="pill">{post.data.status}</span>
+				<span>{post.data.status}</span>
 				<span>{fmtDate(post.data.date)}</span>
 				<span>{post.data.project}</span>
 			</div>
