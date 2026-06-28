@@ -14,62 +14,70 @@ const contentLang = lang === "es" ? "es" : "en";
 const copy = {
 	en: {
 		description:
-			"Crafter Research is an AI research lab in Lima building datasets, evaluation harnesses, agent systems, and civic-tech prototypes for LATAM.",
+			"Crafter Research is a public-interest AI research lab for Peru and LATAM, building reproducible artifacts, datasets, evals, registries, and accountability tools.",
 		label: "Crafter Research",
 		navLog: "Research log",
 		kicker: "Crafter Research / Lima, Peru",
-		heroTitle: "AI research for public systems.",
+		heroTitle: "Public-interest AI research for Peru and LATAM.",
 		heroBody:
-			"We build corpora, evals, agents, and working interfaces for the messy institutions people actually depend on.",
+			"We turn public data, legal and civic corpora, and model evaluations into reproducible artifacts, datasets, registries, and accountability tools.",
 		primaryCta: "Read the log",
 		secondaryCta: "GitHub",
-		instrumentLabel: "Field thesis",
-		instrumentTitle: "Public systems are frontier research environments.",
+		instrumentLabel: "Team overview",
+		instrumentTitle: "Research should ship artifacts people can inspect.",
 		instrumentBody:
-			"LATAM gives us brittle portals, fragmented law, weak APIs, and Spanish-language gaps. We turn those constraints into inspectable AI systems.",
-		chainLabel: "Lab apparatus",
-		chainTitle: "From public friction to reusable evidence.",
-		chainBody: "Question, corpus, eval, agent, interface, research log.",
-		ledgerLabel: "Current programs",
-		ledgerTitle: "Four lines of work.",
+			"We work on source-backed datasets, scorecards, registries, evaluation artifacts, and small tools tied to public-interest questions.",
+		chainLabel: "Operating model",
+		chainTitle: "From source material to reusable artifacts.",
+		chainBody: "Question, sources, artifact, review, documentation, release.",
+		ledgerLabel: "Work surfaces",
+		ledgerTitle: "The lab is organized around four artifact types.",
 		ledgerBody:
-			"Legal AI, language evals, gov adapters, and civic data systems.",
+			"Projects can move at different speeds, but the output should stay inspectable and reusable.",
 		logLabel: "Lab notes",
-		logTitle: "Research logs with receipts.",
+		logTitle: "Research logs with artifacts.",
 		logCta: "Read all notes",
+		emptyNoteMeta: "Reserved slot",
+		emptyNoteTitle: "Next research artifact",
+		emptyNoteBody:
+			"This space stays open until a note has source trail, method, and reusable output.",
 		stanceLabel: "Operating stance",
-		stanceTitle: "A small lab, built for evidence over theater.",
+		stanceTitle: "Small, practical, evidence-first.",
 		footerMade: "Made by",
 		footerAnd: "and",
 		footerStation: "Crafter Station",
 	},
 	es: {
 		description:
-			"Crafter Research es un AI research lab en Lima que construye datasets, evals, sistemas de agentes y prototipos civic-tech para LATAM.",
+			"Crafter Research es un AI research lab de interes publico para Peru y LATAM, enfocado en artefactos reproducibles, datasets, evals, registros y tools de accountability.",
 		label: "Crafter Research",
 		navLog: "Registro",
 		kicker: "Crafter Research / Lima, Peru",
-		heroTitle: "AI research para sistemas publicos.",
+		heroTitle: "AI research de interes publico para Peru y LATAM.",
 		heroBody:
-			"Construimos corpora, evals, agentes e interfaces funcionando para las instituciones desordenadas de las que la gente depende.",
+			"Convertimos data publica, corpora legales y civicos, y evaluaciones de modelos en artefactos reproducibles, datasets, registros y tools de accountability.",
 		primaryCta: "Leer registro",
 		secondaryCta: "GitHub",
-		instrumentLabel: "Tesis de campo",
-		instrumentTitle: "Los sistemas publicos son entornos frontier de research.",
+		instrumentLabel: "Overview del team",
+		instrumentTitle: "El research deberia producir artefactos inspeccionables.",
 		instrumentBody:
-			"LATAM nos da portales fragiles, ley fragmentada, APIs debiles y gaps en espanol. Convertimos esas restricciones en sistemas de AI inspeccionables.",
-		chainLabel: "Aparato del lab",
-		chainTitle: "De friccion publica a evidencia reusable.",
-		chainBody: "Pregunta, corpus, eval, agente, interfaz, research log.",
-		ledgerLabel: "Programas actuales",
-		ledgerTitle: "Cuatro lineas de trabajo.",
+			"Trabajamos en datasets source-backed, scorecards, registros, artefactos de evaluacion y tools pequenas atadas a preguntas de interes publico.",
+		chainLabel: "Modelo operativo",
+		chainTitle: "De fuente publica a artefactos reutilizables.",
+		chainBody: "Pregunta, fuentes, artefacto, review, documentacion, release.",
+		ledgerLabel: "Superficies de trabajo",
+		ledgerTitle: "El lab se organiza alrededor de cuatro tipos de artefacto.",
 		ledgerBody:
-			"Legal AI, evals de lenguaje, gov adapters y sistemas de data civica.",
+			"Los proyectos pueden moverse a distintos ritmos, pero el output debe seguir siendo inspeccionable y reusable.",
 		logLabel: "Notas del lab",
-		logTitle: "Research logs con recibos.",
+		logTitle: "Research logs con artefactos.",
 		logCta: "Leer todas las notas",
+		emptyNoteMeta: "Slot reservado",
+		emptyNoteTitle: "Siguiente artefacto de research",
+		emptyNoteBody:
+			"Este espacio queda abierto hasta que una nota tenga fuentes, metodo y output reutilizable.",
 		stanceLabel: "Postura operativa",
-		stanceTitle: "Un lab pequeno, hecho para evidencia antes que teatro.",
+		stanceTitle: "Pequeno, practico y evidence-first.",
 		footerMade: "Hecho por",
 		footerAnd: "y",
 		footerStation: "Crafter Station",
@@ -81,139 +89,165 @@ const homeHref = contentLang === "es" ? "/es" : "/";
 const researchHref = contentLang === "es" ? "/es/research" : "/research";
 
 const heroPathByLang = {
-	en: [
-		"public friction",
-		"corpus",
-		"eval",
-		"agent",
-		"interface",
-		"research log",
-	],
-	es: [
-		"friccion publica",
-		"corpus",
-		"eval",
-		"agente",
-		"interfaz",
-		"research log",
-	],
+	en: ["public source", "dataset", "eval", "registry", "tool", "docs"],
+	es: ["fuente publica", "dataset", "eval", "registro", "tool", "docs"],
 } as const;
 
 const heroSignalsByLang = {
 	en: [
 		[
-			"field",
-			"Public friction",
-			"Government portals, fragmented law, and civic data become research settings.",
+			"data",
+			"Public data",
+			"Messy government and civic sources become reusable, versioned, and inspectable datasets.",
 		],
 		[
-			"artifact",
-			"Inspectable systems",
-			"Every claim should point to a corpus, benchmark, run, interface, or repo.",
+			"corpora",
+			"Legal and civic corpora",
+			"Fragmented public material becomes structured source trails, corpus cards, and research inputs.",
 		],
 		[
-			"setting",
-			"LATAM Spanish",
-			"Language and institutional gaps are treated as first-class evaluation targets.",
+			"evals",
+			"Model evaluations",
+			"Evaluation work should separate correctness, abstention, hallucination, and evidence quality.",
 		],
 	],
 	es: [
 		[
-			"campo",
-			"Friccion publica",
-			"Portales de gobierno, ley fragmentada y data civica se vuelven entornos de research.",
+			"data",
+			"Data publica",
+			"Fuentes civicas y gubernamentales desordenadas se vuelven datasets reusables, versionados e inspeccionables.",
 		],
 		[
-			"artefacto",
-			"Sistemas inspeccionables",
-			"Cada claim debe apuntar a un corpus, benchmark, run, interfaz o repo.",
+			"corpora",
+			"Corpora legales y civicos",
+			"Material publico fragmentado se vuelve source trails, corpus cards e inputs de research.",
 		],
 		[
-			"setting",
-			"Espanol LATAM",
-			"Los gaps de lenguaje e instituciones son targets de evaluacion de primer orden.",
+			"evals",
+			"Evaluaciones de modelos",
+			"El trabajo de eval separa correctitud, abstencion, alucinacion y calidad de evidencia.",
 		],
 	],
 } as const;
 
 const chainByLang = {
 	en: [
-		["01", "Question", "A research question tied to a real civic system."],
-		["02", "Dataset", "Public data made reusable, versioned, and citable."],
-		["03", "Eval", "A harness that can make the idea fail in public."],
-		["04", "Agent", "Retrieval or tool-use systems built from the artifacts."],
-		["05", "Prototype", "A working surface people can inspect or reuse."],
-		["06", "Paper/log", "The argument linked back to code, data, and runs."],
+		[
+			"01",
+			"Question",
+			"A public-interest question tied to a real source, corpus, or model behavior.",
+		],
+		[
+			"02",
+			"Sources",
+			"A source trail with URLs, dates, limitations, and evidence quality notes.",
+		],
+		[
+			"03",
+			"Artifact",
+			"A dataset, eval, registry, scorecard, CLI, or accountability tool.",
+		],
+		[
+			"04",
+			"Review",
+			"Check reproducibility, source quality, and limitations before claims harden.",
+		],
+		[
+			"05",
+			"Documentation",
+			"Shareable notes that do not require private vault access to understand the work.",
+		],
+		[
+			"06",
+			"Next gate",
+			"Promote, hold, or reshape the project based on evidence rather than excitement.",
+		],
 	],
 	es: [
 		[
 			"01",
 			"Pregunta",
-			"Una pregunta de research atada a un sistema civico real.",
+			"Una pregunta de interes publico atada a una fuente, corpus o comportamiento de modelo.",
 		],
-		["02", "Dataset", "Data publica reusable, versionada y citable."],
-		["03", "Eval", "Un harness que puede hacer fallar la idea en publico."],
-		["04", "Agente", "Retrieval o tool-use construido desde los artefactos."],
+		[
+			"02",
+			"Fuentes",
+			"Un rastro de URLs, fechas, limitaciones y notas de calidad de evidencia.",
+		],
+		[
+			"03",
+			"Artefacto",
+			"Un dataset, eval, registro, scorecard, CLI o tool de accountability.",
+		],
+		[
+			"04",
+			"Review",
+			"Revisar reproducibilidad, calidad de fuente y limitaciones antes de endurecer claims.",
+		],
 		[
 			"05",
-			"Prototipo",
-			"Una superficie funcionando que otros pueden inspeccionar.",
+			"Documentacion",
+			"Notas shareables que no requieren acceso al vault privado para entender el trabajo.",
 		],
-		["06", "Paper/log", "El argumento enlazado a codigo, data y runs."],
+		[
+			"06",
+			"Siguiente gate",
+			"Promover, pausar o reformular el proyecto segun evidencia, no entusiasmo.",
+		],
 	],
 } as const;
 
 const ledgerByLang = {
 	en: [
 		[
-			"Legal AI",
-			"legalize-pe / amicus",
-			"Open legal corpora, retrieval evals, and citation-grounded assistants for Peruvian law.",
-			"Corpus, SDK, paper track",
+			"Public data",
+			"Datasets and manifests",
+			"Public sources made easier to cite, refresh, verify, and reuse.",
+			"Source trails, hashes, refresh logs",
 		],
 		[
-			"Language evals",
-			"LatamBench",
-			"Latin American Spanish evals that separate correctness, abstention, and hallucination.",
-			"Harness, judge artifacts",
+			"Legal and civic corpora",
+			"Structured source material",
+			"Fragmented law, records, and civic text turned into reusable research inputs.",
+			"Corpus cards, coverage notes",
 		],
 		[
-			"Gov adapters",
-			"sunat-cli / seace / jne",
-			"Agent-first CLIs that turn hostile public portals into reliable tools.",
-			"Adapters, audit logs",
+			"Model evaluations",
+			"Evals and scorecards",
+			"Evaluation artifacts that make model behavior and evidence quality easier to inspect.",
+			"Rubrics, runs, agreement checks",
 		],
 		[
-			"Civic data systems",
-			"peru-financia / political-graph",
-			"Public data products for finance, elections, and institutional relationships.",
-			"Maps, graphs, datasets",
+			"Accountability tools",
+			"Registries and small interfaces",
+			"Focused tools that help people inspect public systems without hiding the source trail.",
+			"Registries, CLIs, dashboards",
 		],
 	],
 	es: [
 		[
-			"Legal AI",
-			"legalize-pe / amicus",
-			"Corpora legales abiertos, evals de retrieval y asistentes con citas para ley peruana.",
-			"Corpus, SDK, papers",
+			"Data publica",
+			"Datasets y manifests",
+			"Fuentes publicas mas faciles de citar, refrescar, verificar y reutilizar.",
+			"Source trails, hashes, logs",
 		],
 		[
-			"Evals de lenguaje",
-			"LatamBench",
-			"Evals de espanol LATAM que separan correctitud, abstencion y alucinacion.",
-			"Harness, artefactos juez",
+			"Corpora legales y civicos",
+			"Material fuente estructurado",
+			"Ley, records y texto civico fragmentado convertidos en inputs reusables de research.",
+			"Corpus cards, coverage notes",
 		],
 		[
-			"Adapters de gobierno",
-			"sunat-cli / seace / jne",
-			"CLIs agent-first que convierten portales publicos hostiles en tools confiables.",
-			"Adapters, audit logs",
+			"Evaluaciones de modelos",
+			"Evals y scorecards",
+			"Artefactos de evaluacion que hacen mas inspeccionable el comportamiento de modelos y la calidad de evidencia.",
+			"Rubricas, runs, agreement checks",
 		],
 		[
-			"Sistemas de data civica",
-			"peru-financia / political-graph",
-			"Productos publicos para financiamiento, elecciones y relaciones institucionales.",
-			"Mapas, grafos, datasets",
+			"Tools de accountability",
+			"Registros e interfaces pequenas",
+			"Tools enfocadas para inspeccionar sistemas publicos sin esconder el rastro de fuentes.",
+			"Registros, CLIs, dashboards",
 		],
 	],
 } as const;
@@ -221,30 +255,30 @@ const ledgerByLang = {
 const stanceByLang = {
 	en: [
 		[
-			"AI research first",
-			"Civic tech is the field site, not the whole identity.",
+			"Artifact-first",
+			"Every serious claim should point to a dataset, eval, source card set, registry, run, or public method.",
 		],
 		[
-			"Prototype as research artifact",
-			"A working system should make the paper more inspectable, not just more marketable.",
+			"Evidence before claims",
+			"Public-facing work should be source-backed, limitation-aware, and reproducible enough to inspect.",
 		],
 		[
-			"LATAM as a hard setting",
-			"Messy public data, weak APIs, and Spanish-language gaps are research constraints worth studying.",
+			"Shareable docs",
+			"Project context should stand on its own without requiring access to private planning notes.",
 		],
 	],
 	es: [
 		[
-			"AI research primero",
-			"Civic tech es el campo de prueba, no toda la identidad.",
+			"Artifact-first",
+			"Cada claim serio debe apuntar a dataset, eval, source cards, registro, run o metodo publico.",
 		],
 		[
-			"Prototipo como artefacto de research",
-			"Un sistema funcionando debe hacer el paper mas inspeccionable, no solo mas marketeable.",
+			"Evidencia antes que claims",
+			"El trabajo publico debe tener fuentes, limitaciones explicitas y reproducibilidad suficiente para inspeccionarlo.",
 		],
 		[
-			"LATAM como setting dificil",
-			"Data publica desordenada, APIs debiles y gaps en espanol son restricciones de research reales.",
+			"Docs shareables",
+			"El contexto de cada proyecto debe entenderse sin acceso a notas privadas de planning.",
 		],
 	],
 } as const;
@@ -259,6 +293,7 @@ const posts = (await getCollection("research"))
 	.filter((post) => post.data.lang === contentLang)
 	.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
 	.slice(0, 3);
+const emptyNoteSlots = Array.from({ length: Math.max(0, 3 - posts.length) });
 
 const fmtDate = (d: Date) =>
 	d.toLocaleDateString(contentLang === "es" ? "es-PE" : "en-US", {
@@ -385,6 +420,17 @@ const fmtDate = (d: Date) =>
 									</div>
 									<p>{post.data.description}</p>
 								</a>
+							))
+						}
+						{
+							emptyNoteSlots.map((_, index) => (
+								<div class="note-row note-row-empty">
+									<div>
+										<strong>{c.emptyNoteTitle}</strong>
+										<span>{c.emptyNoteMeta} {posts.length + index + 1}</span>
+									</div>
+									<p>{c.emptyNoteBody}</p>
+								</div>
 							))
 						}
 					</div>

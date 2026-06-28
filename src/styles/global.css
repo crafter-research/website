@@ -1989,6 +1989,33 @@ body {
 	transform: translateX(0.36rem);
 }
 
+.note-row-empty {
+	border-bottom-style: dashed;
+	opacity: 0.72;
+}
+
+.note-row-empty strong,
+.note-row-empty p {
+	color: var(--color-muted);
+}
+
+.note-row-empty span {
+	color: color-mix(in srgb, var(--color-accent) 68%, var(--color-muted));
+}
+
+.note-row-empty::before {
+	background:
+		linear-gradient(
+			90deg,
+			transparent,
+			color-mix(in srgb, var(--color-accent) 5%, transparent),
+			transparent
+		),
+		color-mix(in srgb, var(--color-accent) 2%, transparent);
+	opacity: 1;
+	transform: scaleY(1);
+}
+
 .note-feed:has(.note-row:is(:hover, :focus-visible))
 	.note-row:not(:hover, :focus-visible),
 .research-log-feed:has(.note-row:is(:hover, :focus-visible))
