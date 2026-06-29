@@ -10,7 +10,6 @@ import {
 } from "../i18n/home";
 import type { Lang } from "../i18n/ui";
 import Layout from "../layouts/Layout.astro";
-import LanguagePicker from "./LanguagePicker.astro";
 
 interface Props {
 	lang: Lang;
@@ -47,51 +46,34 @@ const fmtDate = (d: Date) =>
 <Layout title={copy.label} description={copy.description} lang={contentLang}>
 	<main class="research-index">
 		<header class="index-shell">
-			<nav class="index-nav">
-				<a href={homeHref} class="index-brand">
-					<span class="brand-glyph" aria-hidden="true"></span>
-					<span>{copy.label}</span>
-				</a>
-				<div class="index-links">
-					<a href={researchHref} class="nav-link">{copy.navLog}</a>
-					<a href="https://github.com/crafter-research" class="nav-link" target="_blank" rel="noreferrer">
-						GitHub
-					</a>
-					<LanguagePicker />
-				</div>
-			</nav>
-
 			<section class="index-hero">
 				<p class="section-label">{copy.kicker}</p>
 				<h1>{copy.heroTitle}</h1>
 				<p>{copy.heroBody}</p>
 				<div class="index-system" aria-label="Research system">
-					{
-						heroPath.map((item) => <span>{item}</span>)
-					}
+					{heroPath.map((item) => <span>{item}</span>)}
 				</div>
 			</section>
 		</header>
 
-		<section class="research-feed" aria-label="Crafter Research operating system">
+		<section
+			class="research-feed"
+			aria-label="Crafter Research operating system"
+		>
 			<article class="feed-entry feed-entry-featured">
 				<div class="feed-node" aria-hidden="true"></div>
 				<div class="feed-panel">
-					<div class="feed-meta">
-						<span>{copy.instrumentLabel}</span>
-					</div>
+					<div class="feed-meta"><span>{copy.instrumentLabel}</span></div>
 					<h2>{copy.instrumentTitle}</h2>
 					<p>{copy.instrumentBody}</p>
 					<div class="signal-strip">
-						{
-							heroSignals.map(([type, title, body]) => (
+						{heroSignals.map(([type, title, body]) => (
 								<article>
 									<span>{type}</span>
 									<strong>{title}</strong>
 									<p>{body}</p>
 								</article>
-							))
-						}
+							))}
 					</div>
 				</div>
 			</article>
@@ -99,20 +81,16 @@ const fmtDate = (d: Date) =>
 			<article class="feed-entry">
 				<div class="feed-node" aria-hidden="true"></div>
 				<div class="feed-panel">
-					<div class="feed-meta">
-						<span>{copy.chainLabel}</span>
-					</div>
+					<div class="feed-meta"><span>{copy.chainLabel}</span></div>
 					<h2>{copy.chainTitle}</h2>
 					<p>{copy.chainBody}</p>
 					<ol class="method-list">
-						{
-							chain.map(([_index, title, body]) => (
+						{chain.map(([_index, title, body]) => (
 								<li>
 									<strong>{title}</strong>
 									<p>{body}</p>
 								</li>
-							))
-						}
+							))}
 					</ol>
 				</div>
 			</article>
@@ -120,14 +98,11 @@ const fmtDate = (d: Date) =>
 			<article class="feed-entry">
 				<div class="feed-node" aria-hidden="true"></div>
 				<div class="feed-panel">
-					<div class="feed-meta">
-						<span>{copy.ledgerLabel}</span>
-					</div>
+					<div class="feed-meta"><span>{copy.ledgerLabel}</span></div>
 					<h2>{copy.ledgerTitle}</h2>
 					<p>{copy.ledgerBody}</p>
 					<div class="program-feed">
-						{
-							ledger.map(([field, instrument, question, surface]) => (
+						{ledger.map(([field, instrument, question, surface]) => (
 								<article>
 									<div>
 										<strong>{field}</strong>
@@ -136,8 +111,7 @@ const fmtDate = (d: Date) =>
 									<p>{question}</p>
 									<small>{surface}</small>
 								</article>
-							))
-						}
+							))}
 					</div>
 				</div>
 			</article>
@@ -151,8 +125,7 @@ const fmtDate = (d: Date) =>
 					</div>
 					<h2>{copy.logTitle}</h2>
 					<div class="note-feed">
-						{
-							posts.map((post) => (
+						{posts.map((post) => (
 								<a href={`${researchHref}/${post.data.urlSlug}`} class="note-row">
 									<div>
 										<strong>{post.data.title}</strong>
@@ -160,10 +133,8 @@ const fmtDate = (d: Date) =>
 									</div>
 									<p>{post.data.description}</p>
 								</a>
-							))
-						}
-						{
-							emptyNoteSlots.map((_, index) => (
+							))}
+						{emptyNoteSlots.map((_, index) => (
 								<div class="note-row note-row-empty">
 									<div>
 										<strong>{copy.emptyNoteTitle}</strong>
@@ -171,8 +142,7 @@ const fmtDate = (d: Date) =>
 									</div>
 									<p>{copy.emptyNoteBody}</p>
 								</div>
-							))
-						}
+							))}
 					</div>
 				</div>
 			</article>
@@ -180,33 +150,18 @@ const fmtDate = (d: Date) =>
 			<article class="feed-entry feed-entry-plain">
 				<div class="feed-node" aria-hidden="true"></div>
 				<div class="feed-panel">
-					<div class="feed-meta">
-						<span>{copy.stanceLabel}</span>
-					</div>
+					<div class="feed-meta"><span>{copy.stanceLabel}</span></div>
 					<h2>{copy.stanceTitle}</h2>
 					<div class="stance-feed">
-						{
-							stance.map(([title, body]) => (
+						{stance.map(([title, body]) => (
 								<article>
 									<strong>{title}</strong>
 									<p>{body}</p>
 								</article>
-							))
-						}
+							))}
 					</div>
 				</div>
 			</article>
 		</section>
-
-		<footer class="index-footer">
-			<p>
-				{copy.footerMade} <a class="footer-link" href="https://shiara.design" target="_blank" rel="noreferrer">Shiara Arauzo</a> {copy.footerAnd} <a class="footer-link" href="https://railly.dev" target="_blank" rel="noreferrer">Railly Hugo</a>
-			</p>
-			<div>
-				<a class="footer-link" href="https://crafterstation.com" target="_blank" rel="noreferrer">{copy.footerStation}</a>
-				<a class="footer-link" href="https://github.com/crafter-research" target="_blank" rel="noreferrer">GitHub</a>
-				<a class="footer-link" href={researchHref}>{copy.navLog}</a>
-			</div>
-		</footer>
 	</main>
 </Layout>

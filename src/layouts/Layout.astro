@@ -1,11 +1,14 @@
 ---
 import "../styles/global.css";
-import ThemeSwitcher from "../components/ThemeSwitcher.astro";
+import EdgePatterns from "../components/EdgePatterns.astro";
+import SiteFooter from "../components/SiteFooter.astro";
+import SiteHeader from "../components/SiteHeader.astro";
+import type { Lang } from "../i18n/ui";
 
 interface Props {
 	title: string;
 	description: string;
-	lang?: string;
+	lang?: Lang;
 }
 
 const { title, description, lang = "en" } = Astro.props;
@@ -54,7 +57,9 @@ const canonicalURL = new URL(
 		<title>{title}</title>
 	</head>
 	<body class="bg-(--color-bg) text-(--color-text) font-sans antialiased">
-		<ThemeSwitcher />
+		<EdgePatterns />
+		<SiteHeader lang={lang} />
 		<slot />
+		<SiteFooter lang={lang} />
 	</body>
 </html>

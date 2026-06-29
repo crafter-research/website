@@ -1,0 +1,63 @@
+---
+import type { Lang } from "../i18n/ui";
+import { useTranslatedPath, useTranslations } from "../i18n/utils";
+import SiteLogo from "./SiteLogo.astro";
+
+interface Props {
+	lang?: Lang;
+}
+
+const { lang = "en" } = Astro.props;
+const t = useTranslations(lang);
+const tp = useTranslatedPath(lang);
+const year = 2026;
+---
+
+<footer class="site-footer">
+	<div class="site-footer-inner">
+		<div class="site-footer-brand">
+			<SiteLogo lang={lang} />
+			<p class="site-footer-tagline">{t("footer.tagline")}</p>
+		</div>
+
+		<nav class="site-footer-cols" aria-label="Footer">
+			<div class="site-footer-col">
+				<p class="site-footer-heading">{t("footer.explore")}</p>
+				<a href={tp("/research")}>{t("research.title")}</a>
+				<a href={tp("/blog")}>{t("blog.title")}</a>
+				<a href={tp("/")}>{t("footer.home")}</a>
+			</div>
+
+			<div class="site-footer-col">
+				<p class="site-footer-heading">{t("footer.ecosystem")}</p>
+				<a href="https://crafterstation.com" target="_blank" rel="noreferrer">
+					Crafter Station
+				</a>
+				<a href="https://hack0.dev" target="_blank" rel="noreferrer">hack0</a>
+				<a href="https://research.crafter.ing" target="_blank" rel="noreferrer">
+					research.crafter.ing
+				</a>
+			</div>
+
+			<div class="site-footer-col">
+				<p class="site-footer-heading">{t("footer.connect")}</p>
+				<a
+					href="https://github.com/crafter-research"
+					target="_blank"
+					rel="noreferrer">GitHub</a
+				>
+				<a href="https://railly.dev" target="_blank" rel="noreferrer">
+					Railly Hugo
+				</a>
+				<a href="https://shiara.design" target="_blank" rel="noreferrer">
+					Shiara Arauzo
+				</a>
+			</div>
+		</nav>
+	</div>
+
+	<div class="site-footer-base">
+		<span>© {year} Crafter Research</span>
+		<span class="site-footer-rights">{t("footer.rights")}</span>
+	</div>
+</footer>

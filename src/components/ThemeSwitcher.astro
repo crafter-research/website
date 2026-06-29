@@ -1,14 +1,49 @@
-<div class="theme-switcher" aria-label="Theme mode">
-	<button type="button" data-theme-choice="system">System</button>
-	<button type="button" data-theme-choice="light">Light</button>
-	<button type="button" data-theme-choice="dark">Dark</button>
-</div>
+<button
+	type="button"
+	class="theme-toggle"
+	data-theme-toggle
+	aria-label="Theme: system"
+	title="Theme: system"
+>
+	<span class="theme-toggle-icon" data-theme-icon="system" aria-hidden="true">
+		<svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+			<rect x="3" y="4" width="18" height="12" rx="2" stroke="currentColor" stroke-width="1.5"></rect>
+			<path d="M8 20h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
+		</svg>
+	</span>
+	<span class="theme-toggle-icon hidden" data-theme-icon="light" aria-hidden="true">
+		<svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+			<circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.5"></circle>
+			<path
+				d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"
+				stroke="currentColor"
+				stroke-width="1.5"
+				stroke-linecap="round"></path>
+		</svg>
+	</span>
+	<span class="theme-toggle-icon hidden" data-theme-icon="dark" aria-hidden="true">
+		<svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+			<path
+				d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z"
+				stroke="currentColor"
+				stroke-width="1.5"
+				stroke-linecap="round"
+				stroke-linejoin="round"></path>
+		</svg>
+	</span>
+</button>
 
 <script>
 	const key = "cr-research-theme";
-	const buttons = Array.from(document.querySelectorAll("[data-theme-choice]"));
+	const modes = ["system", "light", "dark"] as const;
+	type ThemeMode = (typeof modes)[number];
 
-	const updateThemePictures = (mode: string) => {
+	const toggle = document.querySelector<HTMLButtonElement>("[data-theme-toggle]");
+	const icons = Array.from(
+		document.querySelectorAll<HTMLElement>("[data-theme-icon]"),
+	);
+
+	const updateThemePictures = (mode: ThemeMode) => {
 		for (const picture of document.querySelectorAll("[data-theme-picture]")) {
 			const source = picture.querySelector("source");
 			const img = picture.querySelector("img");
@@ -30,8 +65,26 @@
 		}
 	};
 
+	const normalizeMode = (value: string | null): ThemeMode => {
+		if (value === "light" || value === "dark") return value;
+		return "system";
+	};
+
+	const updateToggleUi = (mode: ThemeMode) => {
+		if (!toggle) return;
+
+		const label = `Theme: ${mode}`;
+		toggle.setAttribute("aria-label", label);
+		toggle.title = label;
+		toggle.dataset.themeMode = mode;
+
+		for (const icon of icons) {
+			icon.classList.toggle("hidden", icon.dataset.themeIcon !== mode);
+		}
+	};
+
 	const applyTheme = (value: string | null) => {
-		const mode = value === "light" || value === "dark" ? value : "system";
+		const mode = normalizeMode(value);
 
 		if (mode === "system") {
 			document.documentElement.removeAttribute("data-theme");
@@ -41,23 +94,21 @@
 			localStorage.setItem(key, mode);
 		}
 
-		for (const button of buttons) {
-			button.toggleAttribute(
-				"aria-pressed",
-				button.getAttribute("data-theme-choice") === mode,
-			);
-		}
-
+		updateToggleUi(mode);
 		updateThemePictures(mode);
+	};
+
+	const nextMode = (mode: ThemeMode): ThemeMode => {
+		const index = modes.indexOf(mode);
+		return modes[(index + 1) % modes.length] ?? "system";
 	};
 
 	applyTheme(localStorage.getItem(key));
 	document.addEventListener("DOMContentLoaded", () => applyTheme(localStorage.getItem(key)));
 	window.setTimeout(() => applyTheme(localStorage.getItem(key)), 0);
 
-	for (const button of buttons) {
-		button.addEventListener("click", () => {
-			applyTheme(button.getAttribute("data-theme-choice"));
-		});
-	}
+	toggle?.addEventListener("click", () => {
+		const current = normalizeMode(toggle.dataset.themeMode ?? localStorage.getItem(key));
+		applyTheme(nextMode(current));
+	});
 </script>

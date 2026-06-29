@@ -1,0 +1,16 @@
+---
+import type { Lang } from "../i18n/ui";
+import { useTranslatedPath, useTranslations } from "../i18n/utils";
+
+interface Props {
+	lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const tp = useTranslatedPath(lang);
+---
+
+<a href={tp("/")} class="site-header-brand" aria-label={t("site.title")}>
+	<span class="brand-glyph" aria-hidden="true"></span>
+</a>

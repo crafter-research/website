@@ -1,0 +1,75 @@
+---
+// Subtle Greek-key (meander) pattern running down both side margins.
+// SVG tile repeats vertically; color follows --color-border (theme-aware),
+// dithered with a faint grain overlay so it reads as printed texture, not a hard line.
+---
+
+<div class="edge-patterns" aria-hidden="true">
+	<div class="edge-pattern edge-pattern-left"></div>
+	<div class="edge-pattern edge-pattern-right"></div>
+</div>
+
+<style>
+	.edge-patterns {
+		pointer-events: none;
+		position: absolute;
+		inset: 0;
+		z-index: 0;
+	}
+
+	.edge-pattern {
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		width: 11vw;
+		--meander: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Cpath fill='none' stroke='%23000' stroke-width='2' d='M2 2h28v28H8v-8h14V8H8v6h8v8H2z'/%3E%3C/svg%3E");
+		/* Top fade only: clears the header and eases in below it. The bottom
+		   stays solid so the greca meets the end of the content as a hard stop,
+		   signalling there's nothing more to scroll. */
+		--fade: linear-gradient(
+			to bottom,
+			transparent 0,
+			transparent calc(var(--header-height) + 1.5rem),
+			#000 calc(var(--header-height) + 7rem),
+			#000 100%
+		);
+		/* Greek-key (meander) spiral tile, painted via mask so the fill comes
+		   from --color-border and stays theme-aware in light + dark. */
+		background-color: var(--color-border);
+		-webkit-mask:
+			var(--meander) repeat-y center top / 28px 28px,
+			var(--fade);
+		-webkit-mask-composite: source-in;
+		mask:
+			var(--meander) repeat-y center top / 28px 28px,
+			var(--fade);
+		mask-composite: intersect;
+		opacity: 0.45;
+	}
+
+	.edge-pattern-left {
+		left: 0;
+	}
+
+	.edge-pattern-right {
+		right: 0;
+		transform: scaleX(-1);
+	}
+
+	/* Faint dither grain overlaid on the meander so edges feel printed. */
+	.edge-pattern::after {
+		content: "";
+		position: absolute;
+		inset: 0;
+		background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4'%3E%3Crect width='1' height='1' x='0' y='0' fill='%23000'/%3E%3Crect width='1' height='1' x='2' y='2' fill='%23000'/%3E%3C/svg%3E");
+		background-size: 3px 3px;
+		opacity: 0.4;
+		mix-blend-mode: overlay;
+	}
+
+	@media (max-width: 720px) {
+		.edge-patterns {
+			display: none;
+		}
+	}
+</style>
