@@ -1,5 +1,7 @@
-import { defineCollection, z } from "astro:content";
+import { defineCollection } from "astro:content";
 import { glob } from "astro/loaders";
+import { z } from "astro/zod";
+import { authorId } from "./lib/authors";
 
 const langEnum = z.enum(["en", "es", "pt", "zh"]);
 
@@ -8,6 +10,7 @@ const research = defineCollection({
 	schema: z.object({
 		title: z.string(),
 		description: z.string(),
+		abstract: z.string().optional(),
 		date: z.coerce.date(),
 		status: z
 			.enum(["wip", "milestone", "result", "retired"])
@@ -15,6 +18,7 @@ const research = defineCollection({
 		urlSlug: z.string(),
 		lang: langEnum,
 		project: z.string().default("legalize-pe"),
+		author: authorId.default("railly"),
 		tags: z.array(z.string()).default([]),
 		supersedes: z.string().optional(),
 	}),
@@ -25,10 +29,11 @@ const blog = defineCollection({
 	schema: z.object({
 		title: z.string(),
 		description: z.string(),
+		abstract: z.string().optional(),
 		date: z.coerce.date(),
 		urlSlug: z.string(),
 		lang: langEnum,
-		author: z.string().default("Crafter Research"),
+		author: authorId.default("railly"),
 		tags: z.array(z.string()).default([]),
 	}),
 });
