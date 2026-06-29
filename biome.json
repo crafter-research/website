@@ -21,6 +21,12 @@
 			"recommended": true
 		}
 	},
+	"html": {
+		"experimentalFullSupportEnabled": true,
+		"formatter": {
+			"enabled": true
+		}
+	},
 	"css": {
 		"parser": {
 			"tailwindDirectives": true

@@ -24,3 +24,11 @@ pnpm-debug.log*
 .idea/
 .vercel
 .vercel
+
+# stray agent-browser / experiment screenshots
+.agent-browser-*.png
+.arshad-*.png
+.ours-*.png
+
+# npm lockfile (this is a Bun repo)
+package-lock.json
