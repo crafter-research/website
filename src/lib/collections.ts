@@ -19,6 +19,15 @@ export function fmtDate(d: Date, lang: Lang): string {
 	});
 }
 
+export function fmtArticleDate(d: Date, lang: Lang): string {
+	return d.toLocaleDateString(localeTag[lang] ?? "en-US", {
+		year: "numeric",
+		month: "long",
+		day: "numeric",
+		timeZone: "UTC",
+	});
+}
+
 type AnyEntry = CollectionEntry<"research"> | CollectionEntry<"blog">;
 
 export interface ResolvedEntry<T extends AnyEntry = AnyEntry> {
@@ -83,4 +92,30 @@ export async function getSlugs(type: ContentType): Promise<string[]> {
 			slugs.add(entry.data.urlSlug);
 	}
 	return [...slugs];
+}
+
+export interface NeighborLink {
+	urlSlug: string;
+	title: string;
+}
+
+/** Prev (newer) and next (older) entries around a given slug, by date. */
+export async function getEntryNeighbors<T extends ContentType>(
+	type: T,
+	lang: Lang,
+	urlSlug: string,
+): Promise<{ prev: NeighborLink | null; next: NeighborLink | null }> {
+	const resolved = await getEntriesWithFallback(type, lang);
+	const index = resolved.findIndex((r) => r.entry.data.urlSlug === urlSlug);
+	if (index === -1) return { prev: null, next: null };
+
+	const toLink = (r: ResolvedEntry<CollectionEntry<T>>): NeighborLink => ({
+		urlSlug: r.entry.data.urlSlug,
+		title: r.entry.data.title,
+	});
+
+	return {
+		prev: index > 0 ? toLink(resolved[index - 1]) : null,
+		next: index < resolved.length - 1 ? toLink(resolved[index + 1]) : null,
+	};
 }

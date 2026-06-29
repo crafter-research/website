@@ -20,10 +20,6 @@ const untranslatedLabel = t("content.untranslated");
 ---
 
 <main class="research-log-index">
-	<nav class="article-nav">
-		<a href={tp("/")}>Crafter Research</a>
-	</nav>
-
 	<header class="research-log-header">
 		<p class="section-label">{t(`${type}.label`)}</p>
 		<h1>{t(`${type}.title`)}</h1>
@@ -31,8 +27,7 @@ const untranslatedLabel = t("content.untranslated");
 	</header>
 
 	<section class="research-log-feed" aria-label={t(`${type}.title`)}>
-		{
-			entries.map(({ entry, untranslated }) => {
+		{entries.map(({ entry, untranslated }) => {
 				const d = entry.data;
 				const meta =
 					type === "research" && "status" in d
@@ -52,8 +47,7 @@ const untranslatedLabel = t("content.untranslated");
 						<p>{d.description}</p>
 					</a>
 				);
-			})
-		}
+			})}
 	</section>
 
 	<footer class="article-footer">

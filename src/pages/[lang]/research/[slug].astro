@@ -2,7 +2,11 @@
 import PostArticle from "../../../components/PostArticle.astro";
 import type { Lang } from "../../../i18n/ui";
 import Layout from "../../../layouts/Layout.astro";
-import { getEntryWithFallback, getSlugs } from "../../../lib/collections";
+import {
+	getEntryNeighbors,
+	getEntryWithFallback,
+	getSlugs,
+} from "../../../lib/collections";
 
 export async function getStaticPaths() {
 	const langs = ["es", "pt", "zh"] as Lang[];
@@ -16,6 +20,7 @@ const lang = Astro.params.lang as Lang;
 const { slug } = Astro.params;
 const resolved = await getEntryWithFallback("research", lang, slug!);
 if (!resolved) return Astro.redirect(`/${lang}/research`);
+const { prev, next } = await getEntryNeighbors("research", lang, slug!);
 ---
 
 <Layout
@@ -23,5 +28,5 @@ if (!resolved) return Astro.redirect(`/${lang}/research`);
 	description={resolved.entry.data.description}
 	lang={lang}
 >
-	<PostArticle type="research" lang={lang} resolved={resolved} />
+	<PostArticle type="research" lang={lang} resolved={resolved} prev={prev} next={next} />
 </Layout>

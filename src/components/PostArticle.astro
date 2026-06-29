@@ -3,9 +3,11 @@ import type { CollectionEntry } from "astro:content";
 import { render } from "astro:content";
 import type { Lang } from "../i18n/ui";
 import { useTranslatedPath, useTranslations } from "../i18n/utils";
+import { getAuthor } from "../lib/authors";
 import {
 	type ContentType,
-	fmtDate,
+	fmtArticleDate,
+	type NeighborLink,
 	type ResolvedEntry,
 } from "../lib/collections";
 
@@ -13,40 +15,95 @@ interface Props {
 	type: ContentType;
 	lang: Lang;
 	resolved: ResolvedEntry;
+	prev?: NeighborLink | null;
+	next?: NeighborLink | null;
 }
 
-const { type, lang, resolved } = Astro.props;
+const { type, lang, resolved, prev = null, next = null } = Astro.props;
 const { entry, untranslated } = resolved;
 const d = entry.data;
+const author = getAuthor(d.author);
 const t = useTranslations(lang);
 const tp = useTranslatedPath(lang);
 const { Content } = await render(entry as CollectionEntry<ContentType>);
 
-const showStatus = type === "research" && "status" in d;
+const showProject = type === "research" && "project" in d;
+const tags = "tags" in d ? d.tags : [];
+const abstractText = ("abstract" in d && d.abstract) || d.description;
+const abstractParagraphs = abstractText.split(/\n\s*\n/).map((p) => p.trim()).filter(Boolean);
 ---
 
-<main class="research-entry">
-	<nav class="article-nav">
-		<a href={tp("/")}>Crafter Research</a>
-		<a href={tp(`/${type}`)}>{t(`${type}.title`)}</a>
-	</nav>
-
+<main class="research-entry mx-auto w-full max-w-2xl px-(--layout-padding) pt-12 pb-12 sm:pt-20">
 	<header class="article-header">
-		<div class="article-kicker">
-			{showStatus && <span>{d.status}</span>}
-			<span>{fmtDate(d.date, lang)}</span>
-			{showStatus ? <span>{d.project}</span> : <span>{d.author}</span>}
+		<h1>{d.title}</h1>
+		<p class="article-date">{fmtArticleDate(d.date, lang)}</p>
+		<div class="article-byline">
+			{showProject && <span>{d.project}</span>}
+			{showProject && <span class="article-dot" aria-hidden="true">·</span>}
+			<a class="article-author" href={author.github} target="_blank" rel="noreferrer">
+				<img src={author.avatar} alt="" width="18" height="18" loading="lazy" />
+				<span>{author.name}</span>
+			</a>
 			{untranslated && <em class="untranslated-badge">{t("content.untranslated")}</em>}
 		</div>
-		<h1>{d.title}</h1>
-		<p>{d.description}</p>
 	</header>
 
-	<article class="research-prose">
-		<Content />
-	</article>
+	<div class="writing-content flex flex-col gap-6">
+		<section class="article-abstract flex flex-col gap-4" aria-labelledby="article-abstract-heading">
+			<h2 id="article-abstract-heading" class="text-lg font-medium tracking-tight">
+				{t("content.abstract")}
+			</h2>
+			<div class="article-abstract-body">
+				{abstractParagraphs.map((paragraph) => (
+					<p>{paragraph}</p>
+				))}
+			</div>
+		</section>
 
-	<footer class="article-footer">
-		<a href={tp(`/${type}`)}>{t(`${type}.all`)}</a>
+		<article class="research-prose flex flex-col gap-6">
+			<Content />
+		</article>
+	</div>
+
+	<footer class="article-end">
+		<dl class="article-meta">
+			{showProject && (
+				<div>
+					<dt>{t("article.project")}</dt>
+					<dd>{d.project}</dd>
+				</div>
+			)}
+			<div>
+				<dt>{t("article.published")}</dt>
+				<dd>{fmtArticleDate(d.date, lang)}</dd>
+			</div>
+			{tags.length > 0 && (
+				<div class="article-meta-tags">
+					<dt>{t("article.tags")}</dt>
+					<dd>
+						{tags.map((tag) => <span class="article-tag">{tag}</span>)}
+					</dd>
+				</div>
+			)}
+		</dl>
+
+		{(prev || next) && (
+			<nav class="article-pager" aria-label="More posts">
+				{prev ? (
+					<a href={tp(`/${type}/${prev.urlSlug}`)} class="article-pager-link is-prev">
+						<span class="article-pager-dir">← {t("article.prev")}</span>
+						<span class="article-pager-title">{prev.title}</span>
+					</a>
+				) : <span />}
+				{next ? (
+					<a href={tp(`/${type}/${next.urlSlug}`)} class="article-pager-link is-next">
+						<span class="article-pager-dir">{t("article.next")} →</span>
+						<span class="article-pager-title">{next.title}</span>
+					</a>
+				) : <span />}
+			</nav>
+		)}
+
+		<a href={tp(`/${type}`)} class="article-back">← {t("article.backToLog")}</a>
 	</footer>
 </main>
