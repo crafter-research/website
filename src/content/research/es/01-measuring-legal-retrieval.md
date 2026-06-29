@@ -1,15 +1,18 @@
 ---
 title: "Medir si nuestra búsqueda legal de verdad funciona"
 description: "Construimos un asistente hybrid-RAG sobre 21,000 normas peruanas. Después lo medimos, y la conclusión se movió tres veces a medida que la evaluación se volvía más rigurosa."
+abstract: |
+  Construimos un asistente hybrid-RAG sobre 21,000 normas peruanas. Después lo medimos, y la conclusión se movió tres veces a medida que la evaluación se volvía más rigurosa.
+
+  Cualquiera arma un RAG. Pocos miden si funciona. Este es el registro de medir el nuestro, y de ver cómo la respuesta cambiaba a medida que la medición mejoraba.
 date: 2026-06-18
 status: result
 urlSlug: measuring-legal-retrieval
 lang: es
 project: legalize-pe
+author: railly
 tags: [retrieval, evaluacion, rag, ablation, legal-nlp]
 ---
-
-Cualquiera arma un RAG. Pocos miden si funciona. Este es el registro de medir el nuestro, y de ver cómo la respuesta cambiaba a medida que la medición mejoraba.
 
 ## El sistema
 
@@ -61,7 +64,7 @@ Ese 22% es un hallazgo, no un fallo. Dos anotadores competentes, leyendo el mism
 
 Acá está la parte honesta. Corrimos la misma ablation tres veces, sobre gold sets cada vez mejores:
 
-| Config (MRR) | N=19, 1 juez | N=28, 2 jueces | N=35, +subnacional |
+| Config (MRR) | $N=19$, 1 juez | $N=28$, 2 jueces | $N=35$, +subnacional |
 |---|---:|---:|---:|
 | fts (solo palabras) | 0.092 | 0.090 | 0.089 |
 | vec (solo embeddings) | 0.495 | 0.538 | 0.511 |
@@ -72,15 +75,15 @@ Acá está la parte honesta. Corrimos la misma ablation tres veces, sobre gold s
 
 Lee las filas `rrf+expand` y `best` de arriba a abajo. La historia se reescribió sola:
 
-- **N=19**: "expand es lo que importa; el pipeline en producción no es óptimo".
-- **N=28**: "no, el pipeline completo domina".
-- **N=35**: "la pieza que carga el resultado es el **rerank**, y `rrf+rerank` ≈ `best`".
+- **$N=19$**: "expand es lo que importa; el pipeline en producción no es óptimo".
+- **$N=28$**: "no, el pipeline completo domina".
+- **$N=35$**: "la pieza que carga el resultado es el **rerank**, y `rrf+rerank` ≈ `best`".
 
 El hallazgo viral de la primera corrida (*tu pipeline en producción no es óptimo*) era un artefacto de un gold chico, de un solo anotador. Murió al escalar. Si lo hubiéramos publicado, habríamos publicado ruido.
 
 ## Lo que sobrevivió cada corrida
 
-Dos resultados aguantaron N=19, 28 y 35. Esos son los confiables:
+Dos resultados aguantaron $N=19$, $N=28$ y $N=35$. Esos son los confiables:
 
 1. **FTS solo es casi inútil con lenguaje natural** (MRR ~0.09). Una consulta en forma de pregunta completa obliga a que todas las palabras clave aparezcan a la vez; el recall colapsa. FTS solo gana su lugar en consultas fuera de alcance, donde correctamente se abstiene el 60% de las veces mientras toda otra config devuelve algo.
 
