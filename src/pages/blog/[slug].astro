@@ -4,14 +4,14 @@ import Layout from "../../layouts/Layout.astro";
 import { getEntryWithFallback, getSlugs } from "../../lib/collections";
 
 export async function getStaticPaths() {
-	const slugs = await getSlugs("research");
+	const slugs = await getSlugs("blog");
 	return slugs.map((slug) => ({ params: { slug } }));
 }
 
 const lang = "en";
 const { slug } = Astro.params;
-const resolved = await getEntryWithFallback("research", lang, slug!);
-if (!resolved) return Astro.redirect("/research");
+const resolved = await getEntryWithFallback("blog", lang, slug!);
+if (!resolved) return Astro.redirect("/blog");
 ---
 
 <Layout
@@ -19,5 +19,5 @@ if (!resolved) return Astro.redirect("/research");
 	description={resolved.entry.data.description}
 	lang={lang}
 >
-	<PostArticle type="research" lang={lang} resolved={resolved} />
+	<PostArticle type="blog" lang={lang} resolved={resolved} />
 </Layout>

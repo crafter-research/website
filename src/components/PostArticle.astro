@@ -1,0 +1,52 @@
+---
+import type { CollectionEntry } from "astro:content";
+import { render } from "astro:content";
+import type { Lang } from "../i18n/ui";
+import { useTranslatedPath, useTranslations } from "../i18n/utils";
+import {
+	type ContentType,
+	fmtDate,
+	type ResolvedEntry,
+} from "../lib/collections";
+
+interface Props {
+	type: ContentType;
+	lang: Lang;
+	resolved: ResolvedEntry;
+}
+
+const { type, lang, resolved } = Astro.props;
+const { entry, untranslated } = resolved;
+const d = entry.data;
+const t = useTranslations(lang);
+const tp = useTranslatedPath(lang);
+const { Content } = await render(entry as CollectionEntry<ContentType>);
+
+const showStatus = type === "research" && "status" in d;
+---
+
+<main class="research-entry">
+	<nav class="article-nav">
+		<a href={tp("/")}>Crafter Research</a>
+		<a href={tp(`/${type}`)}>{t(`${type}.title`)}</a>
+	</nav>
+
+	<header class="article-header">
+		<div class="article-kicker">
+			{showStatus && <span>{d.status}</span>}
+			<span>{fmtDate(d.date, lang)}</span>
+			{showStatus ? <span>{d.project}</span> : <span>{d.author}</span>}
+			{untranslated && <em class="untranslated-badge">{t("content.untranslated")}</em>}
+		</div>
+		<h1>{d.title}</h1>
+		<p>{d.description}</p>
+	</header>
+
+	<article class="research-prose">
+		<Content />
+	</article>
+
+	<footer class="article-footer">
+		<a href={tp(`/${type}`)}>{t(`${type}.all`)}</a>
+	</footer>
+</main>

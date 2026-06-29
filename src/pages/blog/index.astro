@@ -6,9 +6,9 @@ import { getEntriesWithFallback } from "../../lib/collections";
 
 const lang = "en";
 const t = useTranslations(lang);
-const entries = await getEntriesWithFallback("research", lang);
+const entries = await getEntriesWithFallback("blog", lang);
 ---
 
-<Layout title={`${t("research.title")} · Crafter Research`} description={t("research.description")} lang={lang}>
-	<PostList type="research" lang={lang} entries={entries} />
+<Layout title={`${t("blog.title")} · Crafter Research`} description={t("blog.description")} lang={lang}>
+	<PostList type="blog" lang={lang} entries={entries} />
 </Layout>

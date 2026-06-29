@@ -1,0 +1,19 @@
+---
+import PostList from "../../../components/PostList.astro";
+import type { Lang } from "../../../i18n/ui";
+import { useTranslations } from "../../../i18n/utils";
+import Layout from "../../../layouts/Layout.astro";
+import { getEntriesWithFallback } from "../../../lib/collections";
+
+export function getStaticPaths() {
+	return (["es", "pt", "zh"] as Lang[]).map((lang) => ({ params: { lang } }));
+}
+
+const lang = Astro.params.lang as Lang;
+const t = useTranslations(lang);
+const entries = await getEntriesWithFallback("blog", lang);
+---
+
+<Layout title={`${t("blog.title")} · Crafter Research`} description={t("blog.description")} lang={lang}>
+	<PostList type="blog" lang={lang} entries={entries} />
+</Layout>

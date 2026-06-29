@@ -1,0 +1,62 @@
+---
+import type { Lang } from "../i18n/ui";
+import { useTranslatedPath, useTranslations } from "../i18n/utils";
+import {
+	type ContentType,
+	fmtDate,
+	type ResolvedEntry,
+} from "../lib/collections";
+
+interface Props {
+	type: ContentType;
+	lang: Lang;
+	entries: ResolvedEntry[];
+}
+
+const { type, lang, entries } = Astro.props;
+const t = useTranslations(lang);
+const tp = useTranslatedPath(lang);
+const untranslatedLabel = t("content.untranslated");
+---
+
+<main class="research-log-index">
+	<nav class="article-nav">
+		<a href={tp("/")}>Crafter Research</a>
+	</nav>
+
+	<header class="research-log-header">
+		<p class="section-label">{t(`${type}.label`)}</p>
+		<h1>{t(`${type}.title`)}</h1>
+		<p>{t(`${type}.description`)}</p>
+	</header>
+
+	<section class="research-log-feed" aria-label={t(`${type}.title`)}>
+		{
+			entries.map(({ entry, untranslated }) => {
+				const d = entry.data;
+				const meta =
+					type === "research" && "status" in d
+						? `${d.status} / ${fmtDate(d.date, lang)} / ${d.project}`
+						: fmtDate(d.date, lang);
+				return (
+					<a href={tp(`/${type}/${d.urlSlug}`)} class="note-row">
+						<div>
+							<strong>{d.title}</strong>
+							<span>
+								{meta}
+								{untranslated && (
+									<em class="untranslated-badge"> · {untranslatedLabel}</em>
+								)}
+							</span>
+						</div>
+						<p>{d.description}</p>
+					</a>
+				);
+			})
+		}
+	</section>
+
+	<footer class="article-footer">
+		<a href={tp("/")}>{t(`${type}.back`)}</a>
+	</footer>
+</main>

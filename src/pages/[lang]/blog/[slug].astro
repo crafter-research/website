@@ -1,0 +1,27 @@
+---
+import PostArticle from "../../../components/PostArticle.astro";
+import type { Lang } from "../../../i18n/ui";
+import Layout from "../../../layouts/Layout.astro";
+import { getEntryWithFallback, getSlugs } from "../../../lib/collections";
+
+export async function getStaticPaths() {
+	const langs = ["es", "pt", "zh"] as Lang[];
+	const slugs = await getSlugs("blog");
+	return langs.flatMap((lang) =>
+		slugs.map((slug) => ({ params: { lang, slug } })),
+	);
+}
+
+const lang = Astro.params.lang as Lang;
+const { slug } = Astro.params;
+const resolved = await getEntryWithFallback("blog", lang, slug!);
+if (!resolved) return Astro.redirect(`/${lang}/blog`);
+---
+
+<Layout
+	title={`${resolved.entry.data.title} · Crafter Research`}
+	description={resolved.entry.data.description}
+	lang={lang}
+>
+	<PostArticle type="blog" lang={lang} resolved={resolved} />
+</Layout>

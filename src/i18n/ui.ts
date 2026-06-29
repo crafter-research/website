@@ -83,6 +83,19 @@ export const ui = {
 			"Congresista Score: public profiles of legislators based on attendance, voting record, and consistency between discourse and vote.",
 		"next.listening":
 			"Broad Listening AI: clusters citizen opinions by actual meaning, detects coordinated spam in public consultations, and surfaces genuine diverse views.",
+		"research.title": "Research Log",
+		"research.description":
+			"Milestones from the lab, written as we go. Hypotheses, measurements, and the conclusions that moved.",
+		"research.label": "Crafter Research / Research log",
+		"research.all": "All milestones",
+		"research.back": "Back to lab",
+		"blog.title": "Blog",
+		"blog.description":
+			"Notes, essays, and field reports from the lab. Less rigor than the research log, more thinking out loud.",
+		"blog.label": "Crafter Research / Blog",
+		"blog.all": "All posts",
+		"blog.back": "Back to lab",
+		"content.untranslated": "untranslated",
 		"footer.madeBy": "Made by",
 		"footer.and": "and",
 		"footer.madeSuffix": "",
@@ -161,6 +174,19 @@ export const ui = {
 			"Congresista Score: perfiles públicos de legisladores basados en asistencia, historial de votaciones y coherencia entre discurso y voto.",
 		"next.listening":
 			"Broad Listening AI: agrupa opiniones ciudadanas por significado real, detecta spam coordinado en consultas públicas y visibiliza las voces genuinas.",
+		"research.title": "Registro de Investigación",
+		"research.description":
+			"Hitos del laboratorio, escritos sobre la marcha. Hipótesis, mediciones, y las conclusiones que se movieron.",
+		"research.label": "Crafter Research / Registro",
+		"research.all": "Todos los hitos",
+		"research.back": "Volver al lab",
+		"blog.title": "Blog",
+		"blog.description":
+			"Notas, ensayos y reportes de campo del laboratorio. Menos rigor que el registro, más pensar en voz alta.",
+		"blog.label": "Crafter Research / Blog",
+		"blog.all": "Todas las entradas",
+		"blog.back": "Volver al lab",
+		"content.untranslated": "sin traducir",
 		"footer.madeBy": "Hecho por",
 		"footer.and": "y",
 		"footer.madeSuffix": "",
@@ -239,6 +265,19 @@ export const ui = {
 			"Congresista Score: perfis públicos de legisladores baseados em presença, histórico de votação e coerência entre discurso e voto.",
 		"next.listening":
 			"Broad Listening AI: agrupa opiniões cidadãs por significado real, detecta spam coordenado em consultas públicas e torna visíveis as vozes genuínas.",
+		"research.title": "Registro de Pesquisa",
+		"research.description":
+			"Marcos do laboratório, escritos ao longo do caminho. Hipóteses, medições, e as conclusões que mudaram.",
+		"research.label": "Crafter Research / Registro",
+		"research.all": "Todos os marcos",
+		"research.back": "Voltar ao lab",
+		"blog.title": "Blog",
+		"blog.description":
+			"Notas, ensaios e relatos de campo do laboratório. Menos rigor que o registro, mais pensar em voz alta.",
+		"blog.label": "Crafter Research / Blog",
+		"blog.all": "Todas as entradas",
+		"blog.back": "Voltar ao lab",
+		"content.untranslated": "não traduzido",
 		"footer.madeBy": "Feito por",
 		"footer.and": "e",
 		"footer.madeSuffix": "",
@@ -316,6 +355,19 @@ export const ui = {
 			"Congresista Score：基于出席率、投票记录和言行一致性的立法者公开档案。",
 		"next.listening":
 			"Broad Listening AI：按实际含义聚类公民意见，检测公众咨询中的协调垃圾信息，展现真实多元的声音。",
+		"research.title": "研究日志",
+		"research.description":
+			"实验室的里程碑，边做边记录。假设、测量，以及随之改变的结论。",
+		"research.label": "Crafter Research / 研究日志",
+		"research.all": "全部里程碑",
+		"research.back": "返回实验室",
+		"blog.title": "博客",
+		"blog.description":
+			"实验室的笔记、随笔与现场记录。比研究日志少些严谨，多些自由思考。",
+		"blog.label": "Crafter Research / 博客",
+		"blog.all": "全部文章",
+		"blog.back": "返回实验室",
+		"content.untranslated": "未翻译",
 		"footer.madeBy": "由",
 		"footer.and": "和",
 		"footer.madeSuffix": "制作",
