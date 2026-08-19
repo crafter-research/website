@@ -1,19 +1,5 @@
 {
 	"framework": "astro",
 	"buildCommand": "bun run build",
-	"outputDirectory": "dist",
-	"redirects": [
-		{
-			"source": "/:path*",
-			"has": [{ "type": "host", "value": "research.crafter.ing" }],
-			"destination": "https://crafter.ing/:path*",
-			"permanent": true
-		},
-		{
-			"source": "/:path*",
-			"has": [{ "type": "host", "value": "www.crafter.ing" }],
-			"destination": "https://crafter.ing/:path*",
-			"permanent": true
-		}
-	]
+	"outputDirectory": "dist"
 }
