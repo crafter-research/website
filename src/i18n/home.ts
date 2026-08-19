@@ -36,22 +36,22 @@ export const copyByLang = {
 	},
 	es: {
 		description:
-			"Crafter Research es un AI research lab de interes publico para Peru y LATAM, enfocado en artefactos reproducibles, datasets, evals, registros y tools de accountability.",
+			"Crafter Research es un AI research lab de interés público para Perú y LATAM, enfocado en artefactos reproducibles, datasets, evals, registros y tools de accountability.",
 		label: "Crafter Research",
 		navLog: "Registro",
-		kicker: "Crafter Research / Lima, Peru",
-		heroTitle: "AI research de interes publico para Peru y LATAM.",
+		kicker: "Crafter Research / Lima, Perú",
+		heroTitle: "AI research de interés público para Perú y LATAM.",
 		heroBody:
-			"Convertimos data publica, corpora legales y civicos, y evaluaciones de modelos en artefactos reproducibles, datasets, registros y tools de accountability.",
+			"Convertimos data pública, corpora legales y cívicos, y evaluaciones de modelos en artefactos reproducibles, datasets, registros y tools de accountability.",
 		primaryCta: "Leer registro",
 		secondaryCta: "GitHub",
 		instrumentLabel: "Overview del team",
-		instrumentTitle: "El research deberia producir artefactos inspeccionables.",
+		instrumentTitle: "El research debería producir artefactos inspeccionables.",
 		instrumentBody:
-			"Trabajamos en datasets source-backed, scorecards, registros, artefactos de evaluacion y tools pequenas atadas a preguntas de interes publico.",
+			"Trabajamos en datasets source-backed, scorecards, registros, artefactos de evaluación y tools pequeñas atadas a preguntas de interés público.",
 		chainLabel: "Modelo operativo",
-		chainTitle: "De fuente publica a artefactos reutilizables.",
-		chainBody: "Pregunta, fuentes, artefacto, review, documentacion, release.",
+		chainTitle: "De fuente pública a artefactos reutilizables.",
+		chainBody: "Pregunta, fuentes, artefacto, review, documentación, release.",
 		ledgerLabel: "Superficies de trabajo",
 		ledgerTitle: "El lab se organiza alrededor de cuatro tipos de artefacto.",
 		ledgerBody:
@@ -62,9 +62,9 @@ export const copyByLang = {
 		emptyNoteMeta: "Slot reservado",
 		emptyNoteTitle: "Siguiente artefacto de research",
 		emptyNoteBody:
-			"Este espacio queda abierto hasta que una nota tenga fuentes, metodo y output reutilizable.",
+			"Este espacio queda abierto hasta que una nota tenga fuentes, método y output reutilizable.",
 		stanceLabel: "Postura operativa",
-		stanceTitle: "Pequeno, practico y evidence-first.",
+		stanceTitle: "Pequeño, práctico y evidence-first.",
 		footerMade: "Hecho por",
 		footerAnd: "y",
 		footerStation: "Crafter Station",
@@ -73,7 +73,7 @@ export const copyByLang = {
 
 export const heroPathByLang = {
 	en: ["public source", "dataset", "eval", "registry", "tool", "docs"],
-	es: ["fuente publica", "dataset", "eval", "registro", "tool", "docs"],
+	es: ["fuente pública", "dataset", "eval", "registro", "tool", "docs"],
 } as const;
 
 export const heroSignalsByLang = {
@@ -97,18 +97,18 @@ export const heroSignalsByLang = {
 	es: [
 		[
 			"data",
-			"Data publica",
-			"Fuentes civicas y gubernamentales desordenadas se vuelven datasets reusables, versionados e inspeccionables.",
+			"Data pública",
+			"Fuentes cívicas y gubernamentales desordenadas se vuelven datasets reusables, versionados e inspeccionables.",
 		],
 		[
 			"corpora",
-			"Corpora legales y civicos",
-			"Material publico fragmentado se vuelve source trails, corpus cards e inputs de research.",
+			"Corpora legales y cívicos",
+			"Material público fragmentado se vuelve source trails, corpus cards e inputs de research.",
 		],
 		[
 			"evals",
 			"Evaluaciones de modelos",
-			"El trabajo de eval separa correctitud, abstencion, alucinacion y calidad de evidencia.",
+			"El trabajo de eval separa correctitud, abstención, alucinación y calidad de evidencia.",
 		],
 	],
 } as const;
@@ -150,7 +150,7 @@ export const chainByLang = {
 		[
 			"01",
 			"Pregunta",
-			"Una pregunta de interes publico atada a una fuente, corpus o comportamiento de modelo.",
+			"Una pregunta de interés público atada a una fuente, corpus o comportamiento de modelo.",
 		],
 		[
 			"02",
@@ -169,13 +169,13 @@ export const chainByLang = {
 		],
 		[
 			"05",
-			"Documentacion",
+			"Documentación",
 			"Notas shareables que no requieren acceso al vault privado para entender el trabajo.",
 		],
 		[
 			"06",
 			"Siguiente gate",
-			"Promover, pausar o reformular el proyecto segun evidencia, no entusiasmo.",
+			"Promover, pausar o reformular el proyecto según evidencia, no entusiasmo.",
 		],
 	],
 } as const;
@@ -209,27 +209,27 @@ export const ledgerByLang = {
 	],
 	es: [
 		[
-			"Data publica",
+			"Data pública",
 			"Datasets y manifests",
-			"Fuentes publicas mas faciles de citar, refrescar, verificar y reutilizar.",
+			"Fuentes públicas más fáciles de citar, refrescar, verificar y reutilizar.",
 			"Source trails, hashes, logs",
 		],
 		[
-			"Corpora legales y civicos",
+			"Corpora legales y cívicos",
 			"Material fuente estructurado",
-			"Ley, records y texto civico fragmentado convertidos en inputs reusables de research.",
+			"Ley, records y texto cívico fragmentado convertidos en inputs reusables de research.",
 			"Corpus cards, coverage notes",
 		],
 		[
 			"Evaluaciones de modelos",
 			"Evals y scorecards",
-			"Artefactos de evaluacion que hacen mas inspeccionable el comportamiento de modelos y la calidad de evidencia.",
-			"Rubricas, runs, agreement checks",
+			"Artefactos de evaluación que hacen más inspeccionable el comportamiento de modelos y la calidad de evidencia.",
+			"Rúbricas, runs, agreement checks",
 		],
 		[
 			"Tools de accountability",
-			"Registros e interfaces pequenas",
-			"Tools enfocadas para inspeccionar sistemas publicos sin esconder el rastro de fuentes.",
+			"Registros e interfaces pequeñas",
+			"Tools enfocadas para inspeccionar sistemas públicos sin esconder el rastro de fuentes.",
 			"Registros, CLIs, dashboards",
 		],
 	],
@@ -253,11 +253,11 @@ export const stanceByLang = {
 	es: [
 		[
 			"Artifact-first",
-			"Cada claim serio debe apuntar a dataset, eval, source cards, registro, run o metodo publico.",
+			"Cada claim serio debe apuntar a dataset, eval, source cards, registro, run o método público.",
 		],
 		[
 			"Evidencia antes que claims",
-			"El trabajo publico debe tener fuentes, limitaciones explicitas y reproducibilidad suficiente para inspeccionarlo.",
+			"El trabajo público debe tener fuentes, limitaciones explícitas y reproducibilidad suficiente para inspeccionarlo.",
 		],
 		[
 			"Docs shareables",

@@ -3,6 +3,7 @@ import { defineConfig } from 'astro/config';
 
 import tailwindcss from '@tailwindcss/vite';
 
+import sitemap from '@astrojs/sitemap';
 import vercel from '@astrojs/vercel';
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
 import rehypeKatex from 'rehype-katex';
@@ -13,7 +14,7 @@ import { crafterDark, crafterLight } from './src/lib/shiki-theme.ts';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://research.crafter.ing',
+  site: 'https://crafter.ing',
 
   i18n: {
     locales: ['en', 'es', 'pt', 'zh'],
@@ -22,6 +23,15 @@ export default defineConfig({
       prefixDefaultLocale: false,
     },
   },
+
+  integrations: [
+    sitemap({
+      i18n: {
+        defaultLocale: 'en',
+        locales: { en: 'en', es: 'es', pt: 'pt', zh: 'zh' },
+      },
+    }),
+  ],
 
   markdown: {
     shikiConfig: {
