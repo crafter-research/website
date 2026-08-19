@@ -1,4 +1,4 @@
 User-Agent: *
 Allow: /
 
-Sitemap: https://research.crafter.ing/sitemap.xml
+Sitemap: https://crafter.ing/sitemap-index.xml

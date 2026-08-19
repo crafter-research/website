@@ -4,9 +4,15 @@
 	"outputDirectory": "dist",
 	"redirects": [
 		{
-			"source": "/(.*)",
-			"has": [{ "type": "host", "value": "crafter.ing" }],
-			"destination": "https://crafterstation.com/$1",
+			"source": "/:path*",
+			"has": [{ "type": "host", "value": "research.crafter.ing" }],
+			"destination": "https://crafter.ing/:path*",
+			"permanent": true
+		},
+		{
+			"source": "/:path*",
+			"has": [{ "type": "host", "value": "www.crafter.ing" }],
+			"destination": "https://crafter.ing/:path*",
 			"permanent": true
 		}
 	]
