@@ -10,6 +10,7 @@ import {
 } from "../data/portfolio-audit";
 import type { ProjectLocale } from "../data/projects";
 import type { Lang } from "../i18n/ui";
+import { useTranslatedPath } from "../i18n/utils";
 import Layout from "../layouts/Layout.astro";
 
 interface Props {
@@ -18,6 +19,7 @@ interface Props {
 
 const { lang } = Astro.props;
 const contentLang: ProjectLocale = lang === "es" ? "es" : "en";
+const tp = useTranslatedPath(lang);
 
 const copy = {
 	en: {
@@ -412,7 +414,7 @@ const collisionIndex = (
 								</div>
 								<p>{copy.lastActivity} <time datetime={project.lastActivity}>{fmtDate(project.lastActivity)}</time></p>
 								<nav aria-label={project.name}>
-									{project.homepage && <a href={project.homepage} target="_blank" rel="noreferrer">{copy.openProject} ↗</a>}
+									{project.homepage && <a href={project.homepage.startsWith("/") ? tp(project.homepage) : project.homepage} target={project.homepage.startsWith("/") ? undefined : "_blank"} rel={project.homepage.startsWith("/") ? undefined : "noreferrer"}>{copy.openProject} ↗</a>}
 									<a href={project.repository} target="_blank" rel="noreferrer">{copy.openSource} ↗</a>
 								</nav>
 							</footer>

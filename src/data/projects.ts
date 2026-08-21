@@ -224,14 +224,17 @@ export const projects = [
 		evidence: [
 			{
 				label: { en: "Census", es: "Censo" },
-				value: { en: "1,794 municipalities", es: "1,794 municipalidades" },
+				value: {
+					en: "1,871 scored municipalities",
+					es: "1,871 municipalidades puntuadas",
+				},
 				sourceUrl: "https://github.com/crafter-research/muniscan",
 			},
 			{
 				label: { en: "Coverage", es: "Cobertura" },
 				value: {
-					en: "95.5% of declared entities",
-					es: "95.5% de las entidades declaradas",
+					en: "3,474 enriched entities",
+					es: "3,474 entidades enriquecidas",
 				},
 				sourceUrl:
 					"https://github.com/crafter-research/muniscan/blob/main/METHOD.md",
@@ -239,14 +242,18 @@ export const projects = [
 		],
 		links: [
 			{
+				label: { en: "Open public audit", es: "Abrir auditoría pública" },
+				url: "/muniscan",
+			},
+			{
 				label: { en: "Inspect data and method", es: "Revisar datos y método" },
 				url: "https://github.com/crafter-research/muniscan",
 			},
 		],
-		verifiedAt: "2026-08-20",
+		verifiedAt: "2026-08-21",
 		limitation: {
-			en: "Only one census run has been published, so repeatability across time is still unproven.",
-			es: "Solo se ha publicado una corrida censal, por lo que la repetibilidad temporal aún no está probada.",
+			en: "Two scored snapshots demonstrate one recurrence, but not yet a stable monthly operating history.",
+			es: "Dos snapshots puntuados demuestran una recurrencia, pero aún no una operación mensual estable.",
 		},
 	},
 ] satisfies ProjectRecord[];

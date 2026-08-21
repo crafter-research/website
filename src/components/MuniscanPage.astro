@@ -1,0 +1,1495 @@
+---
+import type { Lang } from "../i18n/ui";
+import Layout from "../layouts/Layout.astro";
+
+interface Props {
+	lang: Lang;
+}
+
+const { lang } = Astro.props;
+const contentLang = lang === "es" ? "es" : "en";
+const repo = "https://github.com/crafter-research/muniscan";
+const snapshotPath = `${repo}/tree/main/data/2026-08-21`;
+const rawPath =
+	"https://raw.githubusercontent.com/crafter-research/muniscan/main/data/2026-08-21";
+
+const copy = {
+	en: {
+		metaTitle: "Muniscan · Peru's municipal digital surface",
+		metaDescription:
+			"A reproducible census of the digital surface Peru's municipalities declare on gob.pe, with snapshots, method, limitations, and raw data.",
+		eyebrow: "Muniscan / public measurement 02",
+		title: "One public page. 1,871 municipal digital surfaces.",
+		body: "Muniscan turns the links municipalities publish on gob.pe into a reproducible census of declared technical architecture. It exposes the source trail, scoring choices, recurrent snapshot, and failure boundaries instead of hiding them behind a dashboard.",
+		status: "Validated recurrent snapshot",
+		statusBody:
+			"Two scored snapshots are public. The latest scan, score, and diff completed without bypassing completeness guards.",
+		openData: "Open latest data",
+		openSource: "Inspect the pipeline",
+		measuredLabel: "Latest snapshot / 21 Aug 2026",
+		measuredTitle: "What the pipeline actually measured.",
+		measuredBody:
+			"The unit is a municipality's institutional page on gob.pe and the public links found there. Counts describe the published snapshot, not service quality or legal compliance.",
+		metrics: [
+			[
+				"3,474",
+				"entities enriched",
+				"94.3% of the entity count declared by gob.pe",
+			],
+			[
+				"1,871",
+				"municipalities scored",
+				"one more record remained an explicit HTTP error",
+			],
+			[
+				"409",
+				"municipalities restored",
+				"carried from the prior census, then fetched again",
+			],
+			["34", "median index", "on the recorded 0–100 scoring model"],
+		],
+		distributionLabel: "Score distribution",
+		distributionTitle: "Most records sit between 20 and 59.",
+		distributionBody:
+			"The bands summarize this snapshot only. The weights and normalization are methodological choices, not an objective definition of digital maturity.",
+		bands: [
+			["0", "30", 30],
+			["1–19", "285", 285],
+			["20–39", "928", 928],
+			["40–59", "588", 588],
+			["60+", "40", 40],
+		],
+		quartiles: [
+			["Q1", "27"],
+			["Median", "34"],
+			["Q3", "41"],
+		],
+		pipelineLabel: "Reproducible pipeline",
+		pipelineTitle: "Every number has a route back to public evidence.",
+		pipelineBody:
+			"Each stage writes an inspectable artifact. Earlier run directories stay immutable, so a later method change cannot silently rewrite a cited snapshot.",
+		pipeline: [
+			[
+				"01",
+				"Discover",
+				"Union two disagreeing gob.pe directory views, oversample, and deduplicate by slug.",
+				"entities.json",
+			],
+			[
+				"02",
+				"Enrich",
+				"Fetch each institutional page serially and record linked gob.pe hosts and visible signals.",
+				"enriched.jsonl",
+			],
+			[
+				"03",
+				"Guard",
+				"Reject empty, sharply smaller, or high-error censuses before they can become rankings.",
+				"completeness check",
+			],
+			[
+				"04",
+				"Score",
+				"Apply the versioned presence, central-platform adoption, and hostname-classification model.",
+				"index.json",
+			],
+			[
+				"05",
+				"Compare",
+				"Diff against the newest earlier scored snapshot and preserve additions, removals, and movements.",
+				"diff.json",
+			],
+		],
+		repeatLabel: "Second public snapshot",
+		repeatTitle: "Recurrence is now demonstrated once, not merely promised.",
+		repeatBody:
+			"The new run proves the pipeline can restore known municipalities from a nondeterministic directory, refetch them, pass its guards, and publish an explicit diff. It is still too early to claim a stable monthly operating history.",
+		previous: "08 Aug",
+		current: "21 Aug",
+		previousCount: "1,794 scored",
+		currentCount: "1,871 scored",
+		diffItems: [
+			["+78", "records added to the scored snapshot"],
+			["−1", "record removed after an explicit HTTP 403"],
+			["10", "score movements recorded"],
+			["1,783", "scores unchanged"],
+		],
+		diffBoundary:
+			"A movement can come from the source page, directory behavior, redirects, or the measured link surface. The diff alone does not establish that a municipality improved or deteriorated.",
+		httpLabel: "Bounded HTTP observation",
+		httpTitle: "100 domains, observed once each.",
+		httpBody:
+			"The sample selects 20 municipalities from each ranking quintile, then requests one hostname-classified domain per municipality with a 15-second timeout.",
+		response: "HTTP response",
+		noResponse: "No HTTP response",
+		success: "2xx response",
+		otherResponse: "Other HTTP response",
+		httpBoundary:
+			"This is a point observation. It is not uptime, availability history, service quality, accessibility, security, compliance, or verified ownership. A response does not prove a citizen-facing service works.",
+		artifactsLabel: "Evidence package",
+		artifactsTitle: "Download the result. Challenge the method.",
+		artifactsBody:
+			"The public page is an entry point, not a substitute for the dataset. Raw files, assumptions, known false negatives, licenses, and code remain available in the repository.",
+		artifacts: [
+			["Latest index", "1,871 scored records", `${rawPath}/index.json`],
+			[
+				"Entity census",
+				"discovered and restored counts",
+				`${rawPath}/entities.json`,
+			],
+			["Snapshot diff", "machine-readable changes", `${rawPath}/diff.json`],
+			[
+				"HTTP sample",
+				"100 point observations",
+				`${rawPath}/health-sample.json`,
+			],
+			["Method", "discovery, scoring, guards", `${repo}/blob/main/METHOD.md`],
+			[
+				"Limitations",
+				"interpretation boundaries",
+				`${repo}/blob/main/LIMITATIONS.md`,
+			],
+		],
+		limitsLabel: "Read before citing",
+		limitsTitle: "The strongest result is knowing what this does not prove.",
+		limits: [
+			[
+				"Declared surface, not delivered service",
+				"Muniscan reads links on one gob.pe institutional page. Undeclared software is invisible, and a listed system can still be unusable.",
+			],
+			[
+				"Hostname classification, not ownership",
+				"The sistemas_propios field requires a domain containing the entity slug. It avoids a known false-positive failure, but creates deliberate false negatives.",
+			],
+			[
+				"A score is not compliance",
+				"No indicator here represents Peru's legal obligations. An anomalous municipality is a lead for manual review, never an accusation.",
+			],
+			[
+				"The model contains choices",
+				"The central-platform threshold, axis weights, and within-run normalization are recorded choices. Different choices can produce a different ranking.",
+			],
+		],
+		citationTitle: "Use the snapshot, not a floating claim.",
+		citationBody:
+			"When citing Muniscan, name the snapshot date and link the exact run. Public corrections can be opened in the repository with the affected record and source evidence.",
+		openSnapshot: "Open 2026-08-21 snapshot",
+		reportCorrection: "Report a correction",
+		fallback:
+			"The research record is shown in English for this locale while the full translation is prepared.",
+	},
+	es: {
+		metaTitle: "Muniscan · Superficie digital municipal del Perú",
+		metaDescription:
+			"Censo reproducible de la superficie digital que las municipalidades del Perú declaran en gob.pe, con snapshots, método, límites y datos crudos.",
+		eyebrow: "Muniscan / medición pública 02",
+		title: "Una página pública. 1,871 superficies digitales municipales.",
+		body: "Muniscan convierte los enlaces que las municipalidades publican en gob.pe en un censo reproducible de arquitectura técnica declarada. Expone fuentes, decisiones de scoring, el snapshot recurrente y sus límites en vez de esconderlos detrás de un dashboard.",
+		status: "Snapshot recurrente validado",
+		statusBody:
+			"Hay dos snapshots puntuados y públicos. El último scan, score y diff terminó sin saltarse los controles de completitud.",
+		openData: "Abrir últimos datos",
+		openSource: "Revisar el pipeline",
+		measuredLabel: "Último snapshot / 21 ago 2026",
+		measuredTitle: "Lo que el pipeline realmente midió.",
+		measuredBody:
+			"La unidad es la página institucional de una municipalidad en gob.pe y los enlaces públicos encontrados allí. Los conteos describen el snapshot publicado, no calidad de servicio ni cumplimiento legal.",
+		metrics: [
+			[
+				"3,474",
+				"entidades enriquecidas",
+				"94.3% del conteo de entidades declarado por gob.pe",
+			],
+			[
+				"1,871",
+				"municipalidades puntuadas",
+				"otro registro quedó como error HTTP explícito",
+			],
+			[
+				"409",
+				"municipalidades recuperadas",
+				"preservadas del censo anterior y consultadas otra vez",
+			],
+			["34", "índice mediano", "en el modelo documentado de 0 a 100"],
+		],
+		distributionLabel: "Distribución de scores",
+		distributionTitle: "La mayoría de registros está entre 20 y 59.",
+		distributionBody:
+			"Las bandas resumen solo este snapshot. Los pesos y la normalización son decisiones metodológicas, no una definición objetiva de madurez digital.",
+		bands: [
+			["0", "30", 30],
+			["1–19", "285", 285],
+			["20–39", "928", 928],
+			["40–59", "588", 588],
+			["60+", "40", 40],
+		],
+		quartiles: [
+			["Q1", "27"],
+			["Mediana", "34"],
+			["Q3", "41"],
+		],
+		pipelineLabel: "Pipeline reproducible",
+		pipelineTitle: "Cada número tiene una ruta hacia evidencia pública.",
+		pipelineBody:
+			"Cada etapa escribe un artefacto inspeccionable. Las corridas anteriores quedan inmutables, así un cambio de método no reescribe en silencio un snapshot citado.",
+		pipeline: [
+			[
+				"01",
+				"Descubrir",
+				"Unir dos directorios discordantes de gob.pe, sobremuestrear y deduplicar por slug.",
+				"entities.json",
+			],
+			[
+				"02",
+				"Enriquecer",
+				"Consultar cada página en serie y registrar hosts gob.pe enlazados y señales visibles.",
+				"enriched.jsonl",
+			],
+			[
+				"03",
+				"Controlar",
+				"Rechazar censos vacíos, demasiado pequeños o con demasiados errores antes del ranking.",
+				"control de completitud",
+			],
+			[
+				"04",
+				"Puntuar",
+				"Aplicar el modelo versionado de presencia, adopción central y clasificación por hostname.",
+				"index.json",
+			],
+			[
+				"05",
+				"Comparar",
+				"Comparar con el snapshot puntuado anterior y preservar altas, bajas y movimientos.",
+				"diff.json",
+			],
+		],
+		repeatLabel: "Segundo snapshot público",
+		repeatTitle:
+			"La recurrencia se demostró una vez, ya no es solo una promesa.",
+		repeatBody:
+			"La nueva corrida prueba que el pipeline puede recuperar municipalidades conocidas de un directorio no determinista, consultarlas otra vez, pasar sus controles y publicar un diff explícito. Todavía es pronto para afirmar una operación mensual estable.",
+		previous: "08 ago",
+		current: "21 ago",
+		previousCount: "1,794 puntuadas",
+		currentCount: "1,871 puntuadas",
+		diffItems: [
+			["+78", "registros añadidos al snapshot puntuado"],
+			["−1", "registro retirado tras un HTTP 403 explícito"],
+			["10", "movimientos de score registrados"],
+			["1,783", "scores sin cambio"],
+		],
+		diffBoundary:
+			"Un movimiento puede venir de la página fuente, el directorio, redirects o la superficie de enlaces medida. El diff por sí solo no prueba que una municipalidad mejoró o empeoró.",
+		httpLabel: "Observación HTTP acotada",
+		httpTitle: "100 dominios, observados una vez cada uno.",
+		httpBody:
+			"La muestra selecciona 20 municipalidades por quintil del ranking y consulta un dominio clasificado por hostname por municipalidad, con timeout de 15 segundos.",
+		response: "Respuesta HTTP",
+		noResponse: "Sin respuesta HTTP",
+		success: "Respuesta 2xx",
+		otherResponse: "Otra respuesta HTTP",
+		httpBoundary:
+			"Esta es una observación puntual. No es uptime, historial de disponibilidad, calidad, accesibilidad, seguridad, cumplimiento ni propiedad verificada. Una respuesta no prueba que el servicio funcione para un ciudadano.",
+		artifactsLabel: "Paquete de evidencia",
+		artifactsTitle: "Descarga el resultado. Cuestiona el método.",
+		artifactsBody:
+			"La página pública es una entrada, no reemplaza el dataset. Los archivos crudos, supuestos, falsos negativos conocidos, licencias y código siguen disponibles en el repositorio.",
+		artifacts: [
+			["Último índice", "1,871 registros puntuados", `${rawPath}/index.json`],
+			[
+				"Censo de entidades",
+				"conteos descubiertos y recuperados",
+				`${rawPath}/entities.json`,
+			],
+			[
+				"Diff del snapshot",
+				"cambios legibles por máquina",
+				`${rawPath}/diff.json`,
+			],
+			[
+				"Muestra HTTP",
+				"100 observaciones puntuales",
+				`${rawPath}/health-sample.json`,
+			],
+			[
+				"Método",
+				"descubrimiento, scoring y controles",
+				`${repo}/blob/main/METHOD.md`,
+			],
+			[
+				"Limitaciones",
+				"límites de interpretación",
+				`${repo}/blob/main/LIMITATIONS.md`,
+			],
+		],
+		limitsLabel: "Leer antes de citar",
+		limitsTitle: "El resultado más fuerte es saber qué no prueba esto.",
+		limits: [
+			[
+				"Superficie declarada, no servicio entregado",
+				"Muniscan lee enlaces de una página institucional en gob.pe. El software no declarado es invisible y un sistema listado puede ser inutilizable.",
+			],
+			[
+				"Clasificación por hostname, no propiedad",
+				"El campo sistemas_propios exige un dominio que contenga el slug de la entidad. Evita un falso positivo conocido, pero crea falsos negativos deliberados.",
+			],
+			[
+				"Un score no es cumplimiento",
+				"Ningún indicador representa obligaciones legales peruanas. Una municipalidad anómala es una pista para revisión manual, nunca una acusación.",
+			],
+			[
+				"El modelo contiene decisiones",
+				"El umbral de plataforma central, los pesos y la normalización por corrida son decisiones registradas. Otras decisiones pueden producir otro ranking.",
+			],
+		],
+		citationTitle: "Usa el snapshot, no una afirmación flotante.",
+		citationBody:
+			"Al citar Muniscan, indica la fecha y enlaza la corrida exacta. Las correcciones públicas pueden abrirse en el repositorio con el registro afectado y evidencia fuente.",
+		openSnapshot: "Abrir snapshot 2026-08-21",
+		reportCorrection: "Reportar una corrección",
+		fallback: "",
+	},
+}[contentLang];
+---
+
+<Layout title={copy.metaTitle} description={copy.metaDescription} lang={lang}>
+	<main class="muniscan-page">
+		<header class="muniscan-hero">
+			<div class="muniscan-hero-copy">
+				<p class="muniscan-eyebrow">{copy.eyebrow}</p>
+				<h1>{copy.title}</h1>
+				<p class="muniscan-hero-body">{copy.body}</p>
+				{lang !== "en" && lang !== "es" && <small>{copy.fallback}</small>}
+				<div class="muniscan-actions">
+					<a href={snapshotPath} target="_blank" rel="noreferrer"
+						>{copy.openData}
+						↗</a
+					>
+					<a href={repo} target="_blank" rel="noreferrer">{copy.openSource}↗</a>
+				</div>
+			</div>
+			<aside class="muniscan-instrument" aria-label={copy.status}>
+				<div class="instrument-radar" aria-hidden="true">
+					<i></i><i></i><i></i><i></i><span></span>
+				</div>
+				<div class="instrument-state">
+					<span><i></i>{copy.status}</span>
+					<p>{copy.statusBody}</p>
+					<code>snapshot::2026-08-21</code>
+				</div>
+			</aside>
+		</header>
+
+		<section
+			class="muniscan-section measured-section"
+			aria-labelledby="measured-title"
+		>
+			<header class="muniscan-section-heading">
+				<div>
+					<p class="muniscan-eyebrow">{copy.measuredLabel}</p>
+					<h2 id="measured-title">{copy.measuredTitle}</h2>
+				</div>
+				<p>{copy.measuredBody}</p>
+			</header>
+			<dl class="muniscan-metrics">
+				{copy.metrics.map(([value, label, note], index) => (
+					<div>
+						<dt>{value}</dt>
+						<dd><span>{String(index + 1).padStart(2, "0")}</span><strong>{label}</strong><small>{note}</small></dd>
+					</div>
+				))}
+			</dl>
+			<div class="distribution-layout">
+				<div class="distribution-copy">
+					<p class="muniscan-eyebrow">{copy.distributionLabel}</p>
+					<h3>{copy.distributionTitle}</h3>
+					<p>{copy.distributionBody}</p>
+					<dl>
+						{copy.quartiles.map(([label, value]) => <div><dt>{label}</dt><dd>{value}</dd></div>)}
+					</dl>
+				</div>
+				<div
+					class="distribution-plot"
+					role="img"
+					aria-label={copy.distributionTitle}
+				>
+					<div class="distribution-grid" aria-hidden="true">
+						<i></i><i></i><i></i><i></i>
+					</div>
+					{copy.bands.map(([label, count, amount], index) => (
+						<div class="distribution-bar">
+							<span>{label}</span>
+							<i style={`--bar: ${Math.max(5, (Number(amount) / 928) * 100)}%`}></i>
+							<strong>{count}</strong>
+							<small>{String(index + 1).padStart(2, "0")}</small>
+						</div>
+					))}
+				</div>
+			</div>
+		</section>
+
+		<section
+			class="muniscan-section pipeline-section"
+			aria-labelledby="pipeline-title"
+		>
+			<header class="muniscan-section-heading">
+				<div>
+					<p class="muniscan-eyebrow">{copy.pipelineLabel}</p>
+					<h2 id="pipeline-title">{copy.pipelineTitle}</h2>
+				</div>
+				<p>{copy.pipelineBody}</p>
+			</header>
+			<ol class="pipeline-track">
+				{copy.pipeline.map(([number, title, body, artifact]) => (
+					<li>
+						<div class="pipeline-number"><span>{number}</span><i></i></div>
+						<div><h3>{title}</h3><p>{body}</p><code>{artifact}</code></div>
+					</li>
+				))}
+			</ol>
+		</section>
+
+		<section
+			class="muniscan-section repeat-section"
+			aria-labelledby="repeat-title"
+		>
+			<div class="repeat-intro">
+				<p class="muniscan-eyebrow">{copy.repeatLabel}</p>
+				<h2 id="repeat-title">{copy.repeatTitle}</h2>
+				<p>{copy.repeatBody}</p>
+			</div>
+			<div class="snapshot-bridge">
+				<div>
+					<time datetime="2026-08-08">{copy.previous}</time
+					><strong>{copy.previousCount}</strong>
+				</div>
+				<span aria-hidden="true"><i></i><b>13d</b><i></i></span>
+				<div class="snapshot-current">
+					<time datetime="2026-08-21">{copy.current}</time
+					><strong>{copy.currentCount}</strong>
+				</div>
+			</div>
+			<div class="diff-ledger">
+				{copy.diffItems.map(([value, label]) => <div><strong>{value}</strong><span>{label}</span></div>)}
+			</div>
+			<p class="boundary-note">
+				<strong>!</strong><span>{copy.diffBoundary}</span>
+			</p>
+		</section>
+
+		<section class="muniscan-section http-section" aria-labelledby="http-title">
+			<div class="http-copy">
+				<p class="muniscan-eyebrow">{copy.httpLabel}</p>
+				<h2 id="http-title">{copy.httpTitle}</h2>
+				<p>{copy.httpBody}</p>
+			</div>
+			<div class="http-observation">
+				<div class="http-total">
+					<span>n</span><strong>100</strong><small>2026-08-21</small>
+				</div>
+				<div class="http-bars">
+					<div
+						class="http-bar-main"
+						role="img"
+						aria-label={`68 ${copy.response}; 32 ${copy.noResponse}`}
+					>
+						<i class="http-response" style="--size: 68%"></i
+						><i class="http-none" style="--size: 32%"></i>
+					</div>
+					<div
+						class="http-bar-detail"
+						role="img"
+						aria-label={`53 ${copy.success}; 15 ${copy.otherResponse}; 32 ${copy.noResponse}`}
+					>
+						<i class="http-success" style="--size: 53%"></i
+						><i class="http-other" style="--size: 15%"></i
+						><i class="http-none" style="--size: 32%"></i>
+					</div>
+					<div class="http-legend">
+						<span
+							><i class="http-success"></i><strong>53</strong>
+							{copy.success}</span
+						>
+						<span
+							><i class="http-other"></i><strong>15</strong>
+							{copy.otherResponse}</span
+						>
+						<span
+							><i class="http-none"></i><strong>32</strong>
+							{copy.noResponse}</span
+						>
+					</div>
+				</div>
+			</div>
+			<p class="boundary-note http-boundary">
+				<strong>!</strong><span>{copy.httpBoundary}</span>
+			</p>
+		</section>
+
+		<section
+			class="muniscan-section artifacts-section"
+			aria-labelledby="artifacts-title"
+		>
+			<header class="muniscan-section-heading">
+				<div>
+					<p class="muniscan-eyebrow">{copy.artifactsLabel}</p>
+					<h2 id="artifacts-title">{copy.artifactsTitle}</h2>
+				</div>
+				<p>{copy.artifactsBody}</p>
+			</header>
+			<div class="artifact-ledger">
+				{copy.artifacts.map(([title, body, url], index) => (
+					<a href={url} target="_blank" rel="noreferrer">
+						<span>{String(index + 1).padStart(2, "0")}</span>
+						<strong>{title}</strong>
+						<p>{body}</p>
+						<i aria-hidden="true">↗</i>
+					</a>
+				))}
+			</div>
+		</section>
+
+		<section
+			class="muniscan-section limits-section"
+			aria-labelledby="limits-title"
+		>
+			<div class="limits-heading">
+				<p class="muniscan-eyebrow">{copy.limitsLabel}</p>
+				<h2 id="limits-title">{copy.limitsTitle}</h2>
+			</div>
+			<div class="limits-ledger">
+				{copy.limits.map(([title, body], index) => (
+					<article><span>{String(index + 1).padStart(2, "0")}</span><h3>{title}</h3><p>{body}</p></article>
+				))}
+			</div>
+			<footer class="citation-panel">
+				<div>
+					<p class="muniscan-eyebrow">CC BY 4.0 / MIT</p>
+					<h3>{copy.citationTitle}</h3>
+					<p>{copy.citationBody}</p>
+				</div>
+				<nav aria-label="Muniscan">
+					<a href={snapshotPath} target="_blank" rel="noreferrer"
+						>{copy.openSnapshot}
+						↗</a
+					>
+					<a href={`${repo}/issues/new`} target="_blank" rel="noreferrer"
+						>{copy.reportCorrection}
+						↗</a
+					>
+				</nav>
+			</footer>
+		</section>
+	</main>
+</Layout>
+
+<style>
+.muniscan-page {
+	--muni-gutter: clamp(4rem, 7vw, 7.5rem);
+	margin: 0 auto;
+	max-width: 96rem;
+	padding: 0 var(--muni-gutter) 7rem;
+}
+.muniscan-eyebrow {
+	color: var(--color-accent);
+	font-family: var(--font-mono);
+	font-size: 0.67rem;
+	letter-spacing: 0.16em;
+	text-transform: uppercase;
+}
+.muniscan-hero {
+	align-items: center;
+	display: grid;
+	gap: clamp(4rem, 9vw, 9rem);
+	grid-template-columns: minmax(0, 1.25fr) minmax(20rem, 0.62fr);
+	min-height: calc(94svh - var(--header-height));
+	padding: clamp(7rem, 12vw, 11rem) 0 clamp(5rem, 8vw, 8rem);
+}
+.muniscan-hero-copy {
+	max-width: 65rem;
+}
+.muniscan-hero h1 {
+	font-size: clamp(3.4rem, 7vw, 7.3rem);
+	font-weight: 470;
+	letter-spacing: -0.06em;
+	line-height: 0.9;
+	margin-top: 1.4rem;
+	max-width: 11ch;
+	text-wrap: balance;
+}
+.muniscan-hero-body {
+	color: var(--color-muted-strong);
+	font-size: clamp(1rem, 1.55vw, 1.24rem);
+	line-height: 1.7;
+	margin-top: 2rem;
+	max-width: 48rem;
+}
+.muniscan-hero-copy > small {
+	color: var(--color-muted);
+	display: block;
+	font-family: var(--font-mono);
+	font-size: 0.72rem;
+	margin-top: 1rem;
+}
+.muniscan-actions {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.8rem;
+	margin-top: 2rem;
+}
+.muniscan-actions a {
+	border: 1px solid var(--color-border);
+	color: var(--color-text);
+	font-family: var(--font-mono);
+	font-size: 0.72rem;
+	padding: 0.8rem 1rem;
+	transition:
+		background-color 160ms ease,
+		border-color 160ms ease;
+}
+.muniscan-actions a:first-child {
+	background: var(--color-text);
+	border-color: var(--color-text);
+	color: var(--color-bg);
+}
+.muniscan-actions a:hover {
+	background: color-mix(in srgb, var(--color-accent) 8%, transparent);
+	border-color: var(--color-accent);
+}
+.muniscan-actions a:first-child:hover {
+	background: var(--color-accent);
+}
+.muniscan-instrument {
+	border: 1px solid var(--color-border);
+	min-height: 31rem;
+	padding: 1.2rem;
+	position: relative;
+}
+.muniscan-instrument::before,
+.muniscan-instrument::after {
+	border-color: var(--color-accent);
+	border-style: solid;
+	content: "";
+	height: 1.25rem;
+	position: absolute;
+	width: 1.25rem;
+}
+.muniscan-instrument::before {
+	border-width: 1px 0 0 1px;
+	left: -1px;
+	top: -1px;
+}
+.muniscan-instrument::after {
+	border-width: 0 1px 1px 0;
+	bottom: -1px;
+	right: -1px;
+}
+.instrument-radar {
+	aspect-ratio: 1;
+	background: radial-gradient(
+		circle,
+		color-mix(in srgb, var(--color-accent) 8%, transparent),
+		transparent 63%
+	);
+	border: 1px solid var(--color-border);
+	border-radius: 50%;
+	margin: 1.8rem auto;
+	max-width: 18rem;
+	overflow: hidden;
+	position: relative;
+}
+.instrument-radar i {
+	border: 1px solid var(--color-border);
+	border-radius: 50%;
+	inset: 14%;
+	position: absolute;
+}
+.instrument-radar i:nth-child(2) {
+	inset: 28%;
+}
+.instrument-radar i:nth-child(3) {
+	inset: 42%;
+}
+.instrument-radar i:nth-child(4) {
+	border: 0;
+	border-left: 1px solid var(--color-border);
+	border-radius: 0;
+	inset: 0 0 0 50%;
+}
+.instrument-radar::before {
+	border-top: 1px solid var(--color-border);
+	content: "";
+	left: 0;
+	position: absolute;
+	right: 0;
+	top: 50%;
+}
+.instrument-radar span {
+	background: conic-gradient(
+		from 230deg,
+		transparent 0 82%,
+		color-mix(in srgb, var(--color-accent) 25%, transparent) 95%,
+		transparent
+	);
+	border-radius: 50%;
+	inset: 0;
+	position: absolute;
+}
+.instrument-radar span::after {
+	background: var(--color-accent);
+	border-radius: 50%;
+	box-shadow: 0 0 1rem var(--color-accent);
+	content: "";
+	height: 0.42rem;
+	left: 65%;
+	position: absolute;
+	top: 31%;
+	width: 0.42rem;
+}
+.instrument-state {
+	border-top: 1px solid var(--color-border);
+	padding-top: 1rem;
+}
+.instrument-state > span {
+	align-items: center;
+	color: var(--color-accent);
+	display: flex;
+	font-family: var(--font-mono);
+	font-size: 0.68rem;
+	gap: 0.55rem;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+}
+.instrument-state > span i {
+	background: var(--color-accent);
+	border-radius: 50%;
+	box-shadow: 0 0 0 0.25rem
+		color-mix(in srgb, var(--color-accent) 10%, transparent);
+	height: 0.42rem;
+	width: 0.42rem;
+}
+.instrument-state p {
+	color: var(--color-muted-strong);
+	font-size: 0.86rem;
+	line-height: 1.55;
+	margin-top: 0.8rem;
+}
+.instrument-state code {
+	color: var(--color-muted);
+	display: block;
+	font-size: 0.65rem;
+	margin-top: 1rem;
+}
+.muniscan-section {
+	border-top: 1px solid var(--color-border);
+	padding: clamp(5rem, 9vw, 8rem) 0;
+}
+.muniscan-section-heading {
+	align-items: end;
+	display: grid;
+	gap: clamp(2rem, 6vw, 6rem);
+	grid-template-columns: minmax(0, 1fr) minmax(18rem, 0.56fr);
+	margin-bottom: clamp(3rem, 6vw, 5rem);
+}
+.muniscan-section-heading h2,
+.repeat-intro h2,
+.http-copy h2,
+.limits-heading h2 {
+	font-size: clamp(2.5rem, 5vw, 5rem);
+	font-weight: 470;
+	letter-spacing: -0.052em;
+	line-height: 0.97;
+	margin-top: 1rem;
+	max-width: 15ch;
+	text-wrap: balance;
+}
+.muniscan-section-heading > p,
+.repeat-intro > p:last-child,
+.http-copy > p:last-child {
+	color: var(--color-muted-strong);
+	line-height: 1.68;
+	max-width: 39rem;
+}
+.muniscan-metrics {
+	border-bottom: 1px solid var(--color-border);
+	border-top: 1px solid var(--color-border);
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+	margin: 0;
+}
+.muniscan-metrics > div {
+	display: grid;
+	min-height: 16rem;
+	padding: 1.1rem 1.25rem 1.4rem;
+	position: relative;
+}
+.muniscan-metrics > div + div {
+	border-left: 1px solid var(--color-border);
+}
+.muniscan-metrics dd > span {
+	color: var(--color-muted);
+	font-family: var(--font-mono);
+	font-size: 0.64rem;
+	left: 1.25rem;
+	position: absolute;
+	top: 1.1rem;
+}
+.muniscan-metrics dt {
+	align-self: end;
+	font-family: var(--font-mono);
+	font-size: clamp(2.3rem, 4vw, 4rem);
+	letter-spacing: -0.05em;
+}
+.muniscan-metrics dd {
+	margin: 0.8rem 0 0;
+}
+.muniscan-metrics dd strong {
+	display: block;
+	font-size: 0.88rem;
+	font-weight: 600;
+}
+.muniscan-metrics dd small {
+	color: var(--color-muted);
+	display: block;
+	font-size: 0.72rem;
+	line-height: 1.48;
+	margin-top: 0.45rem;
+}
+.distribution-layout {
+	display: grid;
+	gap: clamp(3rem, 8vw, 8rem);
+	grid-template-columns: minmax(16rem, 0.52fr) minmax(0, 1fr);
+	padding-top: clamp(4rem, 7vw, 6rem);
+}
+.distribution-copy h3 {
+	font-size: clamp(1.8rem, 3.4vw, 3.2rem);
+	font-weight: 480;
+	letter-spacing: -0.04em;
+	line-height: 1.05;
+	margin-top: 0.9rem;
+	max-width: 13ch;
+}
+.distribution-copy > p:last-of-type {
+	color: var(--color-muted-strong);
+	line-height: 1.65;
+	margin-top: 1.2rem;
+}
+.distribution-copy dl {
+	border-top: 1px solid var(--color-border);
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	margin-top: 2rem;
+}
+.distribution-copy dl div {
+	padding: 0.75rem 0;
+}
+.distribution-copy dt {
+	color: var(--color-muted);
+	font-family: var(--font-mono);
+	font-size: 0.62rem;
+	text-transform: uppercase;
+}
+.distribution-copy dd {
+	font-family: var(--font-mono);
+	font-size: 1.2rem;
+	margin: 0.3rem 0 0;
+}
+.distribution-plot {
+	border-bottom: 1px solid var(--color-border);
+	display: grid;
+	grid-template-columns: repeat(5, 1fr);
+	min-height: 27rem;
+	position: relative;
+}
+.distribution-grid {
+	display: grid;
+	inset: 0;
+	position: absolute;
+}
+.distribution-grid i {
+	border-top: 1px solid var(--color-border);
+}
+.distribution-bar {
+	align-items: end;
+	border-left: 1px solid var(--color-border);
+	display: grid;
+	grid-template-rows: auto 1fr auto auto;
+	padding: 0 0.7rem 0.8rem;
+	position: relative;
+}
+.distribution-bar > span,
+.distribution-bar > small {
+	color: var(--color-muted);
+	font-family: var(--font-mono);
+	font-size: 0.62rem;
+	padding-top: 0.7rem;
+}
+.distribution-bar > i {
+	background: color-mix(in srgb, var(--color-accent) 15%, transparent);
+	border-top: 2px solid var(--color-accent);
+	height: var(--bar);
+	min-height: 1rem;
+	position: relative;
+}
+.distribution-bar > i::after {
+	background: repeating-linear-gradient(
+		0deg,
+		transparent 0 7px,
+		color-mix(in srgb, var(--color-accent) 18%, transparent) 7px 8px
+	);
+	content: "";
+	inset: 0;
+	position: absolute;
+}
+.distribution-bar > i + strong {
+	font-family: var(--font-mono);
+	font-size: 1.1rem;
+	margin-top: 0.8rem;
+}
+.distribution-bar small {
+	padding-top: 0.2rem;
+}
+.pipeline-track {
+	border-top: 1px solid var(--color-border);
+	display: grid;
+	grid-template-columns: repeat(5, 1fr);
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+.pipeline-track li {
+	border-bottom: 1px solid var(--color-border);
+	display: grid;
+	grid-template-rows: auto 1fr;
+	min-height: 23rem;
+	padding: 1.1rem;
+}
+.pipeline-track li + li {
+	border-left: 1px solid var(--color-border);
+}
+.pipeline-number {
+	align-items: center;
+	display: flex;
+	gap: 0.8rem;
+}
+.pipeline-number span {
+	color: var(--color-accent);
+	font-family: var(--font-mono);
+	font-size: 0.68rem;
+}
+.pipeline-number i {
+	background: var(--color-border);
+	height: 1px;
+	position: relative;
+	width: 100%;
+}
+.pipeline-number i::after {
+	background: var(--color-accent);
+	border-radius: 50%;
+	content: "";
+	height: 0.38rem;
+	position: absolute;
+	right: 0;
+	top: -0.16rem;
+	width: 0.38rem;
+}
+.pipeline-track li > div:last-child {
+	align-self: end;
+}
+.pipeline-track h3 {
+	font-size: 1.25rem;
+	font-weight: 570;
+}
+.pipeline-track p {
+	color: var(--color-muted-strong);
+	font-size: 0.84rem;
+	line-height: 1.58;
+	margin-top: 0.8rem;
+}
+.pipeline-track code {
+	color: var(--color-muted);
+	display: block;
+	font-size: 0.62rem;
+	margin-top: 1rem;
+}
+.repeat-section {
+	display: grid;
+	gap: clamp(3rem, 7vw, 6rem);
+	grid-template-columns: minmax(17rem, 0.6fr) minmax(0, 1fr);
+}
+.repeat-intro {
+	align-self: start;
+}
+.repeat-intro > p:last-child {
+	margin-top: 1.5rem;
+}
+.snapshot-bridge {
+	align-items: center;
+	display: grid;
+	grid-template-columns: 1fr minmax(6rem, 0.6fr) 1fr;
+}
+.snapshot-bridge > div {
+	border: 1px solid var(--color-border);
+	display: grid;
+	gap: 1.1rem;
+	min-height: 11rem;
+	padding: 1.2rem;
+}
+.snapshot-bridge time {
+	color: var(--color-muted);
+	font-family: var(--font-mono);
+	font-size: 0.68rem;
+	text-transform: uppercase;
+}
+.snapshot-bridge > div > strong {
+	align-self: end;
+	font-size: clamp(1.3rem, 2.5vw, 2.2rem);
+	font-weight: 500;
+	letter-spacing: -0.04em;
+}
+.snapshot-bridge .snapshot-current {
+	background: color-mix(in srgb, var(--color-accent) 5%, transparent);
+	border-color: var(--color-accent);
+}
+.snapshot-bridge > span {
+	align-items: center;
+	display: flex;
+}
+.snapshot-bridge > span i {
+	background: var(--color-border);
+	height: 1px;
+	width: 100%;
+}
+.snapshot-bridge > span b {
+	border: 1px solid var(--color-border);
+	border-radius: 999px;
+	color: var(--color-muted);
+	font-family: var(--font-mono);
+	font-size: 0.6rem;
+	font-weight: 500;
+	padding: 0.45rem;
+}
+.diff-ledger {
+	border-top: 1px solid var(--color-border);
+	display: grid;
+	grid-column: 2;
+	grid-template-columns: repeat(4, 1fr);
+}
+.diff-ledger > div {
+	display: grid;
+	gap: 0.65rem;
+	padding: 1rem;
+}
+.diff-ledger > div + div {
+	border-left: 1px solid var(--color-border);
+}
+.diff-ledger > div > strong {
+	font-family: var(--font-mono);
+	font-size: 1.5rem;
+	font-weight: 500;
+}
+.diff-ledger span {
+	color: var(--color-muted);
+	font-size: 0.72rem;
+	line-height: 1.45;
+}
+.boundary-note {
+	background: color-mix(in srgb, var(--color-accent) 4%, transparent);
+	border-left: 2px solid var(--color-accent);
+	display: grid;
+	gap: 1rem;
+	grid-column: 2;
+	grid-template-columns: auto 1fr;
+	padding: 1rem;
+}
+.boundary-note > strong:first-child {
+	color: var(--color-accent);
+	font-family: var(--font-mono);
+}
+.boundary-note span {
+	color: var(--color-muted-strong);
+	font-size: 0.8rem;
+	line-height: 1.58;
+}
+.http-section {
+	display: grid;
+	gap: clamp(3rem, 7vw, 7rem);
+	grid-template-columns: minmax(17rem, 0.5fr) minmax(0, 1fr);
+}
+.http-copy > p:last-child {
+	margin-top: 1.4rem;
+}
+.http-observation {
+	align-items: center;
+	border-bottom: 1px solid var(--color-border);
+	border-top: 1px solid var(--color-border);
+	display: grid;
+	grid-template-columns: 9rem 1fr;
+	padding: 2rem 0;
+}
+.http-total {
+	display: grid;
+}
+.http-total span,
+.http-total small {
+	color: var(--color-muted);
+	font-family: var(--font-mono);
+	font-size: 0.62rem;
+}
+.http-total > strong:first-of-type {
+	font-family: var(--font-mono);
+	font-size: 3.5rem;
+	font-weight: 450;
+	letter-spacing: -0.06em;
+}
+.http-bars {
+	display: grid;
+	gap: 1rem;
+}
+.http-bar-main,
+.http-bar-detail {
+	display: flex;
+	height: 3rem;
+	overflow: hidden;
+}
+.http-bar-detail {
+	height: 0.7rem;
+}
+.http-bar-main i,
+.http-bar-detail i {
+	display: block;
+	width: var(--size);
+}
+.http-response {
+	background: var(--color-accent);
+}
+.http-success {
+	background: var(--color-accent);
+}
+.http-other {
+	background: color-mix(in srgb, var(--color-accent) 36%, transparent);
+}
+.http-none {
+	background: repeating-linear-gradient(
+		135deg,
+		transparent 0 6px,
+		var(--color-border) 6px 7px
+	);
+	border: 1px solid var(--color-border);
+}
+.http-legend {
+	display: grid;
+	gap: 1rem;
+	grid-template-columns: repeat(3, 1fr);
+}
+.http-legend span {
+	color: var(--color-muted);
+	display: grid;
+	font-size: 0.66rem;
+	grid-template-columns: auto auto;
+	line-height: 1.35;
+}
+.http-legend span > i {
+	height: 0.5rem;
+	width: 0.5rem;
+}
+.http-legend span > strong {
+	font-family: var(--font-mono);
+	font-size: 1rem;
+	font-weight: 500;
+	grid-row: 1 / 3;
+	margin: 0 0.5rem;
+}
+.http-boundary {
+	grid-column: 1 / -1;
+}
+.artifact-ledger {
+	border-top: 1px solid var(--color-border);
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+}
+.artifact-ledger a {
+	align-items: center;
+	border-bottom: 1px solid var(--color-border);
+	color: inherit;
+	display: grid;
+	gap: 1rem;
+	grid-template-columns: 2rem minmax(8rem, 0.55fr) 1fr auto;
+	min-height: 6rem;
+	padding: 1rem;
+	transition: background-color 160ms ease;
+}
+.artifact-ledger a:nth-child(odd) {
+	border-right: 1px solid var(--color-border);
+}
+.artifact-ledger a:hover {
+	background: color-mix(in srgb, var(--color-accent) 5%, transparent);
+}
+.artifact-ledger span,
+.artifact-ledger p {
+	color: var(--color-muted);
+	font-size: 0.7rem;
+}
+.artifact-ledger span {
+	font-family: var(--font-mono);
+}
+.artifact-ledger a > strong {
+	font-size: 0.9rem;
+}
+.artifact-ledger p {
+	line-height: 1.45;
+}
+.artifact-ledger i {
+	color: var(--color-accent);
+	font-style: normal;
+}
+.limits-section {
+	display: grid;
+	gap: clamp(3rem, 7vw, 6rem);
+	grid-template-columns: minmax(17rem, 0.54fr) minmax(0, 1fr);
+}
+.limits-heading {
+	align-self: start;
+	position: sticky;
+	top: 6rem;
+}
+.limits-ledger {
+	border-top: 1px solid var(--color-border);
+	display: grid;
+}
+.limits-ledger article {
+	display: grid;
+	gap: 1.2rem;
+	grid-template-columns: 2rem minmax(10rem, 0.62fr) 1fr;
+	padding: 1.2rem 0;
+}
+.limits-ledger article + article {
+	border-top: 1px solid var(--color-border);
+}
+.limits-ledger span {
+	color: var(--color-muted);
+	font-family: var(--font-mono);
+	font-size: 0.65rem;
+}
+.limits-ledger h3 {
+	font-size: 1rem;
+	font-weight: 580;
+}
+.limits-ledger p {
+	color: var(--color-muted-strong);
+	font-size: 0.84rem;
+	line-height: 1.58;
+}
+.citation-panel {
+	background: color-mix(in srgb, var(--color-accent) 5%, transparent);
+	border: 1px solid var(--color-border);
+	display: grid;
+	gap: 2rem;
+	grid-column: 1 / -1;
+	grid-template-columns: 1fr auto;
+	padding: clamp(1.5rem, 4vw, 3rem);
+}
+.citation-panel h3 {
+	font-size: clamp(1.6rem, 3vw, 2.8rem);
+	font-weight: 480;
+	letter-spacing: -0.04em;
+	margin-top: 0.8rem;
+}
+.citation-panel > div > p:last-child {
+	color: var(--color-muted-strong);
+	line-height: 1.62;
+	margin-top: 1rem;
+	max-width: 48rem;
+}
+.citation-panel nav {
+	align-content: end;
+	display: grid;
+	gap: 0.7rem;
+}
+.citation-panel a {
+	border-bottom: 1px solid var(--color-border);
+	color: var(--color-text);
+	font-family: var(--font-mono);
+	font-size: 0.68rem;
+	padding: 0.6rem 0;
+}
+.citation-panel a:hover {
+	color: var(--color-accent);
+}
+@media (max-width: 1100px) {
+	.muniscan-page {
+		--muni-gutter: clamp(4.5rem, 7vw, 5.5rem);
+	}
+	.muniscan-metrics {
+		grid-template-columns: repeat(2, 1fr);
+	}
+	.muniscan-metrics > div:nth-child(3) {
+		border-left: 0;
+		border-top: 1px solid var(--color-border);
+	}
+	.muniscan-metrics > div:nth-child(4) {
+		border-top: 1px solid var(--color-border);
+	}
+	.pipeline-track {
+		grid-template-columns: repeat(3, 1fr);
+	}
+	.pipeline-track li:nth-child(4) {
+		border-left: 0;
+	}
+	.pipeline-track li:nth-child(n + 4) {
+		border-top: 1px solid var(--color-border);
+	}
+	.artifact-ledger a {
+		grid-template-columns: 2rem 1fr auto;
+	}
+	.artifact-ledger p {
+		grid-column: 2;
+	}
+}
+@media (max-width: 760px) {
+	.muniscan-page {
+		--muni-gutter: 1.25rem;
+		padding-bottom: 4rem;
+	}
+	.muniscan-hero {
+		gap: 4rem;
+		grid-template-columns: 1fr;
+		min-height: auto;
+		padding: 7rem 0 4.5rem;
+	}
+	.muniscan-hero h1 {
+		font-size: clamp(3.4rem, 15vw, 5rem);
+	}
+	.muniscan-instrument {
+		min-height: auto;
+	}
+	.instrument-radar {
+		max-width: 14rem;
+	}
+	.muniscan-section-heading,
+	.distribution-layout,
+	.repeat-section,
+	.http-section,
+	.limits-section {
+		grid-template-columns: 1fr;
+	}
+	.muniscan-section-heading {
+		align-items: start;
+	}
+	.muniscan-metrics > div {
+		min-height: 13rem;
+	}
+	.distribution-plot {
+		min-height: 23rem;
+	}
+	.pipeline-track {
+		grid-template-columns: repeat(2, 1fr);
+	}
+	.pipeline-track li {
+		min-height: 19rem;
+	}
+	.pipeline-track li:nth-child(3),
+	.pipeline-track li:nth-child(5) {
+		border-left: 0;
+	}
+	.pipeline-track li:nth-child(4) {
+		border-left: 1px solid var(--color-border);
+	}
+	.pipeline-track li:nth-child(n + 3) {
+		border-top: 1px solid var(--color-border);
+	}
+	.diff-ledger,
+	.boundary-note {
+		grid-column: 1;
+	}
+	.diff-ledger {
+		grid-template-columns: repeat(2, 1fr);
+	}
+	.diff-ledger > div:nth-child(3) {
+		border-left: 0;
+		border-top: 1px solid var(--color-border);
+	}
+	.diff-ledger > div:nth-child(4) {
+		border-top: 1px solid var(--color-border);
+	}
+	.http-observation {
+		grid-template-columns: 6rem 1fr;
+	}
+	.artifact-ledger {
+		grid-template-columns: 1fr;
+	}
+	.artifact-ledger a:nth-child(odd) {
+		border-right: 0;
+	}
+	.limits-heading {
+		position: static;
+	}
+	.citation-panel {
+		grid-template-columns: 1fr;
+	}
+	.citation-panel nav {
+		align-content: start;
+	}
+}
+@media (max-width: 460px) {
+	.muniscan-page {
+		--muni-gutter: 1rem;
+	}
+	.muniscan-metrics {
+		grid-template-columns: 1fr;
+	}
+	.muniscan-metrics > div + div {
+		border-left: 0;
+		border-top: 1px solid var(--color-border);
+	}
+	.distribution-plot {
+		min-height: 20rem;
+	}
+	.distribution-bar {
+		padding: 0 0.35rem 0.6rem;
+	}
+	.distribution-bar > i + strong {
+		font-size: 0.85rem;
+	}
+	.pipeline-track {
+		grid-template-columns: 1fr;
+	}
+	.pipeline-track li {
+		min-height: 15rem;
+	}
+	.pipeline-track li + li {
+		border-left: 0;
+		border-top: 1px solid var(--color-border);
+	}
+	.snapshot-bridge {
+		grid-template-columns: 1fr;
+	}
+	.snapshot-bridge > span {
+		flex-direction: column;
+		min-height: 4rem;
+	}
+	.snapshot-bridge > span i {
+		height: 100%;
+		width: 1px;
+	}
+	.http-observation {
+		grid-template-columns: 1fr;
+	}
+	.http-bars {
+		margin-top: 1.5rem;
+	}
+	.http-legend {
+		grid-template-columns: 1fr;
+	}
+	.artifact-ledger a {
+		grid-template-columns: 1.5rem 1fr auto;
+	}
+	.limits-ledger article {
+		grid-template-columns: 1.5rem 1fr;
+	}
+	.limits-ledger p {
+		grid-column: 2;
+	}
+}
+</style>

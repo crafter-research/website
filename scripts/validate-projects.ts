@@ -60,7 +60,7 @@ for (const project of projects) {
 		if (!link.label.en || !link.label.es) {
 			errors.push(`${project.slug}: link labels must be bilingual`);
 		}
-		urls.add(link.url);
+		if (link.url.startsWith("http")) urls.add(link.url);
 	}
 }
 
@@ -89,7 +89,7 @@ for (const project of portfolioAudit) {
 		errors.push(`${project.slug}: audit scores must be between 0 and 4`);
 	}
 	urls.add(project.repository);
-	if (project.homepage) urls.add(project.homepage);
+	if (project.homepage?.startsWith("http")) urls.add(project.homepage);
 }
 
 if (publicSystems.length !== 6) {
