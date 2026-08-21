@@ -17,6 +17,16 @@ const { type, lang, entries } = Astro.props;
 const t = useTranslations(lang);
 const tp = useTranslatedPath(lang);
 const untranslatedLabel = t("content.untranslated");
+const projects =
+	type === "research"
+		? [
+				...new Set(
+					entries.flatMap(({ entry }) =>
+						"project" in entry.data ? [entry.data.project] : [],
+					),
+				),
+			].sort()
+		: [];
 ---
 
 <main class="research-log-index">
@@ -26,6 +36,23 @@ const untranslatedLabel = t("content.untranslated");
 		<p>{t(`${type}.description`)}</p>
 	</header>
 
+	{type === "research" && projects.length > 1 && (
+		<div class="research-log-tools">
+			<fieldset class="research-project-filter">
+				<legend class="sr-only">{t("research.filterProject")}</legend>
+				<button type="button" data-research-project="all" aria-pressed="true">
+					{t("research.all")}
+				</button>
+				{projects.map((project) => (
+					<button type="button" data-research-project={project} aria-pressed="false">
+						{project}
+					</button>
+				))}
+			</fieldset>
+			<span class="research-filter-count" aria-live="polite">{entries.length} / {entries.length}</span>
+		</div>
+	)}
+
 	<section class="research-log-feed" aria-label={t(`${type}.title`)}>
 		{entries.map(({ entry, untranslated }) => {
 				const d = entry.data;
@@ -34,7 +61,7 @@ const untranslatedLabel = t("content.untranslated");
 						? `${d.status} / ${fmtDate(d.date, lang)} / ${d.project}`
 						: fmtDate(d.date, lang);
 				return (
-					<a href={tp(`/${type}/${d.urlSlug}`)} class="note-row">
+					<a href={tp(`/${type}/${d.urlSlug}`)} class="note-row" data-project={type === "research" && "project" in d ? d.project : undefined}>
 						<div>
 							<strong>{d.title}</strong>
 							<span>
@@ -49,8 +76,60 @@ const untranslatedLabel = t("content.untranslated");
 				);
 			})}
 	</section>
+	{type === "research" && <p class="research-filter-empty" hidden>{t("research.noResults")}</p>}
 
 	<footer class="article-footer">
 		<a href={tp("/")}>{t(`${type}.back`)}</a>
 	</footer>
 </main>
+
+<script>
+const buttons = [
+	...document.querySelectorAll<HTMLButtonElement>("[data-research-project]"),
+];
+const rows = [
+	...document.querySelectorAll<HTMLElement>(
+		".research-log-feed [data-project]",
+	),
+];
+const count = document.querySelector<HTMLElement>(".research-filter-count");
+const empty = document.querySelector<HTMLElement>(".research-filter-empty");
+
+const selectProject = (project: string) => {
+	let visible = 0;
+	for (const row of rows) {
+		const show = project === "all" || row.dataset.project === project;
+		row.hidden = !show;
+		if (show) visible += 1;
+	}
+	for (const button of buttons) {
+		button.setAttribute(
+			"aria-pressed",
+			String(button.dataset.researchProject === project),
+		);
+	}
+	if (count) count.textContent = `${visible} / ${rows.length}`;
+	if (empty) empty.hidden = visible !== 0;
+
+	const url = new URL(window.location.href);
+	if (project === "all") url.searchParams.delete("project");
+	else url.searchParams.set("project", project);
+	window.history.replaceState({}, "", url);
+};
+
+for (const button of buttons) {
+	button.addEventListener("click", () =>
+		selectProject(button.dataset.researchProject ?? "all"),
+	);
+}
+
+const requestedProject = new URL(window.location.href).searchParams.get(
+	"project",
+);
+if (
+	requestedProject &&
+	buttons.some((button) => button.dataset.researchProject === requestedProject)
+) {
+	selectProject(requestedProject);
+}
+</script>

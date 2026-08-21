@@ -92,6 +92,8 @@ export const ui = {
 			"Milestones from the lab, written as we go. Hypotheses, measurements, and the conclusions that moved.",
 		"research.label": "Crafter Research / Research log",
 		"research.all": "All milestones",
+		"research.filterProject": "Filter by project",
+		"research.noResults": "No milestones match this project.",
 		"research.back": "Back to lab",
 		"blog.title": "Blog",
 		"blog.description":
@@ -201,6 +203,8 @@ export const ui = {
 			"Hitos del laboratorio, escritos sobre la marcha. Hipótesis, mediciones, y las conclusiones que se movieron.",
 		"research.label": "Crafter Research / Registro",
 		"research.all": "Todos los hitos",
+		"research.filterProject": "Filtrar por proyecto",
+		"research.noResults": "No hay hitos para este proyecto.",
 		"research.back": "Volver al lab",
 		"blog.title": "Blog",
 		"blog.description":
@@ -310,6 +314,8 @@ export const ui = {
 			"Marcos do laboratório, escritos ao longo do caminho. Hipóteses, medições, e as conclusões que mudaram.",
 		"research.label": "Crafter Research / Registro",
 		"research.all": "Todos os marcos",
+		"research.filterProject": "Filtrar por projeto",
+		"research.noResults": "Não há marcos para este projeto.",
 		"research.back": "Voltar ao lab",
 		"blog.title": "Blog",
 		"blog.description":
@@ -418,6 +424,8 @@ export const ui = {
 			"实验室的里程碑，边做边记录。假设、测量，以及随之改变的结论。",
 		"research.label": "Crafter Research / 研究日志",
 		"research.all": "全部里程碑",
+		"research.filterProject": "按项目筛选",
+		"research.noResults": "此项目暂无里程碑。",
 		"research.back": "返回实验室",
 		"blog.title": "博客",
 		"blog.description":
