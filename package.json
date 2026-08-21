@@ -8,7 +8,7 @@
 	"scripts": {
 		"dev": "portless crafter-research astro dev",
 		"build": "bun run check:projects && astro build",
-		"check": "bun run check:projects && astro check && biome check src/components/HomePage.astro src/components/LanguagePicker.astro src/components/PortfolioPage.astro src/components/SupportPage.astro src/components/SystemsPage.astro src/components/SiteHeader.astro src/components/SiteFooter.astro src/data/projects.ts src/data/portfolio-audit.ts src/data/public-systems.ts src/i18n/home.ts src/i18n/ui.ts src/pages/projects.astro src/pages/support.astro src/pages/systems.astro src/pages/[lang]/projects.astro src/pages/[lang]/support.astro src/pages/[lang]/systems.astro src/styles/global.css scripts/generate-assets.ts scripts/validate-projects.ts package.json",
+		"check": "bun run check:projects && astro check && biome check src/components/HomePage.astro src/components/LanguagePicker.astro src/components/MuniscanPage.astro src/components/PortfolioPage.astro src/components/SupportPage.astro src/components/SystemsPage.astro src/components/SiteHeader.astro src/components/SiteFooter.astro src/data/projects.ts src/data/portfolio-audit.ts src/data/public-systems.ts src/i18n/home.ts src/i18n/ui.ts src/pages/muniscan.astro src/pages/projects.astro src/pages/support.astro src/pages/systems.astro src/pages/[lang]/muniscan.astro src/pages/[lang]/projects.astro src/pages/[lang]/support.astro src/pages/[lang]/systems.astro src/styles/global.css scripts/generate-assets.ts scripts/validate-projects.ts package.json",
 		"check:projects": "bun scripts/validate-projects.ts",
 		"preview": "astro preview",
 		"astro": "astro"
