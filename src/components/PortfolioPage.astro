@@ -54,7 +54,7 @@ const copy = {
 		ledgerBody:
 			"Filter the evidence without changing the ranking. Every record keeps its limitation visible.",
 		search: "Search projects",
-		searchPlaceholder: "Search by project or artifact",
+		searchPlaceholder: "Search by project or artifact…",
 		family: "System",
 		maturity: "State",
 		all: "All",
@@ -123,7 +123,7 @@ const copy = {
 		ledgerBody:
 			"Filtra la evidencia sin alterar el ranking. Cada registro mantiene su limitación visible.",
 		search: "Buscar proyectos",
-		searchPlaceholder: "Buscar por proyecto o artefacto",
+		searchPlaceholder: "Buscar por proyecto o artefacto…",
 		family: "Sistema",
 		maturity: "Estado",
 		all: "Todos",
@@ -288,14 +288,14 @@ const collisionIndex = (
 			</div>
 			<div class="signal-legend" role="group" aria-label={copy.activityKey}>
 				<span>{copy.activityKey}</span>
-				<i class="legend-dot legend-dot-1"></i
-				><i class="legend-dot legend-dot-2"></i
-				><i class="legend-dot legend-dot-3"></i>
+				<i class="legend-dot legend-dot-1" aria-hidden="true"></i
+				><i class="legend-dot legend-dot-2" aria-hidden="true"></i
+				><i class="legend-dot legend-dot-3" aria-hidden="true"></i>
 			</div>
 		</section>
 
 		<section
-			class="ledger-section"
+			class="portfolio-ledger-section"
 			aria-labelledby="portfolio-ledger-title"
 			data-portfolio-root
 		>
@@ -312,6 +312,8 @@ const collisionIndex = (
 					<span>{copy.search}</span>
 					<input
 						type="search"
+						name="portfolio-search"
+						autocomplete="off"
 						placeholder={copy.searchPlaceholder}
 						data-portfolio-search
 					>
@@ -425,7 +427,10 @@ const collisionIndex = (
 			</div>
 		</section>
 
-		<section class="method-section" aria-labelledby="audit-method-title">
+		<section
+			class="portfolio-method-section"
+			aria-labelledby="audit-method-title"
+		>
 			<div class="method-intro">
 				<p class="portfolio-eyebrow">{copy.methodLabel}</p>
 				<h2 id="audit-method-title">{copy.methodTitle}</h2>
@@ -531,16 +536,18 @@ if (root) {
 
 <style>
 .portfolio-observatory {
+	--portfolio-gutter: clamp(4.5rem, 8vw, 7.5rem);
+	box-sizing: border-box;
 	margin: 0 auto;
-	max-width: 86rem;
-	padding: 0 var(--layout-padding) 6rem;
+	max-width: 96rem;
+	padding: 0 var(--portfolio-gutter) 7rem;
 }
 .portfolio-hero {
 	display: grid;
 	gap: clamp(3rem, 8vw, 8rem);
 	grid-template-columns: minmax(0, 1.5fr) minmax(18rem, 0.7fr);
 	min-height: calc(90svh - var(--header-height));
-	padding: clamp(6rem, 12vw, 10rem) 0 5rem;
+	padding: clamp(7rem, 12vw, 10rem) 0 clamp(5rem, 8vw, 7rem);
 	align-items: end;
 }
 .portfolio-hero-copy {
@@ -605,17 +612,17 @@ if (root) {
 	text-transform: uppercase;
 }
 .signal-section,
-.ledger-section,
-.method-section {
+.portfolio-ledger-section,
+.portfolio-method-section {
 	border-top: 1px solid var(--color-border);
-	padding: clamp(4rem, 8vw, 7rem) 0;
+	padding: clamp(5rem, 8vw, 7.5rem) 0;
 }
 .portfolio-section-heading {
 	align-items: end;
 	display: grid;
 	gap: 2rem;
 	grid-template-columns: minmax(0, 1fr) minmax(18rem, 0.58fr);
-	margin-bottom: 3rem;
+	margin-bottom: clamp(3rem, 5vw, 4.5rem);
 }
 .portfolio-section-heading h2,
 .method-intro h2 {
@@ -810,9 +817,9 @@ if (root) {
 	border-bottom: 1px solid var(--color-border);
 	border-top: 1px solid var(--color-border);
 	display: grid;
-	gap: 1.25rem 2rem;
-	grid-template-columns: minmax(16rem, 0.8fr) minmax(0, 1.4fr);
-	padding: 1.25rem 0;
+	gap: 1.5rem 3rem;
+	grid-template-columns: minmax(18rem, 0.72fr) minmax(0, 1.28fr);
+	padding: 2rem 0;
 }
 .portfolio-search {
 	grid-row: span 2;
@@ -839,13 +846,14 @@ if (root) {
 	border-radius: 0;
 	color: var(--color-text);
 	font: inherit;
-	min-height: 3rem;
-	padding: 0 0.9rem;
+	min-height: 3.5rem;
+	padding: 0 1rem;
 	width: 100%;
 }
-.portfolio-search input:focus {
+.portfolio-search input:focus-visible {
 	border-color: var(--color-accent);
-	outline: 0;
+	outline: 2px solid color-mix(in srgb, var(--color-accent) 38%, transparent);
+	outline-offset: 2px;
 }
 .filter-row {
 	display: flex;
@@ -862,6 +870,19 @@ if (root) {
 	font-size: 0.65rem;
 	min-height: 2rem;
 	padding: 0.35rem 0.65rem;
+	touch-action: manipulation;
+}
+.filter-row button:hover,
+.filter-row button:focus-visible,
+.portfolio-empty button:hover,
+.portfolio-empty button:focus-visible {
+	border-color: var(--color-accent);
+	color: var(--color-text);
+}
+.filter-row button:focus-visible,
+.portfolio-empty button:focus-visible {
+	outline: 2px solid color-mix(in srgb, var(--color-accent) 38%, transparent);
+	outline-offset: 2px;
 }
 .filter-row button[aria-pressed="true"] {
 	background: var(--color-text);
@@ -875,7 +896,7 @@ if (root) {
 	font-size: 0.64rem;
 	justify-content: space-between;
 	letter-spacing: 0.08em;
-	padding: 1rem 0;
+	padding: 1.4rem 0;
 	text-transform: uppercase;
 }
 .ledger-count strong {
@@ -887,9 +908,9 @@ if (root) {
 .portfolio-record {
 	border-bottom: 1px solid var(--color-border);
 	display: grid;
-	gap: 1.5rem;
-	grid-template-columns: 2.25rem minmax(17rem, 0.85fr) minmax(20rem, 1.15fr);
-	padding: 1.7rem 0 2rem;
+	gap: clamp(1.75rem, 3vw, 3rem);
+	grid-template-columns: 2.5rem minmax(19rem, 0.92fr) minmax(24rem, 1.08fr);
+	padding: clamp(2.5rem, 4vw, 3.5rem) 0;
 	scroll-margin-top: 5rem;
 }
 .portfolio-record[hidden] {
@@ -904,7 +925,7 @@ if (root) {
 .record-main,
 .record-evidence {
 	display: grid;
-	gap: 1.1rem;
+	gap: 1.5rem;
 	align-content: start;
 }
 .record-header {
@@ -970,8 +991,8 @@ if (root) {
 }
 .record-summary {
 	color: var(--color-muted-strong);
-	font-size: 0.92rem;
-	line-height: 1.6;
+	font-size: 0.96rem;
+	line-height: 1.7;
 }
 .signal-bars {
 	display: grid;
@@ -1021,7 +1042,7 @@ if (root) {
 }
 .record-evidence {
 	border-left: 1px solid var(--color-border);
-	padding-left: 1.5rem;
+	padding-left: clamp(1.5rem, 3vw, 2.5rem);
 }
 .record-evidence ul {
 	color: var(--color-text);
@@ -1047,7 +1068,7 @@ if (root) {
 	background: color-mix(in srgb, var(--color-accent) 3%, transparent);
 	border-left: 1px solid
 		color-mix(in srgb, var(--color-accent) 48%, transparent);
-	padding: 0.7rem 0.85rem;
+	padding: 1rem 1.1rem;
 }
 .record-limit > p:last-child {
 	color: var(--color-muted-strong);
@@ -1098,25 +1119,27 @@ if (root) {
 .portfolio-empty button {
 	margin-top: 1rem;
 }
-.method-section {
+.portfolio-method-section {
 	display: grid;
-	gap: 3rem;
-	grid-template-columns: minmax(18rem, 0.65fr) minmax(0, 1.35fr);
+	gap: clamp(3rem, 6vw, 6rem);
+	grid-template-columns: minmax(20rem, 0.72fr) minmax(0, 1.28fr);
 }
 .method-intro > p:not(.portfolio-eyebrow) {
 	margin-top: 1.2rem;
 }
 .method-grid {
-	border-top: 1px solid var(--color-border);
 	display: grid;
+	gap: 1px;
 	grid-template-columns: repeat(3, 1fr);
 }
 .method-grid article {
+	background: color-mix(in srgb, var(--color-surface) 45%, transparent);
 	border-bottom: 1px solid var(--color-border);
 	border-right: 1px solid var(--color-border);
 	display: grid;
-	gap: 0.75rem;
-	padding: 1.25rem;
+	gap: 1.25rem;
+	min-height: 23rem;
+	padding: clamp(1.5rem, 2.5vw, 2rem);
 }
 .method-grid article:first-child {
 	border-left: 1px solid var(--color-border);
@@ -1145,7 +1168,7 @@ if (root) {
 .scope-note {
 	border-left: 1px solid var(--color-accent);
 	grid-column: 2;
-	padding: 0.25rem 1rem;
+	padding: 0.5rem 1.25rem;
 }
 .scope-note strong {
 	color: var(--color-accent);
@@ -1163,7 +1186,7 @@ if (root) {
 @media (max-width: 900px) {
 	.portfolio-hero,
 	.portfolio-section-heading,
-	.method-section {
+	.portfolio-method-section {
 		grid-template-columns: 1fr;
 	}
 	.portfolio-hero {
@@ -1198,7 +1221,14 @@ if (root) {
 		border-left: 1px solid var(--color-border);
 	}
 	.signal-map {
-		min-height: 22rem;
+		aspect-ratio: auto;
+		height: 22rem;
+		min-height: 0;
+	}
+}
+@media (max-width: 720px) {
+	.portfolio-observatory {
+		--portfolio-gutter: var(--layout-padding);
 	}
 }
 @media (max-width: 640px) {
@@ -1228,8 +1258,7 @@ if (root) {
 		padding-left: 1.4rem;
 	}
 	.signal-map {
-		aspect-ratio: 0.82;
-		min-height: 32rem;
+		height: 32rem;
 	}
 	.signal-dot span {
 		display: none;
@@ -1242,9 +1271,9 @@ if (root) {
 	}
 	.filter-row {
 		flex-wrap: nowrap;
-		margin-right: calc(var(--layout-padding) * -1);
+		max-width: calc(100vw - (var(--layout-padding) * 2));
 		overflow-x: auto;
-		padding-right: var(--layout-padding);
+		padding: 0.15rem 0 0.4rem;
 		scrollbar-width: none;
 	}
 	.filter-row::-webkit-scrollbar {
@@ -1275,12 +1304,15 @@ if (root) {
 	.method-grid {
 		grid-template-columns: 1fr;
 	}
+	.method-grid article {
+		min-height: 18rem;
+	}
 }
 @media (prefers-reduced-motion: no-preference) {
 	.portfolio-hero-copy,
 	.portfolio-totals,
 	.signal-section,
-	.ledger-section {
+	.portfolio-ledger-section {
 		animation: portfolio-reveal 620ms ease-out both;
 	}
 	.portfolio-totals {
@@ -1289,7 +1321,7 @@ if (root) {
 	.signal-section {
 		animation-delay: 130ms;
 	}
-	.ledger-section {
+	.portfolio-ledger-section {
 		animation-delay: 180ms;
 	}
 	.signal-dot {
