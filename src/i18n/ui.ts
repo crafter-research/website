@@ -14,6 +14,7 @@ export const ui = {
 	en: {
 		"site.label": "crafter research",
 		"nav.research": "research log",
+		"portfolio.title": "Projects",
 		"site.title": "Crafter Research",
 		"site.description":
 			"A research lab where every paper has a working prototype.",
@@ -119,6 +120,7 @@ export const ui = {
 	es: {
 		"site.label": "crafter research",
 		"nav.research": "registro",
+		"portfolio.title": "Proyectos",
 		"site.title": "Crafter Research",
 		"site.description":
 			"Un laboratorio donde cada paper tiene un prototipo funcional.",
@@ -224,6 +226,7 @@ export const ui = {
 	pt: {
 		"site.label": "crafter research",
 		"nav.research": "pesquisa",
+		"portfolio.title": "Projetos",
 		"site.title": "Crafter Research",
 		"site.description":
 			"Um laboratório onde cada paper tem um protótipo funcional.",
@@ -329,6 +332,7 @@ export const ui = {
 	zh: {
 		"site.label": "crafter research",
 		"nav.research": "研究",
+		"portfolio.title": "项目",
 		"site.title": "Crafter Research",
 		"site.description": "每篇论文都有可运行原型的研究实验室。",
 		"hero.title": "验证假设",

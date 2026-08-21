@@ -1,0 +1,1316 @@
+---
+import {
+	auditedPublicRepositoryCount,
+	excludedPublicRepositories,
+	type PortfolioFamily,
+	type PortfolioMaturity,
+	portfolioAudit,
+	portfolioScore,
+	publicRepositoryCount,
+} from "../data/portfolio-audit";
+import type { ProjectLocale } from "../data/projects";
+import type { Lang } from "../i18n/ui";
+import Layout from "../layouts/Layout.astro";
+
+interface Props {
+	lang: Lang;
+}
+
+const { lang } = Astro.props;
+const contentLang: ProjectLocale = lang === "es" ? "es" : "en";
+
+const copy = {
+	en: {
+		metaTitle: "Portfolio Observatory · Crafter Research",
+		metaDescription:
+			"An evidence-first audit of Crafter Research's public portfolio: activity, consistency, real output, and known limits.",
+		kicker: "Portfolio observatory / audit 01",
+		title: "A lab should show its unfinished work, too.",
+		body: "This is a public audit of what we shipped, what we still maintain, and what stopped moving. Maturity is not a vibe: every position is backed by activity, consistency, and inspectable output.",
+		audited: "audited projects",
+		publicRepos: "public repositories",
+		maintained: "maintained now",
+		verified: "snapshot verified",
+		mapLabel: "Signal map",
+		mapTitle: "Output is vertical. Consistency is horizontal.",
+		mapBody:
+			"The upper-right corner is hardest to earn. Dot size reflects recent activity; position reflects evidence accumulated over time.",
+		outputAxis: "more real output",
+		consistencyAxis: "more consistency",
+		activityKey: "activity",
+		quadrants: {
+			promising: "promising",
+			proven: "proven",
+			early: "early",
+			stalled: "stalled",
+		},
+		signals: {
+			activity: "activity",
+			consistency: "consistency",
+			output: "output",
+		},
+		ledgerLabel: "Public ledger",
+		ledgerTitle: "Twenty projects, including the quiet ones.",
+		ledgerBody:
+			"Filter the evidence without changing the ranking. Every record keeps its limitation visible.",
+		search: "Search projects",
+		searchPlaceholder: "Search by project or artifact",
+		family: "System",
+		maturity: "State",
+		all: "All",
+		showing: "Showing",
+		of: "of",
+		projects: "projects",
+		noResults: "No projects match this view.",
+		reset: "Reset filters",
+		proof: "Inspectable proof",
+		limitation: "Current limit",
+		lastActivity: "Last activity",
+		openProject: "Open project",
+		openSource: "Source",
+		commits: "commits",
+		weeks: "active weeks",
+		releases: "releases",
+		methodLabel: "How the audit works",
+		methodTitle: "Three signals, no hidden composite model.",
+		methodBody:
+			"The 12-point total orders the ledger, but each component stays visible. Repository activity is a maintenance signal, not an impact metric.",
+		methodActivity: "Activity",
+		methodActivityBody:
+			"Recency of the latest material push as of the verification date.",
+		methodConsistency: "Consistency",
+		methodConsistencyBody:
+			"Distinct active weeks since March 2026, not raw commit volume.",
+		methodOutput: "Real output",
+		methodOutputBody:
+			"Inspectable datasets, releases, tools, interfaces, methods, or results.",
+		scopeLabel: "Scope note",
+		scopeBody: `${publicRepositoryCount} public repositories were inspected. ${auditedPublicRepositoryCount} represent research or product work. ${excludedPublicRepositories.join(", ")} are lab infrastructure or an empty placeholder and are excluded from ranking. Private repositories are never exposed here.`,
+		fallback:
+			"Project descriptions are shown in English for this locale while the full translation is prepared.",
+	},
+	es: {
+		metaTitle: "Observatorio del portfolio · Crafter Research",
+		metaDescription:
+			"Auditoría evidence-first del portfolio público de Crafter Research: actividad, consistencia, output real y límites conocidos.",
+		kicker: "Observatorio del portfolio / auditoría 01",
+		title: "Un lab también debería mostrar lo que dejó de moverse.",
+		body: "Esta es una auditoría pública de lo que publicamos, lo que seguimos manteniendo y lo que se detuvo. La madurez no es una vibra: cada posición se apoya en actividad, consistencia y output inspeccionable.",
+		audited: "proyectos auditados",
+		publicRepos: "repositorios públicos",
+		maintained: "mantenidos ahora",
+		verified: "snapshot verificado",
+		mapLabel: "Mapa de señales",
+		mapTitle: "El output sube. La consistencia avanza.",
+		mapBody:
+			"La esquina superior derecha es la más difícil de ganar. El tamaño representa actividad reciente; la posición, evidencia acumulada.",
+		outputAxis: "más output real",
+		consistencyAxis: "más consistencia",
+		activityKey: "actividad",
+		quadrants: {
+			promising: "prometedor",
+			proven: "probado",
+			early: "temprano",
+			stalled: "detenido",
+		},
+		signals: {
+			activity: "actividad",
+			consistency: "consistencia",
+			output: "output",
+		},
+		ledgerLabel: "Ledger público",
+		ledgerTitle: "Veinte proyectos, incluyendo los silenciosos.",
+		ledgerBody:
+			"Filtra la evidencia sin alterar el ranking. Cada registro mantiene su limitación visible.",
+		search: "Buscar proyectos",
+		searchPlaceholder: "Buscar por proyecto o artefacto",
+		family: "Sistema",
+		maturity: "Estado",
+		all: "Todos",
+		showing: "Mostrando",
+		of: "de",
+		projects: "proyectos",
+		noResults: "Ningún proyecto coincide con esta vista.",
+		reset: "Limpiar filtros",
+		proof: "Prueba inspeccionable",
+		limitation: "Límite actual",
+		lastActivity: "Última actividad",
+		openProject: "Abrir proyecto",
+		openSource: "Código",
+		commits: "commits",
+		weeks: "semanas activas",
+		releases: "releases",
+		methodLabel: "Cómo funciona la auditoría",
+		methodTitle: "Tres señales, ningún modelo compuesto oculto.",
+		methodBody:
+			"El total de 12 puntos ordena el ledger, pero cada componente sigue visible. La actividad del repo indica mantenimiento, no impacto.",
+		methodActivity: "Actividad",
+		methodActivityBody:
+			"Recencia del último push material al momento de la verificación.",
+		methodConsistency: "Consistencia",
+		methodConsistencyBody:
+			"Semanas activas distintas desde marzo de 2026, no volumen bruto de commits.",
+		methodOutput: "Output real",
+		methodOutputBody:
+			"Datasets, releases, tools, interfaces, métodos o resultados inspeccionables.",
+		scopeLabel: "Nota de alcance",
+		scopeBody: `Se inspeccionaron ${publicRepositoryCount} repositorios públicos. ${auditedPublicRepositoryCount} representan trabajo de research o producto. ${excludedPublicRepositories.join(", ")} son infraestructura del lab o un placeholder vacío y se excluyen del ranking. Los repositorios privados nunca se exponen aquí.`,
+		fallback: "",
+	},
+}[contentLang];
+
+const familyLabels: Record<PortfolioFamily, Record<ProjectLocale, string>> = {
+	"earth-data": { en: "Earth data", es: "Datos de la Tierra" },
+	"ai-evals": { en: "AI evals", es: "Evals de IA" },
+	"legal-infrastructure": {
+		en: "Legal infrastructure",
+		es: "Infraestructura legal",
+	},
+	"government-clis": { en: "Government CLIs", es: "CLIs gubernamentales" },
+	"civic-knowledge": { en: "Civic knowledge", es: "Conocimiento cívico" },
+};
+
+const maturityLabels: Record<
+	PortfolioMaturity,
+	Record<ProjectLocale, string>
+> = {
+	maintained: { en: "Maintained", es: "Mantenido" },
+	published: { en: "Published", es: "Publicado" },
+	experimental: { en: "Experimental", es: "Experimental" },
+	dormant: { en: "Dormant", es: "Inactivo" },
+};
+
+const sortedProjects = [...portfolioAudit].sort((a, b) => {
+	const scoreDelta = portfolioScore(b) - portfolioScore(a);
+	if (scoreDelta !== 0) return scoreDelta;
+	return b.lastActivity.localeCompare(a.lastActivity);
+});
+
+const maintainedCount = portfolioAudit.filter(
+	(project) => project.maturity === "maintained",
+).length;
+const familyOptions = Object.keys(familyLabels) as PortfolioFamily[];
+const maturityOptions = Object.keys(maturityLabels) as PortfolioMaturity[];
+const fmtDate = (value: string) =>
+	new Date(`${value}T00:00:00Z`).toLocaleDateString(
+		contentLang === "es" ? "es-PE" : "en-US",
+		{ day: "2-digit", month: "short", year: "numeric", timeZone: "UTC" },
+	);
+const axisPosition = (score: number) => `${12 + score * 19}%`;
+const collisionOffsets = [
+	[-9, -7],
+	[9, 7],
+	[-9, 8],
+	[9, -8],
+	[0, 0],
+] as const;
+const collisionIndex = (
+	project: (typeof sortedProjects)[number],
+	index: number,
+) =>
+	sortedProjects
+		.slice(0, index)
+		.filter(
+			(candidate) =>
+				candidate.scores.consistency === project.scores.consistency &&
+				candidate.scores.output === project.scores.output,
+		).length;
+---
+
+<Layout title={copy.metaTitle} description={copy.metaDescription} lang={lang}>
+	<main class="portfolio-observatory">
+		<header class="portfolio-hero">
+			<div class="portfolio-hero-copy">
+				<p class="portfolio-eyebrow">{copy.kicker}</p>
+				<h1>{copy.title}</h1>
+				<p>{copy.body}</p>
+				{lang !== "en" && lang !== "es" && <small>{copy.fallback}</small>}
+			</div>
+			<dl class="portfolio-totals">
+				<div>
+					<dt>{String(auditedPublicRepositoryCount).padStart(2, "0")}</dt>
+					<dd>{copy.audited}</dd>
+				</div>
+				<div>
+					<dt>{String(publicRepositoryCount).padStart(2, "0")}</dt>
+					<dd>{copy.publicRepos}</dd>
+				</div>
+				<div>
+					<dt>{String(maintainedCount).padStart(2, "0")}</dt>
+					<dd>{copy.maintained}</dd>
+				</div>
+				<div>
+					<dt>21.08</dt>
+					<dd>{copy.verified}</dd>
+				</div>
+			</dl>
+		</header>
+
+		<section class="signal-section" aria-labelledby="signal-map-title">
+			<div class="portfolio-section-heading">
+				<div>
+					<p class="portfolio-eyebrow">{copy.mapLabel}</p>
+					<h2 id="signal-map-title">{copy.mapTitle}</h2>
+				</div>
+				<p>{copy.mapBody}</p>
+			</div>
+			<div class="signal-map-shell">
+				<span class="axis-label axis-label-y">{copy.outputAxis}</span>
+				<div class="signal-map">
+					<div class="signal-quadrant signal-quadrant-promising">
+						{copy.quadrants.promising}
+					</div>
+					<div class="signal-quadrant signal-quadrant-proven">
+						{copy.quadrants.proven}
+					</div>
+					<div class="signal-quadrant signal-quadrant-early">
+						{copy.quadrants.early}
+					</div>
+					<div class="signal-quadrant signal-quadrant-stalled">
+						{copy.quadrants.stalled}
+					</div>
+					{sortedProjects.map((project, index) => {
+						const offset = collisionOffsets[collisionIndex(project, index) % collisionOffsets.length];
+						return (
+						<a
+							href={`#${project.slug}`}
+							class={`signal-dot signal-dot-${project.maturity}`}
+							style={`--signal-x:${axisPosition(project.scores.consistency)};--signal-y:${axisPosition(project.scores.output)};--signal-offset-x:${offset[0]}px;--signal-offset-y:${offset[1]}px;--signal-size:${0.48 + project.scores.activity * 0.12}rem;--signal-delay:${index * 18}ms`}
+							aria-label={`${project.name}: ${maturityLabels[project.maturity][contentLang]}, ${portfolioScore(project)} / 12`}
+							data-map-family={project.family}
+						>
+							<span>{project.name}</span>
+						</a>
+						);
+					})}
+				</div>
+				<span class="axis-label axis-label-x">{copy.consistencyAxis}</span>
+			</div>
+			<div class="signal-legend" role="group" aria-label={copy.activityKey}>
+				<span>{copy.activityKey}</span>
+				<i class="legend-dot legend-dot-1"></i
+				><i class="legend-dot legend-dot-2"></i
+				><i class="legend-dot legend-dot-3"></i>
+			</div>
+		</section>
+
+		<section
+			class="ledger-section"
+			aria-labelledby="portfolio-ledger-title"
+			data-portfolio-root
+		>
+			<div class="portfolio-section-heading">
+				<div>
+					<p class="portfolio-eyebrow">{copy.ledgerLabel}</p>
+					<h2 id="portfolio-ledger-title">{copy.ledgerTitle}</h2>
+				</div>
+				<p>{copy.ledgerBody}</p>
+			</div>
+
+			<div class="portfolio-controls">
+				<label class="portfolio-search">
+					<span>{copy.search}</span>
+					<input
+						type="search"
+						placeholder={copy.searchPlaceholder}
+						data-portfolio-search
+					>
+				</label>
+				<fieldset>
+					<legend>{copy.family}</legend>
+					<div class="filter-row">
+						<button type="button" data-filter-family="all" aria-pressed="true">
+							{copy.all}
+						</button>
+						{familyOptions.map((family) => (
+							<button type="button" data-filter-family={family} aria-pressed="false">{familyLabels[family][contentLang]}</button>
+						))}
+					</div>
+				</fieldset>
+				<fieldset>
+					<legend>{copy.maturity}</legend>
+					<div class="filter-row">
+						<button
+							type="button"
+							data-filter-maturity="all"
+							aria-pressed="true"
+						>
+							{copy.all}
+						</button>
+						{maturityOptions.map((maturity) => (
+							<button type="button" data-filter-maturity={maturity} aria-pressed="false">{maturityLabels[maturity][contentLang]}</button>
+						))}
+					</div>
+				</fieldset>
+			</div>
+
+			<div class="ledger-count" aria-live="polite">
+				<span
+					>{copy.showing}
+					<strong data-visible-count>{auditedPublicRepositoryCount}</strong>
+					{copy.of} {auditedPublicRepositoryCount} {copy.projects}</span
+				>
+				<span>activity + consistency + output / 12</span>
+			</div>
+
+			<div class="portfolio-ledger">
+				{sortedProjects.map((project, index) => (
+					<article
+						id={project.slug}
+						class="portfolio-record"
+						data-project-record
+						data-family={project.family}
+						data-maturity={project.maturity}
+						data-search={`${project.name} ${project.slug} ${project.artifactTypes.join(" ")} ${familyLabels[project.family][contentLang]}`.toLowerCase()}
+					>
+						<div class="record-index">{String(index + 1).padStart(2, "0")}</div>
+						<div class="record-main">
+							<header class="record-header">
+								<div>
+									<div class="record-taxonomy">
+										<span class={`maturity-pill maturity-${project.maturity}`}>{maturityLabels[project.maturity][contentLang]}</span>
+										<span>{familyLabels[project.family][contentLang]}</span>
+									</div>
+									<h3>{project.name}</h3>
+								</div>
+								<div class="record-score">
+									<strong>{portfolioScore(project)}</strong><span>/12</span>
+								</div>
+							</header>
+							<p class="record-summary">{project.summary[contentLang]}</p>
+							<div class="signal-bars">
+								{(["activity", "consistency", "output"] as const).map((signal) => (
+									<div class="signal-bar">
+									<span>{copy.signals[signal]}</span>
+										<div role="img" aria-label={`${signal}: ${project.scores[signal]} / 4`}>
+											{[1, 2, 3, 4].map((step) => <i class:list={[step <= project.scores[signal] && "filled"]}></i>)}
+										</div>
+										<strong>{project.scores[signal]}</strong>
+									</div>
+								))}
+							</div>
+							<div class="record-artifacts">
+								{project.artifactTypes.map((artifact) => <span>{artifact}</span>)}
+							</div>
+						</div>
+						<div class="record-evidence">
+							<div>
+								<p class="record-label">{copy.proof}</p>
+								<ul>{project.proof.map((proof) => <li>{proof[contentLang]}</li>)}</ul>
+							</div>
+							<div class="record-limit">
+								<p class="record-label">{copy.limitation}</p>
+								<p>{project.limitation[contentLang]}</p>
+							</div>
+							<footer class="record-footer">
+								<div class="record-metrics">
+									<span>{project.metrics.commits} {copy.commits}</span>
+									<span>{project.metrics.activeWeeks} {copy.weeks}</span>
+									{project.metrics.releases > 0 && <span>{project.metrics.releases} {copy.releases}</span>}
+								</div>
+								<p>{copy.lastActivity} <time datetime={project.lastActivity}>{fmtDate(project.lastActivity)}</time></p>
+								<nav aria-label={project.name}>
+									{project.homepage && <a href={project.homepage} target="_blank" rel="noreferrer">{copy.openProject} ↗</a>}
+									<a href={project.repository} target="_blank" rel="noreferrer">{copy.openSource} ↗</a>
+								</nav>
+							</footer>
+						</div>
+					</article>
+				))}
+			</div>
+
+			<div class="portfolio-empty" hidden data-portfolio-empty>
+				<p>{copy.noResults}</p>
+				<button type="button" data-reset-filters>{copy.reset}</button>
+			</div>
+		</section>
+
+		<section class="method-section" aria-labelledby="audit-method-title">
+			<div class="method-intro">
+				<p class="portfolio-eyebrow">{copy.methodLabel}</p>
+				<h2 id="audit-method-title">{copy.methodTitle}</h2>
+				<p>{copy.methodBody}</p>
+			</div>
+			<div class="method-grid">
+				<article>
+					<span>01</span>
+					<h3>{copy.methodActivity}</h3>
+					<p>{copy.methodActivityBody}</p>
+					<code>≤14d 4 · ≤30d 3 · ≤60d 2 · ≤100d 1</code>
+				</article>
+				<article>
+					<span>02</span>
+					<h3>{copy.methodConsistency}</h3>
+					<p>{copy.methodConsistencyBody}</p>
+					<code>5+w 4 · 3–4w 3 · 2w 2 · 1w 1</code>
+				</article>
+				<article>
+					<span>03</span>
+					<h3>{copy.methodOutput}</h3>
+					<p>{copy.methodOutputBody}</p>
+					<code>multi-surface 4 · shipped 3 · usable 2 · source 1</code>
+				</article>
+			</div>
+			<aside class="scope-note">
+				<strong>{copy.scopeLabel}</strong>
+				<p>{copy.scopeBody}</p>
+			</aside>
+		</section>
+	</main>
+</Layout>
+
+<script>
+const root = document.querySelector<HTMLElement>("[data-portfolio-root]");
+if (root) {
+	const records = [
+		...root.querySelectorAll<HTMLElement>("[data-project-record]"),
+	];
+	const search = root.querySelector<HTMLInputElement>(
+		"[data-portfolio-search]",
+	);
+	const count = root.querySelector<HTMLElement>("[data-visible-count]");
+	const empty = root.querySelector<HTMLElement>("[data-portfolio-empty]");
+	let family = "all";
+	let maturity = "all";
+
+	const setPressed = (selector: string, value: string) => {
+		root.querySelectorAll<HTMLButtonElement>(selector).forEach((button) => {
+			const key = selector.includes("family")
+				? button.dataset.filterFamily
+				: button.dataset.filterMaturity;
+			button.setAttribute("aria-pressed", String(key === value));
+		});
+	};
+
+	const applyFilters = () => {
+		const query = search?.value.trim().toLowerCase() ?? "";
+		let visible = 0;
+		for (const record of records) {
+			const matches =
+				(family === "all" || record.dataset.family === family) &&
+				(maturity === "all" || record.dataset.maturity === maturity) &&
+				(!query || record.dataset.search?.includes(query));
+			record.hidden = !matches;
+			if (matches) visible += 1;
+		}
+		if (count) count.textContent = String(visible);
+		if (empty) empty.hidden = visible !== 0;
+	};
+
+	root
+		.querySelectorAll<HTMLButtonElement>("[data-filter-family]")
+		.forEach((button) => {
+			button.addEventListener("click", () => {
+				family = button.dataset.filterFamily ?? "all";
+				setPressed("[data-filter-family]", family);
+				applyFilters();
+			});
+		});
+	root
+		.querySelectorAll<HTMLButtonElement>("[data-filter-maturity]")
+		.forEach((button) => {
+			button.addEventListener("click", () => {
+				maturity = button.dataset.filterMaturity ?? "all";
+				setPressed("[data-filter-maturity]", maturity);
+				applyFilters();
+			});
+		});
+	search?.addEventListener("input", applyFilters);
+	root
+		.querySelector<HTMLButtonElement>("[data-reset-filters]")
+		?.addEventListener("click", () => {
+			family = "all";
+			maturity = "all";
+			if (search) search.value = "";
+			setPressed("[data-filter-family]", family);
+			setPressed("[data-filter-maturity]", maturity);
+			applyFilters();
+		});
+}
+</script>
+
+<style>
+.portfolio-observatory {
+	margin: 0 auto;
+	max-width: 86rem;
+	padding: 0 var(--layout-padding) 6rem;
+}
+.portfolio-hero {
+	display: grid;
+	gap: clamp(3rem, 8vw, 8rem);
+	grid-template-columns: minmax(0, 1.5fr) minmax(18rem, 0.7fr);
+	min-height: calc(90svh - var(--header-height));
+	padding: clamp(6rem, 12vw, 10rem) 0 5rem;
+	align-items: end;
+}
+.portfolio-hero-copy {
+	max-width: 59rem;
+}
+.portfolio-eyebrow,
+.record-label {
+	color: var(--color-accent);
+	font-family: var(--font-mono);
+	font-size: 0.68rem;
+	letter-spacing: 0.15em;
+	text-transform: uppercase;
+}
+.portfolio-hero h1 {
+	color: var(--color-text);
+	font-size: clamp(3rem, 6.4vw, 6.4rem);
+	font-weight: 470;
+	letter-spacing: -0.055em;
+	line-height: 0.94;
+	margin-top: 1.35rem;
+	max-width: 11ch;
+	text-wrap: balance;
+}
+.portfolio-hero-copy > p:not(.portfolio-eyebrow) {
+	color: var(--color-muted-strong);
+	font-size: clamp(1rem, 1.5vw, 1.22rem);
+	line-height: 1.72;
+	margin-top: 1.7rem;
+	max-width: 43rem;
+}
+.portfolio-hero-copy small {
+	color: var(--color-muted);
+	display: block;
+	font-family: var(--font-mono);
+	font-size: 0.72rem;
+	margin-top: 1rem;
+}
+.portfolio-totals {
+	border-top: 1px solid var(--color-border);
+	margin: 0;
+}
+.portfolio-totals div {
+	align-items: baseline;
+	border-bottom: 1px solid var(--color-border);
+	display: grid;
+	gap: 1rem;
+	grid-template-columns: 5rem 1fr;
+	padding: 0.9rem 0;
+}
+.portfolio-totals dt {
+	color: var(--color-text);
+	font-family: var(--font-mono);
+	font-size: 1.45rem;
+	font-weight: 500;
+}
+.portfolio-totals dd {
+	color: var(--color-muted);
+	font-family: var(--font-mono);
+	font-size: 0.68rem;
+	letter-spacing: 0.1em;
+	margin: 0;
+	text-transform: uppercase;
+}
+.signal-section,
+.ledger-section,
+.method-section {
+	border-top: 1px solid var(--color-border);
+	padding: clamp(4rem, 8vw, 7rem) 0;
+}
+.portfolio-section-heading {
+	align-items: end;
+	display: grid;
+	gap: 2rem;
+	grid-template-columns: minmax(0, 1fr) minmax(18rem, 0.58fr);
+	margin-bottom: 3rem;
+}
+.portfolio-section-heading h2,
+.method-intro h2 {
+	color: var(--color-text);
+	font-size: clamp(2rem, 4vw, 4rem);
+	font-weight: 480;
+	letter-spacing: -0.04em;
+	line-height: 1;
+	margin-top: 0.85rem;
+	max-width: 16ch;
+	text-wrap: balance;
+}
+.portfolio-section-heading > p,
+.method-intro > p:not(.portfolio-eyebrow) {
+	color: var(--color-muted-strong);
+	line-height: 1.65;
+	max-width: 38rem;
+}
+.signal-map-shell {
+	padding: 1.5rem 0 2rem 2rem;
+	position: relative;
+}
+.signal-map {
+	aspect-ratio: 2 / 1;
+	background:
+		linear-gradient(
+			90deg,
+			transparent 49.9%,
+			var(--color-border) 50%,
+			transparent 50.1%
+		),
+		linear-gradient(
+			0deg,
+			transparent 49.8%,
+			var(--color-border) 50%,
+			transparent 50.2%
+		),
+		radial-gradient(
+			circle at 75% 25%,
+			color-mix(in srgb, var(--color-accent) 8%, transparent),
+			transparent 30%
+		);
+	border-bottom: 1px solid var(--color-border);
+	border-left: 1px solid var(--color-border);
+	isolation: isolate;
+	min-height: 28rem;
+	position: relative;
+}
+.signal-map::before {
+	background-image: radial-gradient(var(--lab-dot) 1px, transparent 1px);
+	background-size: 16px 16px;
+	content: "";
+	inset: 0;
+	opacity: 0.8;
+	position: absolute;
+	z-index: -1;
+}
+.axis-label {
+	color: var(--color-muted);
+	font-family: var(--font-mono);
+	font-size: 0.62rem;
+	letter-spacing: 0.12em;
+	position: absolute;
+	text-transform: uppercase;
+}
+.axis-label-y {
+	left: 0;
+	top: 50%;
+	transform: rotate(-90deg) translateX(-50%);
+	transform-origin: left top;
+}
+.axis-label-x {
+	bottom: 0;
+	right: 0;
+}
+.signal-quadrant {
+	color: color-mix(in srgb, var(--color-muted) 58%, transparent);
+	font-family: var(--font-mono);
+	font-size: 0.58rem;
+	letter-spacing: 0.13em;
+	position: absolute;
+	text-transform: uppercase;
+}
+.signal-quadrant-promising {
+	left: 2%;
+	top: 2%;
+}
+.signal-quadrant-proven {
+	right: 2%;
+	top: 2%;
+}
+.signal-quadrant-early {
+	bottom: 2%;
+	left: 2%;
+}
+.signal-quadrant-stalled {
+	bottom: 2%;
+	right: 2%;
+}
+.signal-dot {
+	background: var(--color-muted);
+	border: 2px solid var(--color-bg);
+	border-radius: 999px;
+	bottom: var(--signal-y);
+	box-shadow: 0 0 0 1px color-mix(in srgb, var(--color-muted) 45%, transparent);
+	height: var(--signal-size);
+	left: var(--signal-x);
+	position: absolute;
+	transform: translate(
+		calc(-50% + var(--signal-offset-x)),
+		calc(50% + var(--signal-offset-y))
+	);
+	transition:
+		transform 160ms ease,
+		box-shadow 160ms ease;
+	width: var(--signal-size);
+	z-index: 2;
+}
+.signal-dot span {
+	background: var(--color-bg);
+	color: var(--color-muted-strong);
+	font-family: var(--font-mono);
+	font-size: 0.58rem;
+	left: 50%;
+	opacity: 0;
+	padding: 0.3rem 0.42rem;
+	pointer-events: none;
+	position: absolute;
+	top: -0.5rem;
+	transform: translate(-50%, -100%);
+	transition: opacity 120ms ease;
+	white-space: nowrap;
+}
+.signal-dot:hover,
+.signal-dot:focus-visible {
+	box-shadow: 0 0 0 5px color-mix(in srgb, var(--color-accent) 18%, transparent);
+	outline: 0;
+	transform: translate(
+			calc(-50% + var(--signal-offset-x)),
+			calc(50% + var(--signal-offset-y))
+		)
+		scale(1.45);
+	z-index: 4;
+}
+.signal-dot:hover span,
+.signal-dot:focus-visible span {
+	opacity: 1;
+}
+.signal-dot-maintained {
+	background: var(--color-accent);
+}
+.signal-dot-published {
+	background: color-mix(in srgb, var(--color-accent) 68%, var(--color-muted));
+}
+.signal-dot-experimental {
+	background: transparent;
+	border-color: var(--color-accent);
+}
+.signal-dot-dormant {
+	background: var(--color-muted);
+	opacity: 0.58;
+}
+.signal-legend {
+	align-items: center;
+	color: var(--color-muted);
+	display: flex;
+	font-family: var(--font-mono);
+	font-size: 0.62rem;
+	gap: 0.65rem;
+	justify-content: flex-end;
+	letter-spacing: 0.1em;
+	text-transform: uppercase;
+}
+.signal-legend i {
+	background: var(--color-accent);
+	border-radius: 50%;
+	display: block;
+}
+.legend-dot-1 {
+	height: 0.45rem;
+	width: 0.45rem;
+}
+.legend-dot-2 {
+	height: 0.65rem;
+	width: 0.65rem;
+}
+.legend-dot-3 {
+	height: 0.85rem;
+	width: 0.85rem;
+}
+.portfolio-controls {
+	border-bottom: 1px solid var(--color-border);
+	border-top: 1px solid var(--color-border);
+	display: grid;
+	gap: 1.25rem 2rem;
+	grid-template-columns: minmax(16rem, 0.8fr) minmax(0, 1.4fr);
+	padding: 1.25rem 0;
+}
+.portfolio-search {
+	grid-row: span 2;
+}
+.portfolio-search,
+.portfolio-controls fieldset {
+	border: 0;
+	display: grid;
+	gap: 0.6rem;
+	margin: 0;
+	padding: 0;
+}
+.portfolio-search span,
+.portfolio-controls legend {
+	color: var(--color-muted);
+	font-family: var(--font-mono);
+	font-size: 0.62rem;
+	letter-spacing: 0.12em;
+	text-transform: uppercase;
+}
+.portfolio-search input {
+	background: color-mix(in srgb, var(--color-surface) 50%, transparent);
+	border: 1px solid var(--color-border);
+	border-radius: 0;
+	color: var(--color-text);
+	font: inherit;
+	min-height: 3rem;
+	padding: 0 0.9rem;
+	width: 100%;
+}
+.portfolio-search input:focus {
+	border-color: var(--color-accent);
+	outline: 0;
+}
+.filter-row {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.4rem;
+}
+.filter-row button,
+.portfolio-empty button {
+	background: transparent;
+	border: 1px solid var(--color-border);
+	color: var(--color-muted);
+	cursor: pointer;
+	font-family: var(--font-mono);
+	font-size: 0.65rem;
+	min-height: 2rem;
+	padding: 0.35rem 0.65rem;
+}
+.filter-row button[aria-pressed="true"] {
+	background: var(--color-text);
+	border-color: var(--color-text);
+	color: var(--color-bg);
+}
+.ledger-count {
+	color: var(--color-muted);
+	display: flex;
+	font-family: var(--font-mono);
+	font-size: 0.64rem;
+	justify-content: space-between;
+	letter-spacing: 0.08em;
+	padding: 1rem 0;
+	text-transform: uppercase;
+}
+.ledger-count strong {
+	color: var(--color-text);
+}
+.portfolio-ledger {
+	border-top: 1px solid var(--color-border);
+}
+.portfolio-record {
+	border-bottom: 1px solid var(--color-border);
+	display: grid;
+	gap: 1.5rem;
+	grid-template-columns: 2.25rem minmax(17rem, 0.85fr) minmax(20rem, 1.15fr);
+	padding: 1.7rem 0 2rem;
+	scroll-margin-top: 5rem;
+}
+.portfolio-record[hidden] {
+	display: none;
+}
+.record-index {
+	color: var(--color-muted);
+	font-family: var(--font-mono);
+	font-size: 0.65rem;
+	padding-top: 0.35rem;
+}
+.record-main,
+.record-evidence {
+	display: grid;
+	gap: 1.1rem;
+	align-content: start;
+}
+.record-header {
+	align-items: start;
+	display: flex;
+	gap: 1rem;
+	justify-content: space-between;
+}
+.record-taxonomy {
+	align-items: center;
+	color: var(--color-muted);
+	display: flex;
+	flex-wrap: wrap;
+	font-family: var(--font-mono);
+	font-size: 0.6rem;
+	gap: 0.55rem;
+	letter-spacing: 0.09em;
+	text-transform: uppercase;
+}
+.maturity-pill {
+	align-items: center;
+	color: var(--color-muted-strong);
+	display: inline-flex;
+}
+.maturity-pill::before {
+	background: currentColor;
+	border-radius: 50%;
+	content: "";
+	height: 0.42rem;
+	margin-right: 0.4rem;
+	width: 0.42rem;
+}
+.maturity-maintained {
+	color: var(--color-accent);
+}
+.maturity-dormant {
+	opacity: 0.6;
+}
+.maturity-experimental::before {
+	background: transparent;
+	border: 1px solid currentColor;
+}
+.record-header h3 {
+	color: var(--color-text);
+	font-size: clamp(1.35rem, 2vw, 1.8rem);
+	font-weight: 520;
+	letter-spacing: -0.03em;
+	margin-top: 0.65rem;
+}
+.record-score {
+	align-items: baseline;
+	color: var(--color-muted);
+	display: flex;
+	font-family: var(--font-mono);
+}
+.record-score strong {
+	color: var(--color-text);
+	font-size: 1.6rem;
+	font-weight: 500;
+}
+.record-score span {
+	font-size: 0.68rem;
+}
+.record-summary {
+	color: var(--color-muted-strong);
+	font-size: 0.92rem;
+	line-height: 1.6;
+}
+.signal-bars {
+	display: grid;
+	gap: 0.45rem;
+}
+.signal-bar {
+	align-items: center;
+	display: grid;
+	gap: 0.55rem;
+	grid-template-columns: 5.5rem 1fr 1rem;
+}
+.signal-bar > span,
+.signal-bar > strong {
+	color: var(--color-muted);
+	font-family: var(--font-mono);
+	font-size: 0.58rem;
+	font-weight: 400;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+}
+.signal-bar > div {
+	display: grid;
+	gap: 0.22rem;
+	grid-template-columns: repeat(4, 1fr);
+}
+.signal-bar i {
+	background: color-mix(in srgb, var(--color-border) 55%, transparent);
+	display: block;
+	height: 0.24rem;
+}
+.signal-bar i.filled {
+	background: var(--color-accent);
+}
+.record-artifacts {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.35rem;
+}
+.record-artifacts span {
+	border: 1px solid var(--color-border);
+	color: var(--color-muted);
+	font-family: var(--font-mono);
+	font-size: 0.58rem;
+	letter-spacing: 0.08em;
+	padding: 0.25rem 0.45rem;
+	text-transform: uppercase;
+}
+.record-evidence {
+	border-left: 1px solid var(--color-border);
+	padding-left: 1.5rem;
+}
+.record-evidence ul {
+	color: var(--color-text);
+	display: grid;
+	gap: 0.42rem;
+	list-style: none;
+	margin: 0.65rem 0 0;
+	padding: 0;
+}
+.record-evidence li {
+	font-size: 0.86rem;
+	line-height: 1.5;
+	padding-left: 0.9rem;
+	position: relative;
+}
+.record-evidence li::before {
+	color: var(--color-accent);
+	content: "↳";
+	left: 0;
+	position: absolute;
+}
+.record-limit {
+	background: color-mix(in srgb, var(--color-accent) 3%, transparent);
+	border-left: 1px solid
+		color-mix(in srgb, var(--color-accent) 48%, transparent);
+	padding: 0.7rem 0.85rem;
+}
+.record-limit > p:last-child {
+	color: var(--color-muted-strong);
+	font-size: 0.8rem;
+	line-height: 1.52;
+	margin-top: 0.35rem;
+}
+.record-footer {
+	align-items: end;
+	display: grid;
+	gap: 0.75rem;
+	grid-template-columns: 1fr auto;
+}
+.record-metrics {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.35rem 1rem;
+	grid-column: 1 / -1;
+}
+.record-metrics span,
+.record-footer > p {
+	color: var(--color-muted);
+	font-family: var(--font-mono);
+	font-size: 0.58rem;
+	letter-spacing: 0.06em;
+	text-transform: uppercase;
+}
+.record-footer nav {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.45rem 1rem;
+	justify-content: flex-end;
+}
+.record-footer a {
+	color: var(--color-text);
+	font-size: 0.78rem;
+	font-weight: 600;
+}
+.record-footer a:hover {
+	color: var(--color-accent);
+}
+.portfolio-empty {
+	border-bottom: 1px solid var(--color-border);
+	color: var(--color-muted-strong);
+	padding: 4rem 0;
+	text-align: center;
+}
+.portfolio-empty button {
+	margin-top: 1rem;
+}
+.method-section {
+	display: grid;
+	gap: 3rem;
+	grid-template-columns: minmax(18rem, 0.65fr) minmax(0, 1.35fr);
+}
+.method-intro > p:not(.portfolio-eyebrow) {
+	margin-top: 1.2rem;
+}
+.method-grid {
+	border-top: 1px solid var(--color-border);
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+}
+.method-grid article {
+	border-bottom: 1px solid var(--color-border);
+	border-right: 1px solid var(--color-border);
+	display: grid;
+	gap: 0.75rem;
+	padding: 1.25rem;
+}
+.method-grid article:first-child {
+	border-left: 1px solid var(--color-border);
+}
+.method-grid span {
+	color: var(--color-muted);
+	font-family: var(--font-mono);
+	font-size: 0.62rem;
+}
+.method-grid h3 {
+	color: var(--color-text);
+	font-size: 1rem;
+}
+.method-grid p {
+	color: var(--color-muted-strong);
+	font-size: 0.8rem;
+	line-height: 1.55;
+}
+.method-grid code {
+	color: var(--color-accent);
+	font-family: var(--font-mono);
+	font-size: 0.62rem;
+	line-height: 1.5;
+	margin-top: auto;
+}
+.scope-note {
+	border-left: 1px solid var(--color-accent);
+	grid-column: 2;
+	padding: 0.25rem 1rem;
+}
+.scope-note strong {
+	color: var(--color-accent);
+	font-family: var(--font-mono);
+	font-size: 0.65rem;
+	letter-spacing: 0.1em;
+	text-transform: uppercase;
+}
+.scope-note p {
+	color: var(--color-muted-strong);
+	font-size: 0.82rem;
+	line-height: 1.55;
+	margin-top: 0.4rem;
+}
+@media (max-width: 900px) {
+	.portfolio-hero,
+	.portfolio-section-heading,
+	.method-section {
+		grid-template-columns: 1fr;
+	}
+	.portfolio-hero {
+		min-height: auto;
+		padding-top: 6rem;
+	}
+	.portfolio-hero h1 {
+		max-width: 13ch;
+	}
+	.portfolio-totals {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+	}
+	.portfolio-totals div {
+		padding-right: 1rem;
+	}
+	.portfolio-record {
+		grid-template-columns: 2rem minmax(0, 1fr);
+	}
+	.record-evidence {
+		border-left: 0;
+		grid-column: 2;
+		padding-left: 0;
+	}
+	.scope-note {
+		grid-column: 1;
+	}
+	.method-grid {
+		grid-template-columns: 1fr;
+	}
+	.method-grid article {
+		border-left: 1px solid var(--color-border);
+	}
+	.signal-map {
+		min-height: 22rem;
+	}
+}
+@media (max-width: 640px) {
+	.portfolio-observatory {
+		padding-bottom: 3rem;
+	}
+	.portfolio-hero {
+		gap: 3rem;
+		padding-bottom: 3rem;
+	}
+	.portfolio-hero h1 {
+		font-size: clamp(2.8rem, 14vw, 4.5rem);
+	}
+	.portfolio-totals {
+		grid-template-columns: 1fr 1fr;
+	}
+	.portfolio-totals div {
+		display: block;
+	}
+	.portfolio-totals dd {
+		margin-top: 0.3rem;
+	}
+	.portfolio-section-heading {
+		margin-bottom: 2rem;
+	}
+	.signal-map-shell {
+		padding-left: 1.4rem;
+	}
+	.signal-map {
+		aspect-ratio: 0.82;
+		min-height: 32rem;
+	}
+	.signal-dot span {
+		display: none;
+	}
+	.portfolio-controls {
+		grid-template-columns: 1fr;
+	}
+	.portfolio-search {
+		grid-row: auto;
+	}
+	.filter-row {
+		flex-wrap: nowrap;
+		margin-right: calc(var(--layout-padding) * -1);
+		overflow-x: auto;
+		padding-right: var(--layout-padding);
+		scrollbar-width: none;
+	}
+	.filter-row::-webkit-scrollbar {
+		display: none;
+	}
+	.filter-row button {
+		flex: 0 0 auto;
+	}
+	.ledger-count > span:last-child {
+		display: none;
+	}
+	.portfolio-record {
+		gap: 1rem;
+		grid-template-columns: 1.4rem minmax(0, 1fr);
+	}
+	.record-index {
+		font-size: 0.55rem;
+	}
+	.record-footer {
+		grid-template-columns: 1fr;
+	}
+	.record-footer nav {
+		justify-content: flex-start;
+	}
+	.signal-bar {
+		grid-template-columns: 4.8rem 1fr 1rem;
+	}
+	.method-grid {
+		grid-template-columns: 1fr;
+	}
+}
+@media (prefers-reduced-motion: no-preference) {
+	.portfolio-hero-copy,
+	.portfolio-totals,
+	.signal-section,
+	.ledger-section {
+		animation: portfolio-reveal 620ms ease-out both;
+	}
+	.portfolio-totals {
+		animation-delay: 80ms;
+	}
+	.signal-section {
+		animation-delay: 130ms;
+	}
+	.ledger-section {
+		animation-delay: 180ms;
+	}
+	.signal-dot {
+		animation: dot-in 400ms ease-out both;
+		animation-delay: var(--signal-delay);
+	}
+	@keyframes portfolio-reveal {
+		from {
+			opacity: 0;
+			transform: translateY(14px);
+		}
+	}
+	@keyframes dot-in {
+		from {
+			opacity: 0;
+			transform: translate(
+					calc(-50% + var(--signal-offset-x)),
+					calc(50% + var(--signal-offset-y))
+				)
+				scale(0.2);
+		}
+	}
+}
+</style>
