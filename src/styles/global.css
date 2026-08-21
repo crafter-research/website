@@ -223,13 +223,11 @@ a {
 }
 
 .theme-toggle {
-	align-items: center;
 	border: 1px solid var(--color-border);
 	border-radius: 999px;
 	color: var(--color-muted);
 	display: inline-grid;
 	height: 2rem;
-	justify-items: center;
 	padding: 0;
 	place-items: center;
 	position: relative;
@@ -2029,15 +2027,16 @@ body {
 	line-height: 1.5;
 	margin-top: clamp(2rem, 5vw, 3rem);
 	padding: 0.85rem 0;
+	list-style: none;
 	text-transform: uppercase;
 }
 
-.index-system span {
+.index-system li {
 	align-items: center;
 	display: inline-flex;
 }
 
-.index-system span:not(:last-child)::after {
+.index-system li:not(:last-child)::after {
 	color: color-mix(in srgb, var(--color-muted) 78%, transparent);
 	content: "/";
 	margin-left: 0.68rem;
@@ -2166,6 +2165,7 @@ body {
 .signal-strip,
 .method-list,
 .program-feed,
+.project-feed,
 .note-feed,
 .stance-feed,
 .research-log-feed {
@@ -2241,6 +2241,174 @@ body {
 
 .program-feed small {
 	align-self: start;
+	text-align: right;
+}
+
+.feed-entry-projects .feed-panel {
+	overflow: visible;
+}
+
+.project-feed {
+	gap: 0;
+}
+
+.project-card {
+	border-bottom: 1px solid var(--color-border);
+	display: grid;
+	gap: 1rem;
+	padding: 1.15rem 0 1.3rem;
+}
+
+.project-card-header {
+	align-items: start;
+	display: flex;
+	gap: 1rem;
+	justify-content: space-between;
+}
+
+.project-card-header > div {
+	display: grid;
+	gap: 0.55rem;
+}
+
+.project-card h3 {
+	color: var(--color-text);
+	font-size: clamp(1.15rem, 2.4vw, 1.45rem);
+	font-weight: 560;
+	letter-spacing: -0.02em;
+	line-height: 1.15;
+}
+
+.project-status,
+.artifact-list li,
+.project-evidence dt,
+.project-limitation strong,
+.project-card-footer small {
+	color: var(--color-muted);
+	font-family: var(--font-mono);
+	font-size: 0.65rem;
+	letter-spacing: 0.09em;
+	line-height: 1.35;
+	text-transform: uppercase;
+}
+
+.project-status {
+	align-items: center;
+	display: inline-flex;
+	width: fit-content;
+}
+
+.project-status::before {
+	background: currentColor;
+	border-radius: 999px;
+	content: "";
+	height: 0.42rem;
+	margin-right: 0.45rem;
+	width: 0.42rem;
+}
+
+.project-status-maintained {
+	color: var(--color-accent);
+}
+
+.artifact-list {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.35rem;
+	justify-content: flex-end;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+.artifact-list li {
+	border: 1px solid var(--color-border);
+	border-radius: 999px;
+	padding: 0.2rem 0.48rem;
+}
+
+.project-summary {
+	color: var(--color-muted-strong);
+	font-size: 0.94rem;
+	line-height: 1.62;
+	max-width: 40rem;
+}
+
+.project-evidence {
+	display: grid;
+	gap: 0.65rem;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	margin: 0;
+}
+
+.project-evidence div {
+	border-left: 1px solid var(--color-border);
+	display: grid;
+	gap: 0.35rem;
+	padding-left: 0.75rem;
+}
+
+.project-evidence dd {
+	margin: 0;
+}
+
+.project-evidence a {
+	color: var(--color-text);
+	font-size: 0.84rem;
+	font-weight: 600;
+	line-height: 1.4;
+	transition: color 160ms ease;
+}
+
+.project-evidence a:hover {
+	color: var(--color-accent);
+}
+
+.project-limitation {
+	background: color-mix(in srgb, var(--color-accent) 3%, transparent);
+	border-left: 1px solid
+		color-mix(in srgb, var(--color-accent) 48%, transparent);
+	display: grid;
+	gap: 0.35rem;
+	padding: 0.68rem 0.8rem;
+}
+
+.project-limitation strong {
+	color: var(--color-accent);
+}
+
+.project-limitation p {
+	color: var(--color-muted-strong);
+	font-size: 0.82rem;
+	line-height: 1.5;
+}
+
+.project-card-footer {
+	align-items: end;
+	display: flex;
+	gap: 1rem;
+	justify-content: space-between;
+}
+
+.project-card-footer nav {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.45rem 1rem;
+}
+
+.project-card-footer a {
+	color: var(--color-text);
+	font-size: 0.82rem;
+	font-weight: 600;
+	transition: color 160ms ease;
+}
+
+.project-card-footer a:hover {
+	color: var(--color-accent);
+}
+
+.project-card-footer small {
+	flex: 0 0 auto;
 	text-align: right;
 }
 
@@ -2504,6 +2672,7 @@ body {
 
 	.index-facts div,
 	.program-feed article,
+	.project-evidence,
 	.note-row,
 	.method-list li {
 		grid-template-columns: 1fr;
@@ -2529,6 +2698,20 @@ body {
 	}
 
 	.program-feed small {
+		text-align: left;
+	}
+
+	.project-card-header,
+	.project-card-footer {
+		align-items: flex-start;
+		flex-direction: column;
+	}
+
+	.artifact-list {
+		justify-content: flex-start;
+	}
+
+	.project-card-footer small {
 		text-align: left;
 	}
 

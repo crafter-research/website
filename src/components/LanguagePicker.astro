@@ -13,8 +13,22 @@ const route = getRouteFromUrl(Astro.url);
 		id="lang-btn"
 	>
 		{lang.toUpperCase()}
-		<svg width="10" height="6" viewBox="0 0 10 6" fill="none" class="transition-transform" id="lang-chevron">
-			<path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+		<svg
+			aria-hidden="true"
+			width="10"
+			height="6"
+			viewBox="0 0 10 6"
+			fill="none"
+			class="transition-transform"
+			id="lang-chevron"
+		>
+			<path
+				d="M1 1L5 5L9 1"
+				stroke="currentColor"
+				stroke-width="1.5"
+				stroke-linecap="round"
+				stroke-linejoin="round"
+			/>
 		</svg>
 	</button>
 
@@ -40,21 +54,20 @@ const route = getRouteFromUrl(Astro.url);
 </div>
 
 <script>
-	const btn = document.getElementById("lang-btn");
-	const dropdown = document.getElementById("lang-dropdown");
-	const chevron = document.getElementById("lang-chevron");
+const btn = document.getElementById("lang-btn");
+const dropdown = document.getElementById("lang-dropdown");
+const chevron = document.getElementById("lang-chevron");
 
-	btn?.addEventListener("click", () => {
-		const isOpen = !dropdown?.classList.contains("hidden");
-		dropdown?.classList.toggle("hidden");
-		chevron?.classList.toggle("rotate-180");
-	});
+btn?.addEventListener("click", () => {
+	dropdown?.classList.toggle("hidden");
+	chevron?.classList.toggle("rotate-180");
+});
 
-	document.addEventListener("click", (e) => {
-		const wrapper = document.getElementById("lang-wrapper");
-		if (!wrapper?.contains(e.target as Node)) {
-			dropdown?.classList.add("hidden");
-			chevron?.classList.remove("rotate-180");
-		}
-	});
+document.addEventListener("click", (e) => {
+	const wrapper = document.getElementById("lang-wrapper");
+	if (!wrapper?.contains(e.target as Node)) {
+		dropdown?.classList.add("hidden");
+		chevron?.classList.remove("rotate-180");
+	}
+});
 </script>

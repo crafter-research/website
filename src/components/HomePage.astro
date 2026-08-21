@@ -1,5 +1,6 @@
 ---
 import { getCollection } from "astro:content";
+import { featuredProjects, type ProjectLocale } from "../data/projects";
 import {
 	chainByLang,
 	copyByLang,
@@ -16,9 +17,8 @@ interface Props {
 }
 
 const { lang } = Astro.props;
-const contentLang = lang === "es" ? "es" : "en";
+const contentLang: ProjectLocale = lang === "es" ? "es" : "en";
 
-const homeHref = contentLang === "es" ? "/es" : "/";
 const researchHref = contentLang === "es" ? "/es/research" : "/research";
 
 const copy = copyByLang[contentLang];
@@ -32,7 +32,6 @@ const posts = (await getCollection("research"))
 	.filter((post) => post.data.lang === contentLang)
 	.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
 	.slice(0, 3);
-const emptyNoteSlots = Array.from({ length: Math.max(0, 3 - posts.length) });
 
 const fmtDate = (d: Date) =>
 	d.toLocaleDateString(contentLang === "es" ? "es-PE" : "en-US", {
@@ -41,6 +40,17 @@ const fmtDate = (d: Date) =>
 		timeZone: "UTC",
 		year: "numeric",
 	});
+
+const fmtVerifiedDate = (value: string) =>
+	new Date(`${value}T00:00:00Z`).toLocaleDateString(
+		contentLang === "es" ? "es-PE" : "en-US",
+		{
+			day: "numeric",
+			month: "short",
+			timeZone: "UTC",
+			year: "numeric",
+		},
+	);
 ---
 
 <Layout title={copy.label} description={copy.description} lang={contentLang}>
@@ -50,9 +60,9 @@ const fmtDate = (d: Date) =>
 				<p class="section-label">{copy.kicker}</p>
 				<h1>{copy.heroTitle}</h1>
 				<p>{copy.heroBody}</p>
-				<div class="index-system" aria-label="Research system">
-					{heroPath.map((item) => <span>{item}</span>)}
-				</div>
+				<ul class="index-system" aria-label="Research system">
+					{heroPath.map((item) => <li>{item}</li>)}
+				</ul>
 			</section>
 		</header>
 
@@ -74,6 +84,59 @@ const fmtDate = (d: Date) =>
 									<p>{body}</p>
 								</article>
 							))}
+					</div>
+				</div>
+			</article>
+
+			<article class="feed-entry feed-entry-projects">
+				<div class="feed-node" aria-hidden="true"></div>
+				<div class="feed-panel">
+					<div class="feed-meta"><span>{copy.projectsLabel}</span></div>
+					<h2>{copy.projectsTitle}</h2>
+					<p>{copy.projectsBody}</p>
+					<div class="project-feed">
+						{featuredProjects.map((project) => (
+							<article class="project-card" id={project.slug}>
+								<header class="project-card-header">
+									<div>
+										<span class={`project-status project-status-${project.maturity}`}>
+											{copy.maturity[project.maturity]}
+										</span>
+										<h3>{project.name}</h3>
+									</div>
+									<ul class="artifact-list" aria-label={copy.artifactsLabel}>
+										{project.artifactTypes.map((artifact) => <li>{artifact}</li>)}
+									</ul>
+								</header>
+								<p class="project-summary">{project.summary[contentLang]}</p>
+								<dl class="project-evidence">
+									{project.evidence.map((evidence) => (
+										<div>
+											<dt>{evidence.label[contentLang]}</dt>
+											<dd>
+												<a href={evidence.sourceUrl} target="_blank" rel="noreferrer">
+													{evidence.value[contentLang]}
+												</a>
+											</dd>
+										</div>
+									))}
+								</dl>
+								<div class="project-limitation">
+									<strong>{copy.limitationLabel}</strong>
+									<p>{project.limitation[contentLang]}</p>
+								</div>
+								<footer class="project-card-footer">
+									<nav aria-label={`${project.name} ${copy.linksLabel}`}>
+										{project.links.map((link) => (
+											<a href={link.url} target="_blank" rel="noreferrer">
+												{link.label[contentLang]} <span aria-hidden="true">↗</span>
+											</a>
+										))}
+									</nav>
+									<small>{copy.verifiedLabel} {fmtVerifiedDate(project.verifiedAt)}</small>
+								</footer>
+							</article>
+						))}
 					</div>
 				</div>
 			</article>
@@ -132,17 +195,8 @@ const fmtDate = (d: Date) =>
 										<span>{fmtDate(post.data.date)} / {post.data.project}</span>
 									</div>
 									<p>{post.data.description}</p>
-								</a>
-							))}
-						{emptyNoteSlots.map((_, index) => (
-								<div class="note-row note-row-empty">
-									<div>
-										<strong>{copy.emptyNoteTitle}</strong>
-										<span>{copy.emptyNoteMeta} {posts.length + index + 1}</span>
-									</div>
-									<p>{copy.emptyNoteBody}</p>
-								</div>
-							))}
+							</a>
+						))}
 					</div>
 				</div>
 			</article>

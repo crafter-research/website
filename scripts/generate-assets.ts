@@ -1,11 +1,11 @@
-import sharp from "sharp";
 import { writeFileSync } from "fs";
 import { join } from "path";
+import { fileURLToPath } from "url";
+import sharp from "sharp";
 
-const OUT = join(import.meta.dir, "..", "public");
+const OUT = join(fileURLToPath(new URL("..", import.meta.url)), "public");
 
 const BG = "#09090b";
-const SURFACE = "#18181b";
 const BORDER = "#27272a";
 const MUTED = "#71717a";
 const TEXT = "#fafafa";

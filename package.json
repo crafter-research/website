@@ -7,7 +7,9 @@
 	},
 	"scripts": {
 		"dev": "portless crafter-research astro dev",
-		"build": "astro build",
+		"build": "bun run check:projects && astro build",
+		"check": "bun run check:projects && astro check && biome check src/components/HomePage.astro src/components/LanguagePicker.astro src/data/projects.ts src/i18n/home.ts src/styles/global.css scripts/generate-assets.ts scripts/validate-projects.ts package.json",
+		"check:projects": "bun scripts/validate-projects.ts",
 		"preview": "astro preview",
 		"astro": "astro"
 	},
@@ -23,6 +25,7 @@
 		"tailwindcss": "^4.2.2"
 	},
 	"devDependencies": {
+		"@astrojs/check": "^0.9.10",
 		"@biomejs/biome": "^2.4.8",
 		"sharp": "^0.34.5",
 		"typescript": "^6.0.3"
