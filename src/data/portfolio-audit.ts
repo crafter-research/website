@@ -137,7 +137,7 @@ export const portfolioAudit: PortfolioAuditRecord[] = [
 		slug: "muniscan",
 		name: "Muniscan",
 		repository: github("muniscan"),
-		homepage: "/muniscan",
+		homepage: "https://muniscan.crafter.ing",
 		family: "civic-knowledge",
 		maturity: "published",
 		artifactTypes: ["dataset", "cli"],
