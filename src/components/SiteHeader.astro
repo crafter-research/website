@@ -18,7 +18,7 @@ const tp = useTranslatedPath(lang);
 	class="site-header mx-auto flex w-full max-w-[calc(var(--header-width)+(var(--layout-padding)*2))] items-center justify-between px-(--layout-padding)"
 >
 	<SiteLogo lang={lang} />
-	<nav class="site-header-nav">
+	<nav class="site-header-nav" aria-label="Primary navigation">
 		<span class="site-header-collapsible">
 			<a href={tp("/systems")} class="nav-link nav-link-primary"
 				>{t("systems.title")}</a

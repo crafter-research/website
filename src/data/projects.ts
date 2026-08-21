@@ -242,7 +242,11 @@ export const projects = [
 		],
 		links: [
 			{
-				label: { en: "Open public audit", es: "Abrir auditoría pública" },
+				label: { en: "Open live atlas", es: "Abrir atlas en vivo" },
+				url: "https://muniscan.crafter.ing",
+			},
+			{
+				label: { en: "Read research log", es: "Leer bitácora" },
 				url: "/muniscan",
 			},
 			{
