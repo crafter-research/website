@@ -1,0 +1,452 @@
+---
+import type { ProjectLocale } from "../data/projects";
+import type { Lang } from "../i18n/ui";
+import Layout from "../layouts/Layout.astro";
+
+interface Props {
+	lang: Lang;
+}
+
+const { lang } = Astro.props;
+const contentLang: ProjectLocale = lang === "es" ? "es" : "en";
+const inbox = "railly@crafterstation.com";
+
+const content = {
+	en: {
+		metaTitle: "Support the research · Crafter Research",
+		metaDescription:
+			"Support independent public-interest AI evaluation for Latin America with compute, research funding, or domain expertise.",
+		eyebrow: "Support the public infrastructure / 2026 program",
+		title: "Help us measure the systems Latin America is asked to trust.",
+		body: "Crafter Research publishes independent model evaluations, reproducible legal-AI benchmarks, and source-backed public corpora. We are looking for compute, research funding, and expert review tied to specific open milestones.",
+		primaryCta: "Offer compute",
+		secondaryCta: "Fund a milestone",
+		heroNote: "One resource. One bounded release. Public evidence in return.",
+		proofLabel: "Shipped proof",
+		proofTitle: "The proposed work starts from artifacts that already exist.",
+		proofBody:
+			"These are inspectable baselines, not projections. Proposed programs appear separately below.",
+		proof: [
+			[
+				"11",
+				"models evaluated",
+				"LatamBench",
+				"Trueque-500 and CHOCLO-500, with 37 published run records and response sets, plus 32 completed judge transcripts.",
+				"https://github.com/crafter-research/latambench",
+			],
+			[
+				"21,244",
+				"public legal norms",
+				"Legalize Perú",
+				"Approximately 98% full text across the national tier and 26 regional jurisdictions, versioned as a public corpus.",
+				"https://github.com/crafter-research/legalize-pe",
+			],
+			[
+				"N=35",
+				"firm gold set",
+				"Amicus Eval",
+				"Six retrieval configurations with independently recomputable metrics and explicit limitations.",
+				"https://github.com/crafter-research/amicus-eval",
+			],
+		],
+		programLabel: "Proposed research",
+		programTitle:
+			"Three programs waiting on real bottlenecks, not invented ones.",
+		programBody:
+			"Each program has a useful 90-day outcome, a smaller fallback, and an open evidence trail. These projects are proposed and compute-gated. They are not presented as current output.",
+		proposed: "Proposed / compute-gated",
+		programs: [
+			{
+				index: "01",
+				name: "LatamBench Open Weights Observatory",
+				hook: "The models Latin America can actually run.",
+				body: "Evaluate open-weight and regional models under controlled serving. Measure accuracy, abstention, hallucination, quantization effects, serving variance, and benchmark-reference defects.",
+				need: "300–600 A100-equivalent GPU-hours",
+				milestone:
+					"6–8 open models across two benchmark families, with controlled repetitions and human validation.",
+				output:
+					"Raw responses, exact revisions, serving recipes, judge transcripts, exclusions, cost, and measured utilization.",
+				limit:
+					"Core scope stops at 70B. Larger models follow measured utilization, not ambition alone.",
+				featured: true,
+			},
+			{
+				index: "02",
+				name: "Spanish Legal Model Reliability Lab",
+				hook: "Can a model cite the law that was valid then?",
+				body: "Compare retrieval-augmented, long-context, and bounded local-model approaches over Peruvian law. Test citation correctness, temporal validity, groundedness, abstention, and hallucination.",
+				need: "$2k–$5k API credits + expert review",
+				milestone:
+					"Expand Amicus Eval from N=35 to at least N=150 and compare 4–6 fixed configurations.",
+				output:
+					"Per-query evidence, corpus versions, failure taxonomy, and one-command metric verification.",
+				limit:
+					"The benchmark measures system behavior. It does not replace qualified legal judgment.",
+				featured: false,
+			},
+			{
+				index: "03",
+				name: "Public-Service Agent Reliability Benchmark",
+				hook: "The trámite gauntlet.",
+				body: "Replay realistic public-service workflows across models and interface perturbations. Measure task completion, source fidelity, unsafe actions, recovery, and portal drift.",
+				need: "$3k–$8k multimodal model credits",
+				milestone:
+					"20–25 non-destructive workflows, four configurations, and at least three repetitions per task.",
+				output:
+					"Redacted trajectories, task fixtures, scorer definitions, replay format, and failure taxonomy.",
+				limit:
+					"No payments, identity verification, submissions, or irreversible government actions in the pilot.",
+				featured: false,
+			},
+		],
+		needLabel: "Resource",
+		milestoneLabel: "90-day gate",
+		outputLabel: "Public return",
+		limitLabel: "Boundary",
+		enablingLabel: "Enabling lane",
+		enablingTitle: "More than one right answer.",
+		enablingBody:
+			"The LATAM Multi-Answer Dataset would build 500 adjudicated cultural knowledge items with country, dialect, provenance, time, and disagreement context. Model generation, embeddings, and clustering help find candidates. Native-speaker review remains the authority.",
+		enablingNeed: "$2k–$5k model credits + native-speaker review",
+		resourceLabel: "Ways to support",
+		resourceTitle: "Match the resource to the work.",
+		resourceBody:
+			"The strongest offer is not necessarily the largest. It is the one that unlocks a named release with enough time to use it responsibly.",
+		resources: [
+			[
+				"API",
+				"Model access",
+				"$5k–$10k in credits",
+				"Valid for 12 months",
+				"Frontier controls, independent judges, long-context legal evaluation, embeddings, reranking, and multimodal agent runs.",
+				"Fallback: $1,000 for one bounded release.",
+			],
+			[
+				"GPU",
+				"Accelerator capacity",
+				"1,000 A100-equivalent hours",
+				"Or $5,000 in cloud credits",
+				"Controlled 70B serving, open models unavailable through APIs, repetitions, and Spanish retrieval experiments.",
+				"First pilot: 300–600 hours over 90 days.",
+			],
+			[
+				"REV",
+				"Human validation",
+				"$25,000 milestone grant",
+				"Research and expert review",
+				"Native-speaker adjudication, qualified legal review, dataset curation, recurring maintenance, and publication work.",
+				"Fallback: $5,000 for one reviewed legal milestone.",
+			],
+			[
+				"HW",
+				"Measured hardware pilot",
+				"90-day loan",
+				"Dedicated or equivalent remote capacity",
+				"Repeatable high-memory inference with a utilization report, reproducibility notes, and a return, extend, or convert decision.",
+				"Hardware follows a measurable workload. Cloud is always acceptable.",
+			],
+		],
+		independenceLabel: "Research independence",
+		independenceTitle: "Support buys a release. It never buys the result.",
+		independenceBody:
+			"Every awarded resource is disclosed. The same protocol applies to supported and unsupported models. Providers receive no editorial veto, ranking control, or right to suppress negative results or infrastructure failures.",
+		principles: [
+			"Resources and approximate value are disclosed.",
+			"Model inclusion follows the study design.",
+			"Methods, failures, and limitations stay publishable.",
+			"Sponsored case studies remain separate from research conclusions.",
+		],
+		contactLabel: "Start with one measurable release",
+		contactTitle: "Tell us what resource you can offer.",
+		contactBody:
+			"We will reply with the matching workload, budget, milestones, stewardship plan, and public deliverables. Compute, credits, expert time, institutional collaboration, and project grants are all useful.",
+		contactCta: "Write to Railly",
+		contactNote:
+			"Crafter Research is a public-interest research lab by Crafter Station.",
+	},
+	es: {
+		metaTitle: "Apoya el research · Crafter Research",
+		metaDescription:
+			"Apoya evaluaciones independientes de IA de interés público para Latinoamérica con cómputo, financiamiento o expertise.",
+		eyebrow: "Apoya la infraestructura pública / programa 2026",
+		title:
+			"Ayúdanos a medir los sistemas en los que Latinoamérica debe confiar.",
+		body: "Crafter Research publica evaluaciones independientes de modelos, benchmarks reproducibles de IA legal y corpora públicos con fuentes. Buscamos cómputo, financiamiento y revisión experta atados a hitos abiertos y específicos.",
+		primaryCta: "Ofrecer cómputo",
+		secondaryCta: "Financiar un hito",
+		heroNote: "Un recurso. Un release acotado. Evidencia pública a cambio.",
+		proofLabel: "Evidencia publicada",
+		proofTitle: "El trabajo propuesto parte de artefactos que ya existen.",
+		proofBody:
+			"Estas son líneas base inspeccionables, no proyecciones. Los programas propuestos aparecen separados más abajo.",
+		proof: [
+			[
+				"11",
+				"modelos evaluados",
+				"LatamBench",
+				"Trueque-500 y CHOCLO-500, con 37 runs y sets de respuestas publicados, más 32 transcripciones de jueces completas.",
+				"https://github.com/crafter-research/latambench",
+			],
+			[
+				"21,244",
+				"normas legales públicas",
+				"Legalize Perú",
+				"Aproximadamente 98% con texto completo en el tier nacional y 26 jurisdicciones regionales, versionado como corpus público.",
+				"https://github.com/crafter-research/legalize-pe",
+			],
+			[
+				"N=35",
+				"gold set firme",
+				"Amicus Eval",
+				"Seis configuraciones de retrieval con métricas recomputables independientemente y limitaciones explícitas.",
+				"https://github.com/crafter-research/amicus-eval",
+			],
+		],
+		programLabel: "Research propuesto",
+		programTitle:
+			"Tres programas esperando cuellos de botella reales, no inventados.",
+		programBody:
+			"Cada programa tiene un resultado útil a 90 días, un fallback menor y un rastro abierto de evidencia. Son proyectos propuestos y limitados por cómputo. No se presentan como output actual.",
+		proposed: "Propuesto / compute-gated",
+		programs: [
+			{
+				index: "01",
+				name: "LatamBench Open Weights Observatory",
+				hook: "Los modelos que Latinoamérica realmente puede correr.",
+				body: "Evaluar modelos open-weight y regionales bajo serving controlado. Medir accuracy, abstención, alucinación, efectos de cuantización, variación de serving y defectos en referencias.",
+				need: "300–600 horas equivalentes de A100",
+				milestone:
+					"6–8 modelos abiertos sobre dos familias de benchmarks, con repeticiones controladas y validación humana.",
+				output:
+					"Respuestas crudas, revisiones exactas, recetas de serving, jueces, exclusiones, costo y utilización medida.",
+				limit:
+					"El scope central termina en 70B. Modelos mayores siguen a la utilización medida, no solo a la ambición.",
+				featured: true,
+			},
+			{
+				index: "02",
+				name: "Spanish Legal Model Reliability Lab",
+				hook: "¿Puede un modelo citar la ley que era válida entonces?",
+				body: "Comparar RAG, long-context y experimentos locales acotados sobre derecho peruano. Medir citas, vigencia temporal, groundedness, abstención y alucinación.",
+				need: "$2k–$5k en APIs + revisión experta",
+				milestone:
+					"Expandir Amicus Eval de N=35 a N≥150 y comparar 4–6 configuraciones fijas.",
+				output:
+					"Evidencia por query, versiones del corpus, taxonomía de fallas y verificación de métricas con un comando.",
+				limit:
+					"El benchmark mide el comportamiento del sistema. No reemplaza el juicio legal calificado.",
+				featured: false,
+			},
+			{
+				index: "03",
+				name: "Public-Service Agent Reliability Benchmark",
+				hook: "El gauntlet del trámite.",
+				body: "Repetir workflows realistas de servicios públicos entre modelos y perturbaciones de interfaz. Medir completitud, fidelidad a fuentes, acciones inseguras, recuperación y portal drift.",
+				need: "$3k–$8k en créditos multimodales",
+				milestone:
+					"20–25 workflows no destructivos, cuatro configuraciones y al menos tres repeticiones por tarea.",
+				output:
+					"Trayectorias redactadas, fixtures, scorers, formato de replay y taxonomía de fallas.",
+				limit:
+					"El piloto excluye pagos, identidad, envíos y acciones gubernamentales irreversibles.",
+				featured: false,
+			},
+		],
+		needLabel: "Recurso",
+		milestoneLabel: "Gate a 90 días",
+		outputLabel: "Retorno público",
+		limitLabel: "Límite",
+		enablingLabel: "Línea habilitadora",
+		enablingTitle: "Más de una respuesta correcta.",
+		enablingBody:
+			"El LATAM Multi-Answer Dataset construiría 500 ítems adjudicados de conocimiento cultural con país, dialecto, procedencia, tiempo y contexto de desacuerdo. Generación, embeddings y clustering ayudan a encontrar candidatos. La revisión de hablantes nativos conserva la autoridad.",
+		enablingNeed: "$2k–$5k en modelos + revisión de hablantes nativos",
+		resourceLabel: "Formas de apoyar",
+		resourceTitle: "Emparejemos el recurso con el trabajo.",
+		resourceBody:
+			"La mejor oferta no siempre es la más grande. Es la que desbloquea un release nombrado con suficiente tiempo para usarla responsablemente.",
+		resources: [
+			[
+				"API",
+				"Acceso a modelos",
+				"$5k–$10k en créditos",
+				"Válidos por 12 meses",
+				"Controles frontier, jueces independientes, eval legal long-context, embeddings, reranking y agentes multimodales.",
+				"Fallback: $1,000 para un release acotado.",
+			],
+			[
+				"GPU",
+				"Capacidad de aceleradores",
+				"1,000 horas equivalentes de A100",
+				"O $5,000 en cloud credits",
+				"Serving controlado de 70B, modelos no disponibles por API, repeticiones y experimentos de retrieval en español.",
+				"Primer piloto: 300–600 horas durante 90 días.",
+			],
+			[
+				"REV",
+				"Validación humana",
+				"Grant de $25,000",
+				"Research y revisión experta",
+				"Adjudicación de hablantes nativos, revisión legal, curación de datasets, mantenimiento y publicación.",
+				"Fallback: $5,000 para un hito legal revisado.",
+			],
+			[
+				"HW",
+				"Piloto medido de hardware",
+				"Préstamo por 90 días",
+				"Capacidad dedicada o remota equivalente",
+				"Inferencia repetible de alta memoria, reporte de utilización, notas de reproducibilidad y decisión de devolver, extender o convertir.",
+				"El hardware sigue a una carga medible. Cloud siempre sirve.",
+			],
+		],
+		independenceLabel: "Independencia del research",
+		independenceTitle: "El apoyo compra un release. Nunca compra el resultado.",
+		independenceBody:
+			"Cada recurso recibido se declara. El mismo protocolo aplica a modelos apoyados y no apoyados. Los proveedores no reciben veto editorial, control del ranking ni derecho a ocultar resultados negativos o fallas de infraestructura.",
+		principles: [
+			"Se declara cada recurso y su valor aproximado.",
+			"La inclusión de modelos sigue el diseño del estudio.",
+			"Métodos, fallas y limitaciones siguen siendo publicables.",
+			"Los casos patrocinados se separan de las conclusiones.",
+		],
+		contactLabel: "Empecemos con un release medible",
+		contactTitle: "Cuéntanos qué recurso puedes ofrecer.",
+		contactBody:
+			"Responderemos con el workload, presupuesto, hitos, plan de custodia y entregables públicos correspondientes. Cómputo, créditos, tiempo experto, colaboración institucional y grants son útiles.",
+		contactCta: "Escribirle a Railly",
+		contactNote:
+			"Crafter Research es un research lab de interés público de Crafter Station.",
+	},
+}[contentLang];
+
+const fallbackNotice =
+	lang === "pt"
+		? "Esta página está disponível em inglês enquanto preparamos a tradução completa."
+		: lang === "zh"
+			? "完整翻译准备期间，本页面暂以英文显示。"
+			: "";
+
+const computeMailto = `mailto:${inbox}?subject=${encodeURIComponent("Compute support for Crafter Research")}`;
+const fundingMailto = `mailto:${inbox}?subject=${encodeURIComponent("Research milestone support for Crafter Research")}`;
+---
+
+<Layout
+	title={content.metaTitle}
+	description={content.metaDescription}
+	lang={lang}
+>
+	<main class="support-page">
+		<header class="support-hero">
+			<div class="support-hero-main" lang={contentLang}>
+				<p class="support-eyebrow">{content.eyebrow}</p>
+				{fallbackNotice && <p class="support-fallback-notice" lang={lang}>{fallbackNotice}</p>}
+				<h1>{content.title}</h1>
+				<p class="support-hero-body">{content.body}</p>
+				<div class="support-actions">
+					<a class="button-primary" href={computeMailto}
+						>{content.primaryCta}</a
+					>
+					<a class="button-secondary" href={fundingMailto}
+						>{content.secondaryCta}</a
+					>
+				</div>
+			</div>
+			<aside class="support-hero-signal" aria-label={content.heroNote}>
+				<span aria-hidden="true">90</span><strong>days</strong>
+				<p>{content.heroNote}</p>
+			</aside>
+		</header>
+
+		<section class="support-section" aria-labelledby="proof-title">
+			<header class="support-section-heading">
+				<div>
+					<p class="support-eyebrow">{content.proofLabel}</p>
+					<h2 id="proof-title">{content.proofTitle}</h2>
+				</div>
+				<p>{content.proofBody}</p>
+			</header>
+			<div class="proof-grid">
+				{content.proof.map(([value, label, name, body, href]) => (
+					<a href={href} target="_blank" rel="noreferrer" class="proof-card">
+						<div class="proof-value"><strong>{value}</strong><span>{label}</span></div>
+						<div><h3>{name}</h3><p>{body}</p></div><span class="proof-arrow" aria-hidden="true">↗</span>
+					</a>
+				))}
+			</div>
+		</section>
+
+		<section class="support-section" aria-labelledby="programs-title">
+			<header class="support-section-heading">
+				<div>
+					<p class="support-eyebrow">{content.programLabel}</p>
+					<h2 id="programs-title">{content.programTitle}</h2>
+				</div>
+				<p>{content.programBody}</p>
+			</header>
+			<div class="program-dossier">
+				{content.programs.map((program) => (
+					<article class:list={["support-program", program.featured && "support-program-featured"]}>
+						<header class="support-program-header">
+							<div class="support-program-index" aria-hidden="true">{program.index}</div>
+							<div><span class="support-status">{content.proposed}</span><h3>{program.name}</h3><strong>{program.hook}</strong></div>
+							<p>{program.body}</p>
+						</header>
+						<dl class="program-contract">
+							<div class="program-contract-need"><dt>{content.needLabel}</dt><dd>{program.need}</dd></div>
+							<div><dt>{content.milestoneLabel}</dt><dd>{program.milestone}</dd></div>
+							<div><dt>{content.outputLabel}</dt><dd>{program.output}</dd></div>
+							<div class="program-contract-limit"><dt>{content.limitLabel}</dt><dd>{program.limit}</dd></div>
+						</dl>
+					</article>
+				))}
+			</div>
+			<aside class="enabling-lane">
+				<div>
+					<p class="support-eyebrow">{content.enablingLabel}</p>
+					<h3>{content.enablingTitle}</h3>
+				</div>
+				<p>{content.enablingBody}</p>
+				<strong>{content.enablingNeed}</strong>
+			</aside>
+		</section>
+
+		<section class="support-section" aria-labelledby="resources-title">
+			<header class="support-section-heading">
+				<div>
+					<p class="support-eyebrow">{content.resourceLabel}</p>
+					<h2 id="resources-title">{content.resourceTitle}</h2>
+				</div>
+				<p>{content.resourceBody}</p>
+			</header>
+			<div class="resource-ledger">
+				{content.resources.map(([code, name, ask, term, body, fallback]) => (
+					<article>
+						<span class="resource-code">{code}</span>
+						<div class="resource-name"><h3>{name}</h3><strong>{ask}</strong><small>{term}</small></div>
+						<p>{body}</p><small class="resource-fallback">{fallback}</small>
+					</article>
+				))}
+			</div>
+		</section>
+
+		<section class="support-independence" aria-labelledby="independence-title">
+			<div class="independence-statement">
+				<p class="support-eyebrow">{content.independenceLabel}</p>
+				<h2 id="independence-title">{content.independenceTitle}</h2>
+				<p>{content.independenceBody}</p>
+			</div>
+			<ol class="independence-list">
+				{content.principles.map((principle, index) => <li><span>{String(index + 1).padStart(2, "0")}</span>{principle}</li>)}
+			</ol>
+		</section>
+
+		<section class="support-contact" aria-labelledby="contact-title">
+			<p class="support-eyebrow">{content.contactLabel}</p>
+			<h2 id="contact-title">{content.contactTitle}</h2>
+			<p>{content.contactBody}</p>
+			<a href={computeMailto}
+				>{content.contactCta} <span aria-hidden="true">↗</span></a
+			><small>{inbox} / {content.contactNote}</small>
+		</section>
+	</main>
+</Layout>
