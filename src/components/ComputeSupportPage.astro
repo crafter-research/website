@@ -1,0 +1,399 @@
+---
+import type { ProjectLocale } from "../data/projects";
+import type { Lang } from "../i18n/ui";
+import Layout from "../layouts/Layout.astro";
+
+interface Props {
+	lang: Lang;
+}
+
+const { lang } = Astro.props;
+const contentLang: ProjectLocale = lang === "es" ? "es" : "en";
+const inbox = "railly@crafterstation.com";
+
+const content = {
+	en: {
+		metaTitle: "Compute for public-interest research · Crafter Research",
+		metaDescription:
+			"A concrete compute brief for open model evaluation, legal AI reliability, and public-system measurement in Latin America.",
+		eyebrow: "Open compute brief / August 2026",
+		title: "Give a public-interest workload somewhere serious to run.",
+		body: "Crafter Research builds open, reproducible infrastructure for Latin America. We already have the corpora, benchmarks, pipelines, and public baselines. More compute would let us run controlled experiments that are currently too expensive, too slow, or impossible on rented API access alone.",
+		primaryCta: "Discuss a compute offer",
+		secondaryCta: "See shipped evidence",
+		availability: "Open now",
+		availabilityBody:
+			"Cloud credits, dedicated GPU time, API credits, hardware loans, and donated workstations are all useful.",
+		askLabel: "The ask",
+		taskTitle: "Three useful sizes. No all-or-nothing requirement.",
+		taskBody:
+			"We match the workload to the resource, publish measured utilization, and reduce scope before pretending a small grant can support a large study.",
+		tiers: [
+			{
+				code: "S",
+				name: "One bounded release",
+				ask: "$1k–$5k cloud or API credits",
+				term: "3–12 months",
+				use: "A fixed benchmark run, one open-model comparison, embeddings and reranking experiments, or a month of repeated public-system observations.",
+				return:
+					"Raw outputs, exact configuration, cost ledger, limitations, and a Research Log publication.",
+			},
+			{
+				code: "M",
+				name: "Controlled model lab",
+				ask: "300–1,000 A100-equivalent GPU-hours",
+				term: "90-day allocation",
+				use: "Repeated serving of 7B–70B open models, quantization comparisons, retrieval ablations, and independent judging without API drift.",
+				return:
+					"Utilization report, serving recipes, benchmark records, failure taxonomy, and reproducible evaluation code.",
+			},
+			{
+				code: "L",
+				name: "Persistent research node",
+				ask: "High-memory workstation or equivalent remote capacity",
+				term: "90-day loan or donation",
+				use: "Private pre-publication corpora, repeatable local inference, long-running observatory jobs, and experiments that do not fit into short cloud sessions.",
+				return:
+					"Measured workload report and a return, extend, or convert decision. Hardware never becomes the research claim.",
+			},
+		],
+		workLabel: "What it unlocks",
+		workTitle: "Named releases, not generic GPU hunger.",
+		workBody:
+			"Each lane already has public inputs and a bounded next result. Scope is finalized against the actual resource offered.",
+		workloads: [
+			{
+				index: "01",
+				name: "LatamBench Open Weights Observatory",
+				question:
+					"Which open models can Latin America actually run, and what changes under quantization?",
+				baseline:
+					"11 models evaluated across Trueque-500 and CHOCLO-500, with published responses and judge records.",
+				compute:
+					"Controlled inference for 6–8 open models, two quantizations, repeated runs, and independent judging.",
+				release:
+					"A comparable cost, quality, abstention, and serving-variance report with every response public.",
+				href: "https://github.com/crafter-research/latambench",
+			},
+			{
+				index: "02",
+				name: "Spanish Legal Model Reliability Lab",
+				question:
+					"Can a system cite the law that was valid at the time of the question?",
+				baseline:
+					"21,244 versioned legal norms and a firm N=35 retrieval gold set across six configurations.",
+				compute:
+					"Expand to N≥150, compare RAG, long-context, and bounded local models, then repeat the strongest configurations.",
+				release:
+					"Per-query evidence, citation and temporal-validity metrics, failure taxonomy, and one-command verification.",
+				href: "https://crafter.ing/research/measuring-legal-retrieval",
+			},
+			{
+				index: "03",
+				name: "Public Systems Observatory",
+				question:
+					"Do public digital services remain reachable and usable after the landing page?",
+				baseline:
+					"Muniscan covers 1,871 municipalities and already publishes a deterministic 100-domain HTTP sample.",
+				compute:
+					"Repeated network observations, browser-level accessibility checks, visual regression, and non-destructive citizen-task probes.",
+				release:
+					"Time-series evidence and a public failure taxonomy without turning one request into an uptime claim.",
+				href: "https://crafter.ing/research/muniscan-http-sample",
+			},
+		],
+		fitLabel: "Good fit",
+		fitTitle: "What we can responsibly accept.",
+		fitBody:
+			"The best support has enough access time to complete a named release and permits publication of negative results.",
+		fits: [
+			[
+				"Cloud",
+				"Credits valid for at least 90 days, with GPU or high-throughput model access.",
+			],
+			[
+				"Capacity",
+				"Reserved or interruptible accelerators with a documented hardware and software environment.",
+			],
+			[
+				"Hardware",
+				"High-memory NVIDIA or AMD workstations, server access, or measured evaluation loans.",
+			],
+			[
+				"Models",
+				"API credits for frontier controls, independent judges, embeddings, reranking, or multimodal agents.",
+			],
+		],
+		boundaryLabel: "Independence contract",
+		boundaryTitle:
+			"Support funds the experiment. It does not purchase the conclusion.",
+		boundaries: [
+			"The provider and approximate value are disclosed.",
+			"Methods, failures, utilization, and limitations remain publishable.",
+			"Supported models receive no favorable scoring or editorial veto.",
+			"Private data, credentials, and irreversible government actions stay out of scope.",
+		],
+		contactLabel: "Make the offer concrete",
+		contactTitle: "Send the resource, constraints, and expiry date.",
+		contactBody:
+			"We will reply with the best matching workload, a smaller fallback, milestones, stewardship requirements, and public deliverables. A useful email can be three lines long.",
+		contactCta: "Email Railly",
+		contactTemplate: "Available resource / access window / restrictions",
+		back: "All support options",
+		publicReturn: "Public return",
+		baselineLabel: "Baseline",
+		computeLabel: "Compute job",
+		releaseLabel: "Release",
+		evidenceLabel: "Evidence",
+	},
+	es: {
+		metaTitle:
+			"Cómputo para investigación de interés público · Crafter Research",
+		metaDescription:
+			"Un brief concreto de cómputo para evaluación de modelos abiertos, confiabilidad de IA legal y medición de sistemas públicos en Latinoamérica.",
+		eyebrow: "Brief abierto de cómputo / agosto 2026",
+		title: "Dale a un workload de interés público un lugar serio donde correr.",
+		body: "Crafter Research construye infraestructura abierta y reproducible para Latinoamérica. Ya tenemos corpora, benchmarks, pipelines y líneas base públicas. Más cómputo nos permitiría ejecutar experimentos controlados que hoy son demasiado caros, lentos o imposibles solo con APIs alquiladas.",
+		primaryCta: "Conversar sobre una oferta",
+		secondaryCta: "Ver evidencia publicada",
+		availability: "Abierto ahora",
+		availabilityBody:
+			"Créditos cloud, tiempo dedicado de GPU, créditos API, préstamos de hardware y workstations donadas son útiles.",
+		taskLabel: "Lo que pedimos",
+		taskTitle: "Tres tamaños útiles. No tiene que ser todo o nada.",
+		taskBody:
+			"Emparejamos el workload con el recurso, publicamos la utilización medida y reducimos scope antes de fingir que un grant pequeño sostiene un estudio grande.",
+		tiers: [
+			{
+				code: "S",
+				name: "Un release acotado",
+				ask: "$1k–$5k en cloud o APIs",
+				term: "3–12 meses",
+				use: "Un benchmark fijo, una comparación de modelos abiertos, experimentos de embeddings y reranking o un mes de observaciones repetidas de sistemas públicos.",
+				return:
+					"Outputs crudos, configuración exacta, costos, limitaciones y una publicación en Research Log.",
+			},
+			{
+				code: "M",
+				name: "Laboratorio controlado",
+				ask: "300–1,000 horas equivalentes de A100",
+				term: "Asignación de 90 días",
+				use: "Serving repetido de modelos abiertos 7B–70B, comparación de cuantización, ablations de retrieval y jueces independientes sin drift de API.",
+				return:
+					"Reporte de uso, recetas de serving, registros del benchmark, taxonomía de fallas y evaluación reproducible.",
+			},
+			{
+				code: "L",
+				name: "Nodo persistente de research",
+				ask: "Workstation de alta memoria o capacidad remota equivalente",
+				term: "Préstamo por 90 días o donación",
+				use: "Corpora privados antes de publicar, inferencia local repetible, observatorios de larga duración y experimentos que no caben en sesiones cloud cortas.",
+				return:
+					"Reporte medido del workload y decisión de devolver, extender o convertir. El hardware nunca se vuelve el hallazgo.",
+			},
+		],
+		workLabel: "Qué desbloquea",
+		workTitle: "Releases nombrados, no hambre genérica de GPUs.",
+		workBody:
+			"Cada línea ya tiene inputs públicos y un siguiente resultado acotado. El scope final se ajusta al recurso real.",
+		workloads: [
+			{
+				index: "01",
+				name: "LatamBench Open Weights Observatory",
+				question:
+					"¿Qué modelos abiertos puede correr Latinoamérica y qué cambia con cuantización?",
+				baseline:
+					"11 modelos evaluados en Trueque-500 y CHOCLO-500, con respuestas y jueces publicados.",
+				compute:
+					"Inferencia controlada de 6–8 modelos, dos cuantizaciones, repeticiones y evaluación independiente.",
+				release:
+					"Reporte comparable de costo, calidad, abstención y variación de serving con todas las respuestas públicas.",
+				href: "https://github.com/crafter-research/latambench",
+			},
+			{
+				index: "02",
+				name: "Spanish Legal Model Reliability Lab",
+				question:
+					"¿Puede un sistema citar la ley que estaba vigente cuando se hizo la pregunta?",
+				baseline:
+					"21,244 normas versionadas y un gold set firme N=35 en seis configuraciones de retrieval.",
+				compute:
+					"Expandir a N≥150, comparar RAG, long-context y modelos locales acotados, y repetir las configuraciones más fuertes.",
+				release:
+					"Evidencia por consulta, métricas de cita y vigencia temporal, taxonomía y verificación con un comando.",
+				href: "https://crafter.ing/es/research/measuring-legal-retrieval",
+			},
+			{
+				index: "03",
+				name: "Public Systems Observatory",
+				question:
+					"¿Los servicios digitales públicos siguen alcanzables y usables después del landing?",
+				baseline:
+					"Muniscan cubre 1,871 municipalidades y ya publica una muestra HTTP determinística de 100 dominios.",
+				compute:
+					"Observaciones repetidas, accesibilidad a nivel de navegador, regresión visual y pruebas no destructivas de tareas ciudadanas.",
+				release:
+					"Evidencia temporal y taxonomía pública sin convertir un request en una afirmación de uptime.",
+				href: "https://crafter.ing/es/research/muniscan-http-sample",
+			},
+		],
+		fitLabel: "Buen encaje",
+		fitTitle: "Qué podemos aceptar responsablemente.",
+		fitBody:
+			"El mejor apoyo da tiempo suficiente para completar un release nombrado y permite publicar resultados negativos.",
+		fits: [
+			[
+				"Cloud",
+				"Créditos válidos al menos 90 días, con GPUs o acceso a modelos de alto throughput.",
+			],
+			[
+				"Capacidad",
+				"Aceleradores reservados o interrumpibles con entorno de hardware y software documentado.",
+			],
+			[
+				"Hardware",
+				"Workstations NVIDIA o AMD de alta memoria, acceso a servidores o préstamos medidos.",
+			],
+			[
+				"Modelos",
+				"Créditos API para controles frontier, jueces, embeddings, reranking o agentes multimodales.",
+			],
+		],
+		boundaryLabel: "Contrato de independencia",
+		boundaryTitle: "El apoyo financia el experimento. No compra la conclusión.",
+		boundaries: [
+			"Se declara el proveedor y el valor aproximado.",
+			"Métodos, fallas, utilización y limitaciones siguen siendo publicables.",
+			"Los modelos apoyados no reciben scoring favorable ni veto editorial.",
+			"Datos privados, credenciales y acciones gubernamentales irreversibles quedan fuera de scope.",
+		],
+		contactLabel: "Haz concreta la oferta",
+		contactTitle: "Envía el recurso, restricciones y fecha de expiración.",
+		contactBody:
+			"Responderemos con el workload que mejor encaja, un fallback menor, hitos, requisitos de custodia y entregables públicos. Un email útil puede tener tres líneas.",
+		contactCta: "Escribirle a Railly",
+		contactTemplate: "Recurso disponible / ventana de acceso / restricciones",
+		back: "Todas las formas de apoyo",
+		publicReturn: "Retorno público",
+		baselineLabel: "Línea base",
+		computeLabel: "Trabajo de cómputo",
+		releaseLabel: "Release",
+		evidenceLabel: "Evidencia",
+	},
+}[contentLang];
+
+const fallbackNotice =
+	lang === "pt"
+		? "Esta página está disponível em inglês enquanto preparamos a tradução completa."
+		: lang === "zh"
+			? "完整翻译准备期间，本页面暂以英文显示。"
+			: "";
+const supportPath = lang === "en" ? "/support" : `/${lang}/support`;
+const researchPath = lang === "en" ? "/research" : `/${lang}/research`;
+const subject = encodeURIComponent("Compute support for Crafter Research");
+const body = encodeURIComponent(`${content.contactTemplate}\n\n`);
+const mailto = `mailto:${inbox}?subject=${subject}&body=${body}`;
+---
+
+<Layout
+	title={content.metaTitle}
+	description={content.metaDescription}
+	lang={lang}
+>
+	<main class="compute-page" lang={contentLang}>
+		<header class="compute-hero">
+			<div class="compute-hero-copy">
+				<p class="compute-kicker">{content.eyebrow}</p>
+				{fallbackNotice && <p class="support-fallback-notice" lang={lang}>{fallbackNotice}</p>}
+				<h1>{content.title}</h1>
+				<p>{content.body}</p>
+				<div class="support-actions">
+					<a class="button-primary" href={mailto}>{content.primaryCta}</a>
+					<a class="button-secondary" href={researchPath}
+						>{content.secondaryCta}</a
+					>
+				</div>
+			</div>
+			<aside class="compute-availability">
+				<span class="compute-pulse" aria-hidden="true"></span>
+				<strong>{content.availability}</strong>
+				<p>{content.availabilityBody}</p>
+			</aside>
+		</header>
+
+		<section class="compute-section" aria-labelledby="compute-ask-title">
+			<header class="compute-section-heading">
+				<div>
+					<p class="compute-kicker">{content.taskLabel}</p>
+					<h2 id="compute-ask-title">{content.taskTitle}</h2>
+				</div>
+				<p>{content.taskBody}</p>
+			</header>
+			<div class="compute-tier-grid">
+				{content.tiers.map((tier) => (
+					<article>
+						<span class="compute-tier-code">{tier.code}</span>
+						<div><h3>{tier.name}</h3><strong>{tier.ask}</strong><small>{tier.term}</small></div>
+						<p>{tier.use}</p>
+						<p class="compute-return"><span>{content.publicReturn}</span>{tier.return}</p>
+					</article>
+				))}
+			</div>
+		</section>
+
+		<section class="compute-section" aria-labelledby="compute-work-title">
+			<header class="compute-section-heading">
+				<div>
+					<p class="compute-kicker">{content.workLabel}</p>
+					<h2 id="compute-work-title">{content.workTitle}</h2>
+				</div>
+				<p>{content.workBody}</p>
+			</header>
+			<div class="compute-workloads">
+				{content.workloads.map((workload) => (
+					<article>
+						<header><span>{workload.index}</span><div><h3>{workload.name}</h3><strong>{workload.question}</strong></div><a href={workload.href}>{content.evidenceLabel} ↗</a></header>
+						<dl>
+							<div><dt>{content.baselineLabel}</dt><dd>{workload.baseline}</dd></div>
+							<div><dt>{content.computeLabel}</dt><dd>{workload.compute}</dd></div>
+							<div><dt>{content.releaseLabel}</dt><dd>{workload.release}</dd></div>
+						</dl>
+					</article>
+				))}
+			</div>
+		</section>
+
+		<section class="compute-fit" aria-labelledby="compute-fit-title">
+			<div>
+				<p class="compute-kicker">{content.fitLabel}</p>
+				<h2 id="compute-fit-title">{content.fitTitle}</h2>
+				<p>{content.fitBody}</p>
+			</div>
+			<dl>
+				{content.fits.map(([term, detail]) => <div><dt>{term}</dt><dd>{detail}</dd></div>)}
+			</dl>
+		</section>
+
+		<section class="compute-boundary" aria-labelledby="compute-boundary-title">
+			<div>
+				<p class="compute-kicker">{content.boundaryLabel}</p>
+				<h2 id="compute-boundary-title">{content.boundaryTitle}</h2>
+			</div>
+			<ol>
+				{content.boundaries.map((boundary, index) => <li><span>{String(index + 1).padStart(2, "0")}</span>{boundary}</li>)}
+			</ol>
+		</section>
+
+		<section class="compute-contact" aria-labelledby="compute-contact-title">
+			<p class="compute-kicker">{content.contactLabel}</p>
+			<h2 id="compute-contact-title">{content.contactTitle}</h2>
+			<p>{content.contactBody}</p>
+			<a href={mailto}
+				>{content.contactCta} <span aria-hidden="true">↗</span></a
+			>
+			<code>{content.contactTemplate}</code>
+			<small>{inbox}</small>
+			<a class="compute-back" href={supportPath}>← {content.back}</a>
+		</section>
+	</main>
+</Layout>

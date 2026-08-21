@@ -19,7 +19,7 @@ const tp = useTranslatedPath(lang);
 >
 	<SiteLogo lang={lang} />
 	<nav class="site-header-nav" aria-label="Primary navigation">
-		<span class="site-header-collapsible">
+		<span class="site-header-links">
 			<a href={tp("/systems")} class="nav-link nav-link-primary"
 				>{t("systems.title")}</a
 			>
@@ -38,7 +38,7 @@ const tp = useTranslatedPath(lang);
 		</span>
 		<a
 			href="https://github.com/crafter-research"
-			class="github-link text-(--color-muted) hover:text-(--color-text) flex items-center transition-colors"
+			class="github-link site-header-github text-(--color-muted) hover:text-(--color-text) flex items-center transition-colors"
 			target="_blank"
 			rel="noreferrer"
 			aria-label="GitHub"
@@ -56,7 +56,56 @@ const tp = useTranslatedPath(lang);
 				/>
 			</svg>
 		</a>
+		<details class="site-header-menu">
+			<summary>
+				<svg
+					aria-hidden="true"
+					width="15"
+					height="15"
+					viewBox="0 0 16 16"
+					fill="none"
+				>
+					<path
+						d="M2 4h12M2 8h12M2 12h12"
+						stroke="currentColor"
+						stroke-width="1.25"
+						stroke-linecap="round"
+					></path>
+				</svg>
+				<span>{t("nav.menu")}</span>
+			</summary>
+			<div class="site-header-menu-panel">
+				<a href={tp("/systems")}>{t("systems.title")}</a>
+				<a href={tp("/projects")}>{t("portfolio.title")}</a>
+				<a href={tp("/support")}>{t("support.title")}</a>
+				<a href={tp("/research")}>{t("research.title")}</a>
+				<a href={tp("/blog")}>{t("blog.title")}</a>
+				<a
+					href="https://github.com/crafter-research"
+					target="_blank"
+					rel="noreferrer"
+					>GitHub ↗</a
+				>
+			</div>
+		</details>
 		<LanguagePicker />
 		<ThemeSwitcher />
 	</nav>
 </header>
+
+<script>
+const menu = document.querySelector<HTMLDetailsElement>(".site-header-menu");
+menu?.querySelectorAll("a").forEach((link) => {
+	link.addEventListener("click", () => menu.removeAttribute("open"));
+});
+document.addEventListener("click", (event) => {
+	if (menu?.open && !menu.contains(event.target as Node))
+		menu.removeAttribute("open");
+});
+document.addEventListener("keydown", (event) => {
+	if (event.key === "Escape" && menu?.open) {
+		menu.removeAttribute("open");
+		menu.querySelector("summary")?.focus();
+	}
+});
+</script>
