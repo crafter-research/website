@@ -14,6 +14,18 @@ export const copyByLang = {
 		instrumentTitle: "Research should ship artifacts people can inspect.",
 		instrumentBody:
 			"We work on source-backed datasets, scorecards, registries, evaluation artifacts, and small tools tied to public-interest questions.",
+		projectsLabel: "Published work",
+		projectsTitle: "Evidence you can inspect, not promises.",
+		projectsBody:
+			"Five current projects with their released surfaces, supporting evidence, verification date, and known limits.",
+		artifactsLabel: "Artifact types",
+		limitationLabel: "Current limitation",
+		linksLabel: "project links",
+		verifiedLabel: "Verified",
+		maturity: {
+			maintained: "Maintained",
+			published: "Published",
+		},
 		chainLabel: "Operating model",
 		chainTitle: "From source material to reusable artifacts.",
 		chainBody: "Question, sources, artifact, review, documentation, release.",
@@ -24,10 +36,6 @@ export const copyByLang = {
 		logLabel: "Lab notes",
 		logTitle: "Research logs with artifacts.",
 		logCta: "Read all notes",
-		emptyNoteMeta: "Reserved slot",
-		emptyNoteTitle: "Next research artifact",
-		emptyNoteBody:
-			"This space stays open until a note has source trail, method, and reusable output.",
 		stanceLabel: "Operating stance",
 		stanceTitle: "Small, practical, evidence-first.",
 		footerMade: "Made by",
@@ -49,6 +57,18 @@ export const copyByLang = {
 		instrumentTitle: "El research debería producir artefactos inspeccionables.",
 		instrumentBody:
 			"Trabajamos en datasets source-backed, scorecards, registros, artefactos de evaluación y tools pequeñas atadas a preguntas de interés público.",
+		projectsLabel: "Trabajo publicado",
+		projectsTitle: "Evidencia que puedes inspeccionar, no promesas.",
+		projectsBody:
+			"Cinco proyectos actuales con sus superficies publicadas, evidencia, fecha de verificación y límites conocidos.",
+		artifactsLabel: "Tipos de artefacto",
+		limitationLabel: "Limitación actual",
+		linksLabel: "enlaces del proyecto",
+		verifiedLabel: "Verificado",
+		maturity: {
+			maintained: "Mantenido",
+			published: "Publicado",
+		},
 		chainLabel: "Modelo operativo",
 		chainTitle: "De fuente pública a artefactos reutilizables.",
 		chainBody: "Pregunta, fuentes, artefacto, review, documentación, release.",
@@ -59,10 +79,6 @@ export const copyByLang = {
 		logLabel: "Notas del lab",
 		logTitle: "Research logs con artefactos.",
 		logCta: "Leer todas las notas",
-		emptyNoteMeta: "Slot reservado",
-		emptyNoteTitle: "Siguiente artefacto de research",
-		emptyNoteBody:
-			"Este espacio queda abierto hasta que una nota tenga fuentes, método y output reutilizable.",
 		stanceLabel: "Postura operativa",
 		stanceTitle: "Pequeño, práctico y evidence-first.",
 		footerMade: "Hecho por",
