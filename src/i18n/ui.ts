@@ -12,9 +12,11 @@ export type UiKey = keyof (typeof ui)["en"];
 
 export const ui = {
 	en: {
+		"skip.content": "Skip to content",
 		"site.label": "crafter research",
 		"nav.research": "research log",
 		"portfolio.title": "Projects",
+		"support.title": "Support",
 		"site.title": "Crafter Research",
 		"site.description":
 			"A research lab where every paper has a working prototype.",
@@ -118,9 +120,11 @@ export const ui = {
 		"footer.rights": "Public-interest research for Peru and LATAM.",
 	},
 	es: {
+		"skip.content": "Saltar al contenido",
 		"site.label": "crafter research",
 		"nav.research": "registro",
 		"portfolio.title": "Proyectos",
+		"support.title": "Apoyar",
 		"site.title": "Crafter Research",
 		"site.description":
 			"Un laboratorio donde cada paper tiene un prototipo funcional.",
@@ -224,9 +228,11 @@ export const ui = {
 		"footer.rights": "Investigación de interés público para Perú y LATAM.",
 	},
 	pt: {
+		"skip.content": "Pular para o conteúdo",
 		"site.label": "crafter research",
 		"nav.research": "pesquisa",
 		"portfolio.title": "Projetos",
+		"support.title": "Apoiar",
 		"site.title": "Crafter Research",
 		"site.description":
 			"Um laboratório onde cada paper tem um protótipo funcional.",
@@ -330,9 +336,11 @@ export const ui = {
 		"footer.rights": "Pesquisa de interesse público para o Peru e a LATAM.",
 	},
 	zh: {
+		"skip.content": "跳到主要内容",
 		"site.label": "crafter research",
 		"nav.research": "研究",
 		"portfolio.title": "项目",
+		"support.title": "支持",
 		"site.title": "Crafter Research",
 		"site.description": "每篇论文都有可运行原型的研究实验室。",
 		"hero.title": "验证假设",

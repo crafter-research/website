@@ -4,6 +4,7 @@ import EdgePatterns from "../components/EdgePatterns.astro";
 import SiteFooter from "../components/SiteFooter.astro";
 import SiteHeader from "../components/SiteHeader.astro";
 import type { Lang } from "../i18n/ui";
+import { useTranslations } from "../i18n/utils";
 
 interface Props {
 	title: string;
@@ -12,6 +13,7 @@ interface Props {
 }
 
 const { title, description, lang = "en" } = Astro.props;
+const t = useTranslations(lang);
 const siteURL = Astro.site ?? new URL("https://crafter.ing");
 const canonicalURL = new URL(Astro.url.pathname, siteURL);
 const ogImageURL = new URL("/og.png", siteURL);
@@ -56,9 +58,10 @@ const ogImageURL = new URL("/og.png", siteURL);
 		<title>{title}</title>
 	</head>
 	<body class="bg-(--color-bg) text-(--color-text) font-sans antialiased">
+		<a class="skip-link" href="#main-content">{t("skip.content")}</a>
 		<EdgePatterns />
 		<SiteHeader lang={lang} />
-		<slot />
+		<div id="main-content" tabindex="-1"><slot /></div>
 		<SiteFooter lang={lang} />
 	</body>
 </html>
