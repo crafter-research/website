@@ -387,6 +387,12 @@ a {
 	text-transform: none;
 }
 
+@media (max-width: 640px) {
+	.site-header .nav-link-secondary {
+		display: none;
+	}
+}
+
 .research-prose .katex {
 	font-size: 1em;
 }

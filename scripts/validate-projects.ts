@@ -1,10 +1,17 @@
 import { featuredProjects, projects } from "../src/data/projects";
+import {
+	auditedPublicRepositoryCount,
+	excludedPublicRepositories,
+	portfolioAudit,
+	publicRepositoryCount,
+} from "../src/data/portfolio-audit";
 
 const requiredFeaturedProjects = 5;
 const maintainedFreshnessDays = 90;
 const urls = new Set<string>();
 const slugs = new Set<string>();
 const errors: string[] = [];
+const auditSlugs = new Set<string>();
 
 for (const project of projects) {
 	if (slugs.has(project.slug)) errors.push(`Duplicate slug: ${project.slug}`);
@@ -55,6 +62,43 @@ for (const project of projects) {
 	}
 }
 
+for (const project of portfolioAudit) {
+	if (auditSlugs.has(project.slug)) errors.push(`Duplicate audit slug: ${project.slug}`);
+	auditSlugs.add(project.slug);
+	if (!project.summary.en || !project.summary.es) {
+		errors.push(`${project.slug}: audit summary must be bilingual`);
+	}
+	if (!project.limitation.en || !project.limitation.es) {
+		errors.push(`${project.slug}: audit limitation must be bilingual`);
+	}
+	if (project.proof.length === 0 || project.proof.some((item) => !item.en || !item.es)) {
+		errors.push(`${project.slug}: audit proof must be present and bilingual`);
+	}
+	if (!/^https:\/\/github\.com\/crafter-research\//.test(project.repository)) {
+		errors.push(`${project.slug}: audit repository must be public Crafter Research GitHub`);
+	}
+	if (!/^\d{4}-\d{2}-\d{2}$/.test(project.lastActivity)) {
+		errors.push(`${project.slug}: lastActivity must use YYYY-MM-DD`);
+	}
+	if (!/^\d{4}-\d{2}-\d{2}$/.test(project.verifiedAt)) {
+		errors.push(`${project.slug}: audit verifiedAt must use YYYY-MM-DD`);
+	}
+	if (Object.values(project.scores).some((score) => score < 0 || score > 4)) {
+		errors.push(`${project.slug}: audit scores must be between 0 and 4`);
+	}
+	urls.add(project.repository);
+	if (project.homepage) urls.add(project.homepage);
+}
+
+if (portfolioAudit.length !== auditedPublicRepositoryCount) {
+	errors.push(
+		`Expected ${auditedPublicRepositoryCount} audited public projects, found ${portfolioAudit.length}`,
+	);
+}
+if (portfolioAudit.length + excludedPublicRepositories.length !== publicRepositoryCount) {
+	errors.push("Audited and excluded repositories do not match the declared public scope");
+}
+
 if (featuredProjects.length !== requiredFeaturedProjects) {
 	errors.push(
 		`Expected ${requiredFeaturedProjects} featured projects, found ${featuredProjects.length}`,
@@ -82,5 +126,5 @@ if (errors.length > 0) {
 }
 
 console.log(
-	`Validated ${projects.length} projects, ${featuredProjects.length} featured records, and ${urls.size} public URLs.`,
+	`Validated ${projects.length} featured-project records, ${portfolioAudit.length} audited projects, and ${urls.size} public URLs.`,
 );
