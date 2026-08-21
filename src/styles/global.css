@@ -412,7 +412,7 @@ button:focus-visible {
 	text-transform: none;
 }
 
-@media (max-width: 640px) {
+@media (max-width: 900px) {
 	.site-header .nav-link-secondary {
 		display: none;
 	}
