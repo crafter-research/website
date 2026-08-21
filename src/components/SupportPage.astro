@@ -328,6 +328,8 @@ const fallbackNotice =
 
 const computeMailto = `mailto:${inbox}?subject=${encodeURIComponent("Compute support for Crafter Research")}`;
 const fundingMailto = `mailto:${inbox}?subject=${encodeURIComponent("Research milestone support for Crafter Research")}`;
+const computePath =
+	lang === "en" ? "/support/compute" : `/${lang}/support/compute`;
 ---
 
 <Layout
@@ -343,9 +345,7 @@ const fundingMailto = `mailto:${inbox}?subject=${encodeURIComponent("Research mi
 				<h1>{content.title}</h1>
 				<p class="support-hero-body">{content.body}</p>
 				<div class="support-actions">
-					<a class="button-primary" href={computeMailto}
-						>{content.primaryCta}</a
-					>
+					<a class="button-primary" href={computePath}>{content.primaryCta}</a>
 					<a class="button-secondary" href={fundingMailto}
 						>{content.secondaryCta}</a
 					>
