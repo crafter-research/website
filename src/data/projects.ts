@@ -247,7 +247,7 @@ export const projects = [
 			},
 			{
 				label: { en: "Read research log", es: "Leer bitácora" },
-				url: "/muniscan",
+				url: "/research/muniscan",
 			},
 			{
 				label: { en: "Inspect data and method", es: "Revisar datos y método" },

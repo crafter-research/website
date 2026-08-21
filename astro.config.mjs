@@ -16,6 +16,13 @@ import { crafterDark, crafterLight } from './src/lib/shiki-theme.ts';
 export default defineConfig({
   site: 'https://crafter.ing',
 
+  redirects: {
+    '/muniscan': '/research/muniscan',
+    '/es/muniscan': '/es/research/muniscan',
+    '/pt/muniscan': '/pt/research/muniscan',
+    '/zh/muniscan': '/zh/research/muniscan',
+  },
+
   i18n: {
     locales: ['en', 'es', 'pt', 'zh'],
     defaultLocale: 'en',

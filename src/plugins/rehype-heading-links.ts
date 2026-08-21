@@ -5,7 +5,7 @@ const hashSpan: Element = {
 	type: "element",
 	tagName: "span",
 	properties: {
-		ariaHidden: true,
+		ariaHidden: "true",
 		className: ["heading-anchor-hash"],
 	},
 	children: [{ type: "text", value: "#" }],
