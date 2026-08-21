@@ -436,23 +436,41 @@ const collisionIndex = (
 				<h2 id="audit-method-title">{copy.methodTitle}</h2>
 				<p>{copy.methodBody}</p>
 			</div>
-			<div class="method-grid">
+			<div class="portfolio-method-grid">
 				<article>
-					<span>01</span>
+					<header class="method-card-header">
+						<span>01</span>
+						<small>/ 04</small>
+					</header>
 					<h3>{copy.methodActivity}</h3>
 					<p>{copy.methodActivityBody}</p>
+					<div class="method-scale" aria-hidden="true">
+						<i>1</i><i>2</i><i>3</i><i>4</i>
+					</div>
 					<code>≤14d 4 · ≤30d 3 · ≤60d 2 · ≤100d 1</code>
 				</article>
 				<article>
-					<span>02</span>
+					<header class="method-card-header">
+						<span>02</span>
+						<small>/ 04</small>
+					</header>
 					<h3>{copy.methodConsistency}</h3>
 					<p>{copy.methodConsistencyBody}</p>
+					<div class="method-scale" aria-hidden="true">
+						<i>1</i><i>2</i><i>3</i><i>4</i>
+					</div>
 					<code>5+w 4 · 3–4w 3 · 2w 2 · 1w 1</code>
 				</article>
 				<article>
-					<span>03</span>
+					<header class="method-card-header">
+						<span>03</span>
+						<small>/ 04</small>
+					</header>
 					<h3>{copy.methodOutput}</h3>
 					<p>{copy.methodOutputBody}</p>
+					<div class="method-scale" aria-hidden="true">
+						<i>1</i><i>2</i><i>3</i><i>4</i>
+					</div>
 					<code>multi-surface 4 · shipped 3 · usable 2 · source 1</code>
 				</article>
 			</div>
@@ -536,7 +554,7 @@ if (root) {
 
 <style>
 .portfolio-observatory {
-	--portfolio-gutter: clamp(4.5rem, 8vw, 7.5rem);
+	--portfolio-gutter: clamp(5rem, 8.5vw, 8rem);
 	box-sizing: border-box;
 	margin: 0 auto;
 	max-width: 96rem;
@@ -1127,43 +1145,104 @@ if (root) {
 .method-intro > p:not(.portfolio-eyebrow) {
 	margin-top: 1.2rem;
 }
-.method-grid {
+.portfolio-method-grid {
 	display: grid;
-	gap: 1px;
+	gap: clamp(0.75rem, 1.5vw, 1.25rem);
 	grid-template-columns: repeat(3, 1fr);
 }
-.method-grid article {
-	background: color-mix(in srgb, var(--color-surface) 45%, transparent);
-	border-bottom: 1px solid var(--color-border);
-	border-right: 1px solid var(--color-border);
+.portfolio-method-grid article {
+	background:
+		linear-gradient(
+			135deg,
+			color-mix(in srgb, var(--color-accent) 5%, transparent),
+			transparent 48%
+		),
+		color-mix(in srgb, var(--color-surface) 52%, transparent);
+	border: 1px solid var(--color-border);
+	border-radius: 0;
 	display: grid;
-	gap: 1.25rem;
+	gap: 1rem;
 	min-height: 23rem;
+	overflow: hidden;
 	padding: clamp(1.5rem, 2.5vw, 2rem);
+	position: relative;
 }
-.method-grid article:first-child {
-	border-left: 1px solid var(--color-border);
+.portfolio-method-grid article::before {
+	background: var(--color-accent);
+	content: "";
+	height: 2px;
+	left: 0;
+	opacity: 0.7;
+	position: absolute;
+	top: 0;
+	width: 2.75rem;
 }
-.method-grid span {
+.method-card-header {
+	align-items: start;
+	display: flex;
+	justify-content: space-between;
+}
+.method-card-header span {
+	color: color-mix(in srgb, var(--color-accent) 34%, transparent);
+	font-family: var(--font-mono);
+	font-size: clamp(2.75rem, 5vw, 4.5rem);
+	letter-spacing: -0.08em;
+	line-height: 0.85;
+}
+.method-card-header small {
 	color: var(--color-muted);
 	font-family: var(--font-mono);
-	font-size: 0.62rem;
+	font-size: 0.58rem;
+	letter-spacing: 0.12em;
 }
-.method-grid h3 {
+.portfolio-method-grid h3 {
 	color: var(--color-text);
-	font-size: 1rem;
+	font-size: clamp(1.1rem, 1.8vw, 1.35rem);
+	margin-top: 0.5rem;
 }
-.method-grid p {
+.portfolio-method-grid p {
 	color: var(--color-muted-strong);
-	font-size: 0.8rem;
-	line-height: 1.55;
+	font-size: 0.84rem;
+	line-height: 1.65;
 }
-.method-grid code {
+.method-scale {
+	display: grid;
+	gap: 3px;
+	grid-template-columns: repeat(4, 1fr);
+	margin-top: auto;
+}
+.method-scale i {
+	align-items: end;
+	background: color-mix(in srgb, var(--color-accent) 14%, transparent);
+	color: color-mix(in srgb, var(--color-accent) 72%, transparent);
+	display: flex;
+	font-family: var(--font-mono);
+	font-size: 0.52rem;
+	font-style: normal;
+	height: calc(0.5rem + (var(--scale-step, 1) * 0.35rem));
+	justify-content: center;
+	padding-bottom: 0.2rem;
+}
+.method-scale i:nth-child(1) {
+	--scale-step: 1;
+}
+.method-scale i:nth-child(2) {
+	--scale-step: 2;
+}
+.method-scale i:nth-child(3) {
+	--scale-step: 3;
+}
+.method-scale i:nth-child(4) {
+	--scale-step: 4;
+	background: color-mix(in srgb, var(--color-accent) 34%, transparent);
+}
+.portfolio-method-grid code {
+	border-top: 1px solid var(--color-border);
 	color: var(--color-accent);
 	font-family: var(--font-mono);
 	font-size: 0.62rem;
 	line-height: 1.5;
-	margin-top: auto;
+	padding-top: 0.8rem;
 }
 .scope-note {
 	border-left: 1px solid var(--color-accent);
@@ -1183,10 +1262,20 @@ if (root) {
 	line-height: 1.55;
 	margin-top: 0.4rem;
 }
+@media (max-width: 1100px) {
+	.portfolio-method-section {
+		grid-template-columns: 1fr;
+	}
+	.method-intro {
+		max-width: 42rem;
+	}
+	.scope-note {
+		grid-column: 1;
+	}
+}
 @media (max-width: 900px) {
 	.portfolio-hero,
-	.portfolio-section-heading,
-	.portfolio-method-section {
+	.portfolio-section-heading {
 		grid-template-columns: 1fr;
 	}
 	.portfolio-hero {
@@ -1210,15 +1299,6 @@ if (root) {
 		border-left: 0;
 		grid-column: 2;
 		padding-left: 0;
-	}
-	.scope-note {
-		grid-column: 1;
-	}
-	.method-grid {
-		grid-template-columns: 1fr;
-	}
-	.method-grid article {
-		border-left: 1px solid var(--color-border);
 	}
 	.signal-map {
 		aspect-ratio: auto;
@@ -1301,11 +1381,11 @@ if (root) {
 	.signal-bar {
 		grid-template-columns: 4.8rem 1fr 1rem;
 	}
-	.method-grid {
+	.portfolio-method-grid {
 		grid-template-columns: 1fr;
 	}
-	.method-grid article {
-		min-height: 18rem;
+	.portfolio-method-grid article {
+		min-height: 17rem;
 	}
 }
 @media (prefers-reduced-motion: no-preference) {
