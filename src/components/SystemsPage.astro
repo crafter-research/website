@@ -1,6 +1,7 @@
 ---
 import { publicSystems, type SystemLocale } from "../data/public-systems";
 import type { Lang } from "../i18n/ui";
+import { useTranslatedPath } from "../i18n/utils";
 import Layout from "../layouts/Layout.astro";
 
 interface Props {
@@ -10,12 +11,13 @@ interface Props {
 const { lang } = Astro.props;
 const contentLang: SystemLocale = lang === "es" ? "es" : "en";
 const inbox = "railly@crafterstation.com";
+const tp = useTranslatedPath(lang);
 
 const copy = {
 	en: {
 		metaTitle: "Public Systems Observatory · Crafter Research",
 		metaDescription:
-			"Six evidence-first research records on public-sector AI systems in Peru, with sources, unknowns, review state, and correction routes.",
+			"A three-track public-interest program to follow, test, and audit public digital systems in Peru with inspectable evidence.",
 		eyebrow: "Public Systems Observatory / Peru alpha 01",
 		title: "What can the public actually verify about government AI?",
 		body: "Six source-backed research records make the visible evidence, unresolved questions, and review state inspectable. This alpha measures public documentation. It does not rate system safety, effectiveness, or institutional intent.",
@@ -26,11 +28,55 @@ const copy = {
 		sectors: "public sectors",
 		sources: "official sources linked",
 		snapshot: "evidence snapshot",
+		programLabel: "One program / three evidence tracks",
+		programTitle: "Follow the system. Test the workflow. Audit the surface.",
+		programBody:
+			"The tracks answer different public questions and keep different proof standards. They share source lineage, review gates, correction routes, and one rule: no combined score that hides what was actually measured.",
+		trackEvidence: "Shipped evidence",
+		trackGap: "Next gate",
+		tracks: [
+			{
+				code: "01",
+				verb: "Follow",
+				title: "Public AI records",
+				state: "Live alpha",
+				body: "Trace what public institutions say a system does, the evidence they expose, and what remains unavailable for independent review.",
+				evidence: "6 first-pass records · 5 sectors · official source ledgers",
+				gap: "Independent second review and agency right of reply",
+				href: "#systems-index-title",
+				cta: "Inspect the records",
+			},
+			{
+				code: "02",
+				verb: "Test",
+				title: "Public-service reliability",
+				state: "Protocol ready",
+				body: "Replay bounded, non-destructive public-service tasks and separate source fidelity, recovery, correctness, and unsafe action.",
+				evidence:
+					"10 frozen fixtures · 2 persisted trajectories · deterministic scorer",
+				gap: "Eight additional trajectories and independent review",
+				href: tp("/support#programs-title"),
+				cta: "See the funded milestone",
+			},
+			{
+				code: "03",
+				verb: "Audit",
+				title: "Municipal digital surface",
+				state: "Recurrent snapshot",
+				body: "Measure the technical architecture municipalities declare publicly while preserving every snapshot and completeness gate.",
+				evidence:
+					"1,871 municipalities · 2 public snapshots · 100-site HTTP sample",
+				gap: "More observations before any historical reliability claim",
+				href: tp("/muniscan"),
+				cta: "Open Muniscan",
+			},
+		],
 		indexLabel: "Evidence index",
 		indexTitle: "Six systems. Twelve questions each.",
 		indexBody:
 			"The strips show evidence coverage, not quality or safety: documented, partial, or not found publicly in the reviewed source set.",
 		openRecord: "Open evidence record",
+		recordListLabel: "Public-system evidence records",
 		sector: "Sector",
 		reviewed: "Last reviewed",
 		coverageLegend: ["not found publicly", "partial", "documented"],
@@ -119,13 +165,38 @@ const copy = {
 		independenceTitle: "Independence",
 		independenceBody:
 			"Crafter Research is an independent public-interest lab by Crafter Station. The institutions listed here did not commission these records and have no editorial control. Material support for this work will be disclosed.",
+		milestoneLabel: "Next release / 90-day contract",
+		milestoneTitle: "Turn the alpha into a reviewed, versioned public release.",
+		milestoneBody:
+			"The program is already inspectable. Support pays for the expensive missing layers: independent review, agency response, evidence preservation, repeated trajectories, and publication maintenance.",
+		milestoneStats: [
+			["$25k", "full milestone"],
+			["$5k", "three-system fallback"],
+			["300–600", "A100-equivalent hours"],
+		],
+		milestoneOutputs: [
+			[
+				"Follow",
+				"Six reviewed records, an adjudication log, and bounded right-of-reply outreach.",
+			],
+			[
+				"Test",
+				"Ten safe trajectories, scorer outputs, exclusions, and a public failure taxonomy.",
+			],
+			[
+				"Audit",
+				"Additional versioned observations tied only to complete Muniscan snapshots.",
+			],
+		],
+		milestoneCta: "Read the support contract",
+		milestoneNote: "Support buys a release. It never buys the result.",
 		fallback:
 			"Record content is shown in English for this locale while the full translation is prepared.",
 	},
 	es: {
 		metaTitle: "Observatorio de Sistemas Públicos · Crafter Research",
 		metaDescription:
-			"Seis registros evidence-first sobre sistemas de IA del sector público peruano, con fuentes, incógnitas, revisión y correcciones.",
+			"Un programa de interés público con tres tracks para seguir, probar y auditar sistemas digitales públicos del Perú con evidencia inspeccionable.",
 		eyebrow: "Observatorio de Sistemas Públicos / Perú alpha 01",
 		title: "¿Qué puede verificar realmente el público sobre la IA del Estado?",
 		body: "Seis registros con fuentes hacen inspeccionables la evidencia visible, las preguntas abiertas y el estado de revisión. Esta alpha mide documentación pública. No califica seguridad, efectividad ni intención institucional.",
@@ -136,11 +207,57 @@ const copy = {
 		sectors: "sectores públicos",
 		sources: "fuentes oficiales enlazadas",
 		snapshot: "snapshot de evidencia",
+		programLabel: "Un programa / tres tracks de evidencia",
+		programTitle:
+			"Seguir el sistema. Probar el trámite. Auditar la superficie.",
+		programBody:
+			"Los tracks responden preguntas públicas distintas y mantienen estándares de prueba distintos. Comparten trazabilidad, gates de revisión, correcciones y una regla: no combinamos todo en un score que oculte qué se midió.",
+		trackEvidence: "Evidencia publicada",
+		trackGap: "Próximo gate",
+		tracks: [
+			{
+				code: "01",
+				verb: "Seguir",
+				title: "Registros de IA pública",
+				state: "Alpha pública",
+				body: "Trazar qué dice cada institución que hace un sistema, qué evidencia expone y qué sigue inaccesible para revisión independiente.",
+				evidence:
+					"6 registros iniciales · 5 sectores · ledgers de fuentes oficiales",
+				gap: "Segunda revisión independiente y derecho de respuesta",
+				href: "#systems-index-title",
+				cta: "Inspeccionar registros",
+			},
+			{
+				code: "02",
+				verb: "Probar",
+				title: "Confiabilidad de servicios públicos",
+				state: "Protocolo listo",
+				body: "Repetir tareas públicas acotadas y no destructivas, separando fidelidad a fuentes, recuperación, corrección y acciones inseguras.",
+				evidence:
+					"10 fixtures congelados · 2 trayectorias persistidas · scorer determinista",
+				gap: "Ocho trayectorias adicionales y revisión independiente",
+				href: tp("/support#programs-title"),
+				cta: "Ver el milestone financiable",
+			},
+			{
+				code: "03",
+				verb: "Auditar",
+				title: "Superficie digital municipal",
+				state: "Snapshot recurrente",
+				body: "Medir la arquitectura técnica que las municipalidades declaran públicamente, preservando cada snapshot y gate de completitud.",
+				evidence:
+					"1,871 municipalidades · 2 snapshots públicos · muestra HTTP de 100 sitios",
+				gap: "Más observaciones antes de afirmar confiabilidad histórica",
+				href: tp("/muniscan"),
+				cta: "Abrir Muniscan",
+			},
+		],
 		indexLabel: "Índice de evidencia",
 		indexTitle: "Seis sistemas. Doce preguntas cada uno.",
 		indexBody:
 			"Las tiras muestran cobertura de evidencia, no calidad o seguridad: documentada, parcial o no encontrada públicamente en las fuentes revisadas.",
 		openRecord: "Abrir registro de evidencia",
+		recordListLabel: "Registros de evidencia de sistemas públicos",
 		sector: "Sector",
 		reviewed: "Última revisión",
 		coverageLegend: ["no encontrada públicamente", "parcial", "documentada"],
@@ -229,6 +346,32 @@ const copy = {
 		independenceTitle: "Independencia",
 		independenceBody:
 			"Crafter Research es un laboratorio independiente de interés público de Crafter Station. Las instituciones listadas no encargaron estos registros ni tienen control editorial. Declararemos todo apoyo material a este trabajo.",
+		milestoneLabel: "Próximo release / contrato de 90 días",
+		milestoneTitle:
+			"Convertir la alpha en un release público revisado y versionado.",
+		milestoneBody:
+			"El programa ya es inspeccionable. El apoyo paga las capas costosas que faltan: revisión independiente, respuesta institucional, preservación de evidencia, trayectorias repetidas y mantenimiento editorial.",
+		milestoneStats: [
+			["$25k", "milestone completo"],
+			["$5k", "fallback de tres sistemas"],
+			["300–600", "horas equivalentes de A100"],
+		],
+		milestoneOutputs: [
+			[
+				"Seguir",
+				"Seis registros revisados, ledger de adjudicación y derecho de respuesta acotado.",
+			],
+			[
+				"Probar",
+				"Diez trayectorias seguras, outputs del scorer, exclusiones y taxonomía pública de fallas.",
+			],
+			[
+				"Auditar",
+				"Observaciones versionadas adicionales vinculadas solo a snapshots completos de Muniscan.",
+			],
+		],
+		milestoneCta: "Leer el contrato de apoyo",
+		milestoneNote: "El apoyo compra un release. Nunca compra el resultado.",
 		fallback: "",
 	},
 }[contentLang];
@@ -281,6 +424,36 @@ const mailto = (subject: string) =>
 			</dl>
 		</header>
 
+		<section class="systems-program" aria-labelledby="systems-program-title">
+			<div class="systems-section-heading systems-program-heading">
+				<div>
+					<p class="systems-eyebrow">{copy.programLabel}</p>
+					<h2 id="systems-program-title">{copy.programTitle}</h2>
+				</div>
+				<p>{copy.programBody}</p>
+			</div>
+			<div class="systems-track-map">
+				{copy.tracks.map((track, index) => (
+					<article class:list={["systems-track", index === 0 && "systems-track-active"]}>
+						<header>
+							<span class="track-code">{track.code}</span>
+							<span class="track-state">{track.state}</span>
+						</header>
+						<div class="track-title">
+							<p>{track.verb}</p>
+							<h3>{track.title}</h3>
+						</div>
+						<p class="track-body">{track.body}</p>
+						<dl>
+							<div><dt>{copy.trackEvidence}</dt><dd>{track.evidence}</dd></div>
+							<div><dt>{copy.trackGap}</dt><dd>{track.gap}</dd></div>
+						</dl>
+						<a href={track.href}>{track.cta} <span aria-hidden="true">↗</span></a>
+					</article>
+				))}
+			</div>
+		</section>
+
 		<section
 			class="systems-index-section"
 			aria-labelledby="systems-index-title"
@@ -325,7 +498,7 @@ const mailto = (subject: string) =>
 			</div>
 		</section>
 
-		<section class="systems-records" aria-label={copy.indexTitle}>
+		<section class="systems-records" aria-label={copy.recordListLabel}>
 			{publicSystems.map((record, index) => (
 				<article id={record.slug} class="system-dossier">
 					<header class="dossier-header">
@@ -440,6 +613,35 @@ const mailto = (subject: string) =>
 				</div>
 			</div>
 		</section>
+
+		<section
+			class="systems-milestone"
+			aria-labelledby="systems-milestone-title"
+		>
+			<div class="milestone-intro">
+				<p class="systems-eyebrow">{copy.milestoneLabel}</p>
+				<h2 id="systems-milestone-title">{copy.milestoneTitle}</h2>
+				<p>{copy.milestoneBody}</p>
+			</div>
+			<div class="milestone-contract">
+				<dl class="milestone-stats">
+					{copy.milestoneStats.map(([value, label]) => (
+						<div><dt>{value}</dt><dd>{label}</dd></div>
+					))}
+				</dl>
+				<ol class="milestone-outputs">
+					{copy.milestoneOutputs.map(([track, output], index) => (
+						<li><span>{String(index + 1).padStart(2, "0")}</span><strong>{track}</strong><p>{output}</p></li>
+					))}
+				</ol>
+				<footer>
+					<a href={tp("/support")}
+						>{copy.milestoneCta} <span aria-hidden="true">↗</span></a
+					>
+					<p>{copy.milestoneNote}</p>
+				</footer>
+			</div>
+		</section>
 	</main>
 </Layout>
 
@@ -543,7 +745,9 @@ const mailto = (subject: string) =>
 	text-transform: uppercase;
 }
 .systems-index-section,
-.systems-method {
+.systems-method,
+.systems-program,
+.systems-milestone {
 	border-top: 1px solid var(--color-border);
 	padding: clamp(5rem, 8vw, 7.5rem) 0;
 }
@@ -570,6 +774,140 @@ const mailto = (subject: string) =>
 	color: var(--color-muted-strong);
 	line-height: 1.65;
 	max-width: 38rem;
+}
+.systems-program {
+	display: grid;
+	gap: 1.25rem;
+}
+.systems-program-heading {
+	margin-bottom: 1rem;
+}
+.systems-track-map {
+	display: grid;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	position: relative;
+}
+.systems-track-map::before {
+	background: var(--color-border);
+	content: "";
+	height: 1px;
+	left: 2rem;
+	position: absolute;
+	right: 2rem;
+	top: 2rem;
+}
+.systems-track {
+	background: color-mix(in srgb, var(--color-bg) 92%, transparent);
+	border-bottom: 1px solid var(--color-border);
+	border-left: 1px solid var(--color-border);
+	border-top: 1px solid var(--color-border);
+	display: grid;
+	grid-template-rows: auto auto auto 1fr auto;
+	min-height: 36rem;
+	padding: 1.4rem;
+	position: relative;
+}
+.systems-track:last-child {
+	border-right: 1px solid var(--color-border);
+}
+.systems-track::before {
+	background: var(--color-bg);
+	border: 1px solid var(--color-muted);
+	border-radius: 50%;
+	content: "";
+	height: 0.65rem;
+	left: 1.7rem;
+	position: absolute;
+	top: 1.68rem;
+	width: 0.65rem;
+}
+.systems-track-active::before {
+	background: var(--color-accent);
+	border-color: var(--color-accent);
+	box-shadow: 0 0 0 0.4rem
+		color-mix(in srgb, var(--color-accent) 9%, transparent);
+}
+.systems-track > header {
+	align-items: center;
+	display: flex;
+	justify-content: space-between;
+	padding-left: 1.4rem;
+}
+.track-code,
+.track-state {
+	font-family: var(--font-mono);
+	font-size: 0.62rem;
+	letter-spacing: 0.11em;
+	text-transform: uppercase;
+}
+.track-code {
+	color: var(--color-muted);
+}
+.track-state {
+	color: var(--color-accent);
+}
+.track-title {
+	border-bottom: 1px solid var(--color-border);
+	margin-top: clamp(3.5rem, 6vw, 6rem);
+	padding-bottom: 1.4rem;
+}
+.track-title p {
+	color: var(--color-accent);
+	font-family: var(--font-mono);
+	font-size: 0.68rem;
+	letter-spacing: 0.13em;
+	text-transform: uppercase;
+}
+.track-title h3 {
+	color: var(--color-text);
+	font-size: clamp(1.65rem, 3vw, 2.8rem);
+	font-weight: 480;
+	letter-spacing: -0.04em;
+	line-height: 1;
+	margin-top: 0.65rem;
+	max-width: 10ch;
+}
+.track-body {
+	color: var(--color-muted-strong);
+	line-height: 1.62;
+	padding: 1.4rem 0 2rem;
+}
+.systems-track dl {
+	border-top: 1px solid var(--color-border);
+	margin: 0;
+}
+.systems-track dl > div {
+	border-bottom: 1px solid var(--color-border);
+	display: grid;
+	gap: 0.7rem;
+	padding: 1rem 0;
+}
+.systems-track dt {
+	color: var(--color-muted);
+	font-family: var(--font-mono);
+	font-size: 0.58rem;
+	letter-spacing: 0.1em;
+	text-transform: uppercase;
+}
+.systems-track dd {
+	color: var(--color-text);
+	font-size: 0.84rem;
+	line-height: 1.5;
+	margin: 0;
+}
+.systems-track > a {
+	align-items: center;
+	color: var(--color-accent);
+	display: flex;
+	font-family: var(--font-mono);
+	font-size: 0.68rem;
+	justify-content: space-between;
+	letter-spacing: 0.08em;
+	padding-top: 1.4rem;
+	text-transform: uppercase;
+}
+.systems-track > a:hover {
+	color: var(--color-text);
 }
 .coverage-legend {
 	display: flex;
@@ -1008,6 +1346,115 @@ const mailto = (subject: string) =>
 	margin-top: 1rem;
 	max-width: 37rem;
 }
+.systems-milestone {
+	display: grid;
+	gap: clamp(3rem, 7vw, 7rem);
+	grid-template-columns: minmax(18rem, 0.62fr) minmax(0, 1fr);
+}
+.milestone-intro h2 {
+	color: var(--color-text);
+	font-size: clamp(2.4rem, 5vw, 4.8rem);
+	font-weight: 470;
+	letter-spacing: -0.05em;
+	line-height: 0.96;
+	margin-top: 1rem;
+	max-width: 12ch;
+}
+.milestone-intro > p:last-child {
+	color: var(--color-muted-strong);
+	line-height: 1.68;
+	margin-top: 1.7rem;
+	max-width: 34rem;
+}
+.milestone-contract {
+	border: 1px solid var(--color-border);
+	position: relative;
+}
+.milestone-contract::before {
+	background: var(--color-accent);
+	content: "";
+	height: 2px;
+	left: -1px;
+	position: absolute;
+	top: -1px;
+	width: 33%;
+}
+.milestone-stats {
+	display: grid;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	margin: 0;
+}
+.milestone-stats > div {
+	border-bottom: 1px solid var(--color-border);
+	padding: 1.25rem;
+}
+.milestone-stats > div + div {
+	border-left: 1px solid var(--color-border);
+}
+.milestone-stats dt {
+	color: var(--color-text);
+	font-family: var(--font-mono);
+	font-size: clamp(1.5rem, 3vw, 2.5rem);
+}
+.milestone-stats dd {
+	color: var(--color-muted);
+	font-family: var(--font-mono);
+	font-size: 0.6rem;
+	letter-spacing: 0.08em;
+	margin: 0.45rem 0 0;
+	text-transform: uppercase;
+}
+.milestone-outputs {
+	list-style: none;
+	margin: 0;
+	padding: 0 1.25rem;
+}
+.milestone-outputs li {
+	align-items: baseline;
+	border-bottom: 1px solid var(--color-border);
+	display: grid;
+	gap: 1rem;
+	grid-template-columns: 2rem 5rem minmax(0, 1fr);
+	padding: 1.2rem 0;
+}
+.milestone-outputs span {
+	color: var(--color-muted);
+	font-family: var(--font-mono);
+	font-size: 0.62rem;
+}
+.milestone-outputs strong {
+	color: var(--color-accent);
+	font-family: var(--font-mono);
+	font-size: 0.66rem;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+}
+.milestone-outputs p {
+	color: var(--color-muted-strong);
+	line-height: 1.55;
+}
+.milestone-contract footer {
+	align-items: center;
+	display: flex;
+	gap: 2rem;
+	justify-content: space-between;
+	padding: 1.25rem;
+}
+.milestone-contract footer a {
+	color: var(--color-text);
+	font-size: 0.9rem;
+	font-weight: 600;
+}
+.milestone-contract footer a:hover {
+	color: var(--color-accent);
+}
+.milestone-contract footer p {
+	color: var(--color-muted);
+	font-family: var(--font-mono);
+	font-size: 0.62rem;
+	text-align: right;
+	text-transform: uppercase;
+}
 @media (max-width: 1100px) {
 	.systems-observatory {
 		--systems-gutter: clamp(3rem, 6vw, 5rem);
@@ -1029,6 +1476,42 @@ const mailto = (subject: string) =>
 	}
 	.coverage-matrix {
 		grid-template-columns: repeat(4, minmax(0, 1fr));
+	}
+	.systems-track {
+		min-height: 39rem;
+	}
+}
+@media (max-width: 900px) {
+	.systems-track-map {
+		grid-template-columns: 1fr;
+		padding-left: 1.25rem;
+	}
+	.systems-track-map::before {
+		bottom: 2rem;
+		height: auto;
+		left: 0;
+		right: auto;
+		top: 2rem;
+		width: 1px;
+	}
+	.systems-track {
+		border-right: 1px solid var(--color-border);
+		min-height: auto;
+		padding: 1.4rem;
+	}
+	.systems-track::before {
+		left: -1.58rem;
+		top: 1.85rem;
+	}
+	.track-title {
+		margin-top: 3.5rem;
+	}
+	.systems-milestone {
+		gap: 3rem;
+		grid-template-columns: 1fr;
+	}
+	.milestone-intro h2 {
+		max-width: 16ch;
 	}
 }
 @media (max-width: 760px) {
@@ -1056,6 +1539,16 @@ const mailto = (subject: string) =>
 	.systems-section-heading > p,
 	.systems-method-intro > p:last-child {
 		margin-top: 1rem;
+	}
+	.systems-track {
+		padding: 1.2rem;
+	}
+	.systems-track::before {
+		left: -1.58rem;
+		top: 1.65rem;
+	}
+	.track-title {
+		margin-top: 3rem;
 	}
 	.coverage-legend {
 		justify-content: start;
@@ -1147,6 +1640,28 @@ const mailto = (subject: string) =>
 	}
 	.systems-limitations {
 		grid-template-columns: 1fr;
+	}
+	.systems-milestone {
+		gap: 2.5rem;
+	}
+	.milestone-stats {
+		grid-template-columns: 1fr;
+	}
+	.milestone-stats > div + div {
+		border-left: 0;
+	}
+	.milestone-outputs li {
+		grid-template-columns: 2rem minmax(0, 1fr);
+	}
+	.milestone-outputs p {
+		grid-column: 2;
+	}
+	.milestone-contract footer {
+		align-items: start;
+		flex-direction: column;
+	}
+	.milestone-contract footer p {
+		text-align: left;
 	}
 }
 @media (max-width: 420px) {
