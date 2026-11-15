@@ -77,7 +77,12 @@ const copy = {
 }[cl];
 ---
 
-<Layout title={copy.meta} description={copy.description} lang={cl}>
+<Layout
+	title={copy.meta}
+	description={copy.description}
+	lang={cl}
+	ogImage={`/og/support-${cl}.png`}
+>
 	<main class="sp">
 		<header class="sp-hero">
 			<p class="sp-kicker">{copy.kicker}</p>

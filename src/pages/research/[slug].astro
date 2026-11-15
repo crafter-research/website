@@ -23,6 +23,13 @@ const { prev, next } = await getEntryNeighbors("research", lang, slug!);
 	title={`${resolved.entry.data.title} · Crafter Research`}
 	description={resolved.entry.data.description}
 	lang={lang}
+	ogImage={`/og/research/${resolved.entry.data.lang}-${resolved.entry.data.urlSlug}.png`}
 >
-	<PostArticle type="research" lang={lang} resolved={resolved} prev={prev} next={next} />
+	<PostArticle
+		type="research"
+		lang={lang}
+		resolved={resolved}
+		prev={prev}
+		next={next}
+	/>
 </Layout>
