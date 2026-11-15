@@ -10,51 +10,55 @@ interface Props {
 	title: string;
 	description: string;
 	lang?: Lang;
+	ogImage?: string;
 }
 
-const { title, description, lang = "en" } = Astro.props;
+const { title, description, lang = "en", ogImage } = Astro.props;
 const t = useTranslations(lang);
 const siteURL = Astro.site ?? new URL("https://crafter.ing");
 const canonicalURL = new URL(Astro.url.pathname, siteURL);
-const ogImageURL = new URL("/og.png", siteURL);
+const ogImageURL = new URL(
+	ogImage ?? `/og/home-${lang === "es" ? "es" : "en"}.png`,
+	siteURL,
+);
 ---
 
 <html lang={lang}>
 	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" sizes="48x48" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="description" content={description} />
-		<link rel="canonical" href={canonicalURL.href} />
-		<meta property="og:title" content={title} />
-		<meta property="og:description" content={description} />
-		<meta property="og:url" content={canonicalURL.href} />
-		<meta property="og:site_name" content="Crafter Research" />
-		<meta property="og:locale" content={lang === "es" ? "es_PE" : "en_US"} />
-		<meta property="og:type" content="website" />
-		<meta property="og:image" content={ogImageURL.href} />
-		<meta property="og:image:width" content="1200" />
-		<meta property="og:image:height" content="630" />
-		<meta name="twitter:card" content="summary_large_image" />
-		<meta name="twitter:title" content={title} />
-		<meta name="twitter:description" content={description} />
-		<meta name="twitter:image" content={ogImageURL.href} />
-		<meta name="generator" content={Astro.generator} />
+		<meta charset="utf-8">
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+		<link rel="icon" href="/favicon.ico" sizes="48x48">
+		<meta name="viewport" content="width=device-width">
+		<meta name="description" content={description}>
+		<link rel="canonical" href={canonicalURL.href}>
+		<meta property="og:title" content={title}>
+		<meta property="og:description" content={description}>
+		<meta property="og:url" content={canonicalURL.href}>
+		<meta property="og:site_name" content="Crafter Research">
+		<meta property="og:locale" content={lang === "es" ? "es_PE" : "en_US"}>
+		<meta property="og:type" content="website">
+		<meta property="og:image" content={ogImageURL.href}>
+		<meta property="og:image:width" content="1200">
+		<meta property="og:image:height" content="630">
+		<meta name="twitter:card" content="summary_large_image">
+		<meta name="twitter:title" content={title}>
+		<meta name="twitter:description" content={description}>
+		<meta name="twitter:image" content={ogImageURL.href}>
+		<meta name="generator" content={Astro.generator}>
 		<script is:inline>
-			try {
-				const theme = localStorage.getItem("cr-research-theme");
-				if (theme === "light" || theme === "dark") {
-					document.documentElement.dataset.theme = theme;
-				}
-			} catch {}
+		try {
+			const theme = localStorage.getItem("cr-research-theme");
+			if (theme === "light" || theme === "dark") {
+				document.documentElement.dataset.theme = theme;
+			}
+		} catch {}
 		</script>
-		<link rel="preconnect" href="https://fonts.googleapis.com" />
-		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 		<link
 			href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500;600&display=swap"
 			rel="stylesheet"
-		/>
+		>
 		<title>{title}</title>
 	</head>
 	<body class="bg-(--color-bg) text-(--color-text) font-sans antialiased">
