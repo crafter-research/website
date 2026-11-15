@@ -9,6 +9,11 @@ const t = useTranslations(lang);
 const entries = await getEntriesWithFallback("research", lang);
 ---
 
-<Layout title={`${t("research.title")} · Crafter Research`} description={t("research.description")} lang={lang}>
+<Layout
+	title={`${t("research.title")} · Crafter Research`}
+	description={t("research.description")}
+	lang={lang}
+	ogImage="/og/research-en.png"
+>
 	<PostList type="research" lang={lang} entries={entries} />
 </Layout>
