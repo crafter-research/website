@@ -8,7 +8,7 @@
 	"scripts": {
 		"dev": "portless crafter-research astro dev",
 		"build": "bun run check:projects && astro build",
-		"check": "bun run check:projects && astro check && biome check src/components/ComputeSupportPage.astro src/components/HomePage.astro src/components/LanguagePicker.astro src/components/PortfolioPage.astro src/components/PostList.astro src/components/SupportPage.astro src/components/SystemsPage.astro src/components/SiteHeader.astro src/components/SiteFooter.astro src/data/projects.ts src/data/portfolio-audit.ts src/data/public-systems.ts src/i18n/home.ts src/i18n/ui.ts src/pages/projects.astro src/pages/support.astro src/pages/support/compute.astro src/pages/systems.astro src/pages/[lang]/projects.astro src/pages/[lang]/support.astro src/pages/[lang]/support/compute.astro src/pages/[lang]/systems.astro src/styles/global.css scripts/generate-assets.ts scripts/validate-projects.ts package.json",
+		"check": "bun run check:projects && astro check && biome check src/components src/data src/i18n src/lib src/pages src/styles/global.css scripts package.json",
 		"check:projects": "bun scripts/validate-projects.ts",
 		"preview": "astro preview",
 		"astro": "astro"
@@ -22,11 +22,13 @@
 		"rehype-katex": "^7.0.1",
 		"rehype-slug": "^6.0.0",
 		"remark-math": "^6.0.0",
-		"tailwindcss": "^4.2.2"
+		"tailwindcss": "^4.2.2",
+		"vgpu": "^0.6.0"
 	},
 	"devDependencies": {
 		"@astrojs/check": "^0.9.10",
 		"@biomejs/biome": "^2.4.8",
+		"@vgpu/wgsl": "0.6.0",
 		"sharp": "^0.34.5",
 		"typescript": "^6.0.3"
 	}

@@ -20,20 +20,14 @@ const tp = useTranslatedPath(lang);
 	<SiteLogo lang={lang} />
 	<nav class="site-header-nav" aria-label="Primary navigation">
 		<span class="site-header-links">
-			<a href={tp("/systems")} class="nav-link nav-link-primary"
-				>{t("systems.title")}</a
+			<a href={tp("/frontier")} class="nav-link nav-link-primary"
+				>{t("frontier.title")}</a
 			>
-			<a href={tp("/projects")} class="nav-link nav-link-primary"
-				>{t("portfolio.title")}</a
-			>
-			<a href={tp("/support")} class="nav-link nav-link-secondary"
-				>{t("support.title")}</a
-			>
-			<a href={tp("/research")} class="nav-link nav-link-secondary"
+			<a href={tp("/research")} class="nav-link nav-link-primary"
 				>{t("research.title")}</a
 			>
-			<a href={tp("/blog")} class="nav-link nav-link-secondary"
-				>{t("blog.title")}</a
+			<a href={tp("/support")} class="nav-link nav-link-primary"
+				>{t("support.title")}</a
 			>
 		</span>
 		<a
@@ -75,11 +69,9 @@ const tp = useTranslatedPath(lang);
 				<span>{t("nav.menu")}</span>
 			</summary>
 			<div class="site-header-menu-panel">
-				<a href={tp("/systems")}>{t("systems.title")}</a>
-				<a href={tp("/projects")}>{t("portfolio.title")}</a>
-				<a href={tp("/support")}>{t("support.title")}</a>
+				<a href={tp("/frontier")}>{t("frontier.title")}</a>
 				<a href={tp("/research")}>{t("research.title")}</a>
-				<a href={tp("/blog")}>{t("blog.title")}</a>
+				<a href={tp("/support")}>{t("support.title")}</a>
 				<a
 					href="https://github.com/crafter-research"
 					target="_blank"

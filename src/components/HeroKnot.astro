@@ -1,0 +1,148 @@
+---
+interface Props {
+	label: string;
+}
+const { label } = Astro.props;
+---
+
+<div class="hero-knot" data-hero-knot>
+	<canvas aria-label={label} role="img"></canvas>
+</div>
+
+<script>
+import { clock, effect, frame, frameLoop, init, surface } from "vgpu";
+import knotShader from "../shaders/knot.wgsl";
+
+type Loop = { stop(): void } | null;
+
+function cssColor(name: string): [number, number, number, number] {
+	const probe = document.createElement("span");
+	probe.style.color = `var(${name})`;
+	document.body.append(probe);
+	const m = getComputedStyle(probe).color.match(/[\d.]+/g) ?? ["0", "0", "0"];
+	probe.remove();
+	return [Number(m[0]) / 255, Number(m[1]) / 255, Number(m[2]) / 255, 1];
+}
+
+async function start(root: HTMLElement) {
+	const canvas = root.querySelector("canvas");
+	if (!canvas || !("gpu" in navigator)) return;
+	let gpu: Awaited<ReturnType<typeof init>>;
+	try {
+		gpu = await init();
+	} catch {
+		return;
+	}
+
+	const still = matchMedia("(prefers-reduced-motion: reduce)").matches;
+	const out = surface(gpu, canvas, { dpr: [1, 2], clearColor: [0, 0, 0, 0] });
+	const fx = effect(gpu, knotShader, {
+		set: {
+			params: {
+				res: out.size,
+				mouse: [0, 0],
+				time: 2.4,
+				ink: cssColor("--color-accent"),
+				glow: cssColor("--color-accent"),
+			},
+		},
+	});
+	out.onResize(() => fx.set({ params: { res: out.size } }));
+
+	const syncTheme = () =>
+		fx.set({
+			params: {
+				ink: cssColor("--color-accent"),
+				glow: cssColor("--color-accent"),
+			},
+		});
+	new MutationObserver(syncTheme).observe(document.documentElement, {
+		attributes: true,
+		attributeFilter: ["data-theme"],
+	});
+	matchMedia("(prefers-color-scheme: dark)").addEventListener(
+		"change",
+		syncTheme,
+	);
+
+	const target = { x: 0, y: 0 };
+	const eased = { x: 0, y: 0 };
+	window.addEventListener(
+		"pointermove",
+		(e) => {
+			const r = canvas.getBoundingClientRect();
+			target.x = Math.max(
+				-1,
+				Math.min(1, (e.clientX - (r.left + r.width / 2)) / r.width),
+			);
+			target.y = Math.max(
+				-1,
+				Math.min(1, (e.clientY - (r.top + r.height / 2)) / r.height),
+			);
+		},
+		{ passive: true },
+	);
+
+	const time = clock(gpu);
+	let loop: Loop = null;
+	const run = () => {
+		if (loop) return;
+		loop = frameLoop(gpu, (frame) => {
+			eased.x += (target.x - eased.x) * 0.06;
+			eased.y += (target.y - eased.y) * 0.06;
+			fx.set({ params: { time: 2.4 + time.time, mouse: [eased.x, eased.y] } });
+			frame.pass(out, fx);
+		});
+	};
+	const halt = () => {
+		loop?.stop();
+		loop = null;
+	};
+
+	root.classList.add("is-live");
+	if (still) {
+		frame(gpu, (f) => {
+			f.pass(out, fx);
+		});
+		return;
+	}
+
+	new IntersectionObserver(([entry]) =>
+		entry?.isIntersecting ? run() : halt(),
+	).observe(root);
+	document.addEventListener("visibilitychange", () =>
+		document.hidden ? halt() : run(),
+	);
+}
+
+for (const root of document.querySelectorAll<HTMLElement>("[data-hero-knot]")) {
+	void start(root);
+}
+</script>
+
+<style>
+.hero-knot {
+	aspect-ratio: 1;
+	opacity: 0;
+	position: relative;
+	transform: scale(0.96);
+	transition:
+		opacity 1.2s ease,
+		transform 1.6s cubic-bezier(0.2, 0.7, 0.2, 1);
+	width: 100%;
+}
+.hero-knot.is-live {
+	opacity: 1;
+	transform: none;
+}
+.hero-knot canvas {
+	display: block;
+	height: 100%;
+	width: 100%;
+}
+@media (prefers-reduced-motion: reduce) {
+	.hero-knot {
+		transition: none;
+	}
+}
+</style>
