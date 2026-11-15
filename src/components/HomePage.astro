@@ -1,228 +1,907 @@
 ---
 import { getCollection } from "astro:content";
+import { type FieldId, fields, focus, problems } from "../data/frontier";
+import { people } from "../data/people";
 import { featuredProjects, type ProjectLocale } from "../data/projects";
-import {
-	chainByLang,
-	copyByLang,
-	heroPathByLang,
-	heroSignalsByLang,
-	ledgerByLang,
-	stanceByLang,
-} from "../i18n/home";
+import { labCopy, protocolByLang } from "../i18n/lab";
 import type { Lang } from "../i18n/ui";
 import { useTranslatedPath } from "../i18n/utils";
 import Layout from "../layouts/Layout.astro";
+import HeroKnot from "./HeroKnot.astro";
 
 interface Props {
 	lang: Lang;
 }
 
 const { lang } = Astro.props;
-const contentLang: ProjectLocale = lang === "es" ? "es" : "en";
+const cl: ProjectLocale = lang === "es" ? "es" : "en";
 const tp = useTranslatedPath(lang);
-const projectHref = (url: string) => (url.startsWith("/") ? tp(url) : url);
+const copy = labCopy[cl];
+const protocol = protocolByLang[cl];
+const researchHref = cl === "es" ? "/es/research" : "/research";
+const frontierHref = tp("/frontier");
 
-const researchHref = contentLang === "es" ? "/es/research" : "/research";
+const fieldIds = Object.keys(fields) as FieldId[];
+const fieldStats = fieldIds.map((id) => {
+	const rows = problems.filter((p) => p.field === id);
+	return {
+		id,
+		label: fields[id][cl],
+		total: rows.length,
+		tractable: rows.filter((p) => p.tier === "tractable").length,
+		hard: rows.filter((p) => p.tier === "hard").length,
+		longBet: rows.filter((p) => p.tier === "long-bet").length,
+		gradeA: rows.filter((p) => p.grade === "A").length,
+	};
+});
 
-const copy = copyByLang[contentLang];
-const heroSignals = heroSignalsByLang[contentLang];
-const heroPath = heroPathByLang[contentLang];
-const chain = chainByLang[contentLang];
-const ledger = ledgerByLang[contentLang];
-const stance = stanceByLang[contentLang];
+const stats = [
+	[problems.length, copy.statProblems],
+	[fieldIds.length, copy.statFields],
+	[focus.length, copy.statBeliefs],
+	[0, copy.statResults],
+] as const;
+
+const streams = [
+	{
+		title: copy.frontierStream,
+		body: copy.frontierStreamBody,
+		list: people.filter((p) => p.stream === "frontier"),
+		wide: false,
+	},
+	{
+		title: copy.publicStream,
+		body: copy.publicStreamBody,
+		list: people.filter((p) => p.stream === "public-goods"),
+		wide: true,
+	},
+];
 
 const posts = (await getCollection("research"))
-	.filter((post) => post.data.lang === contentLang)
+	.filter((post) => post.data.lang === cl)
 	.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
 	.slice(0, 3);
 
 const fmtDate = (d: Date) =>
-	d.toLocaleDateString(contentLang === "es" ? "es-PE" : "en-US", {
+	d.toLocaleDateString(cl === "es" ? "es-PE" : "en-US", {
 		day: "numeric",
 		month: "short",
 		timeZone: "UTC",
 		year: "numeric",
 	});
 
-const fmtVerifiedDate = (value: string) =>
-	new Date(`${value}T00:00:00Z`).toLocaleDateString(
-		contentLang === "es" ? "es-PE" : "en-US",
-		{
-			day: "numeric",
-			month: "short",
-			timeZone: "UTC",
-			year: "numeric",
-		},
-	);
+const isLocal = (url: string) => url.startsWith("/");
+const projectHref = (url: string) => (isLocal(url) ? tp(url) : url);
+const tierText = {
+	tractable: cl === "es" ? "Tratable hoy" : "Tractable now",
+	hard: cl === "es" ? "Difícil" : "Hard",
+	long: cl === "es" ? "Apuesta larga" : "Long bet",
+	gradeA: cl === "es" ? "con oráculo grado A" : "with a grade A oracle",
+};
 ---
 
-<Layout title={copy.label} description={copy.description} lang={contentLang}>
-	<main class="research-index">
-		<header class="index-shell">
-			<section class="index-hero">
-				<p class="section-label">{copy.kicker}</p>
-				<h1>{copy.heroTitle}</h1>
-				<p>{copy.heroBody}</p>
-				<ul class="index-system" aria-label="Research system">
-					{heroPath.map((item) => <li>{item}</li>)}
-				</ul>
-			</section>
-		</header>
-
-		<section
-			class="research-feed"
-			aria-label="Crafter Research operating system"
-		>
-			<article class="feed-entry feed-entry-featured">
-				<div class="feed-node" aria-hidden="true"></div>
-				<div class="feed-panel">
-					<div class="feed-meta"><span>{copy.instrumentLabel}</span></div>
-					<h2>{copy.instrumentTitle}</h2>
-					<p>{copy.instrumentBody}</p>
-					<div class="signal-strip">
-						{heroSignals.map(([type, title, body]) => (
-								<article>
-									<span>{type}</span>
-									<strong>{title}</strong>
-									<p>{body}</p>
-								</article>
-							))}
+<Layout title="Crafter Research" description={copy.description} lang={cl}>
+	<main class="lab">
+		<section class="lab-hero">
+			<div class="lab-hero-grid">
+				<div class="lab-hero-copy">
+					<p class="lab-kicker rise" style="--d:0">{copy.kicker}</p>
+					<h1 class="rise" style="--d:1">{copy.heroTitle}</h1>
+					<p class="lab-lede rise" style="--d:2">{copy.heroBody}</p>
+					<div class="lab-ctas rise" style="--d:3">
+						<a class="lab-btn lab-btn-primary" href={frontierHref}
+							>{copy.ctaMap} <span aria-hidden="true">→</span></a
+						>
+						<a class="lab-btn" href="#protocol"
+							>{copy.ctaProtocol} <span aria-hidden="true">↓</span></a
+						>
 					</div>
 				</div>
-			</article>
-
-			<article class="feed-entry feed-entry-projects">
-				<div class="feed-node" aria-hidden="true"></div>
-				<div class="feed-panel">
-					<div class="feed-meta"><span>{copy.projectsLabel}</span></div>
-					<h2>{copy.projectsTitle}</h2>
-					<p>{copy.projectsBody}</p>
-					<div class="project-feed">
-						{featuredProjects.map((project) => (
-							<article class="project-card" id={project.slug}>
-								<header class="project-card-header">
-									<div>
-										<span class={`project-status project-status-${project.maturity}`}>
-											{copy.maturity[project.maturity]}
-										</span>
-										<h3>{project.name}</h3>
-									</div>
-									<ul class="artifact-list" aria-label={copy.artifactsLabel}>
-										{project.artifactTypes.map((artifact) => <li>{artifact}</li>)}
-									</ul>
-								</header>
-								<p class="project-summary">{project.summary[contentLang]}</p>
-								<dl class="project-evidence">
-									{project.evidence.map((evidence) => (
-										<div>
-											<dt>{evidence.label[contentLang]}</dt>
-											<dd>
-												<a href={evidence.sourceUrl} target="_blank" rel="noreferrer">
-													{evidence.value[contentLang]}
-												</a>
-											</dd>
-										</div>
-									))}
-								</dl>
-								<div class="project-limitation">
-									<strong>{copy.limitationLabel}</strong>
-									<p>{project.limitation[contentLang]}</p>
-								</div>
-								<footer class="project-card-footer">
-									<nav aria-label={`${project.name} ${copy.linksLabel}`}>
-										{project.links.map((link) => (
-											<a
-												href={projectHref(link.url)}
-												target={link.url.startsWith("/") ? undefined : "_blank"}
-												rel={link.url.startsWith("/") ? undefined : "noreferrer"}
-											>
-												{link.label[contentLang]} <span aria-hidden="true">↗</span>
-											</a>
-										))}
-									</nav>
-									<small>{copy.verifiedLabel} {fmtVerifiedDate(project.verifiedAt)}</small>
-								</footer>
-							</article>
-						))}
-					</div>
+				<div class="lab-hero-art">
+					<HeroKnot label={copy.knotLabel} />
+					<p class="lab-art-caption">{copy.knotCaption}</p>
 				</div>
-			</article>
+			</div>
+			<dl class="lab-stats rise" style="--d:4">
+				{stats.map(([value, label]) => (
+						<div>
+							<dt>{label}</dt>
+							<dd data-count={value}>{value}</dd>
+						</div>
+					))}
+			</dl>
+		</section>
 
-			<article class="feed-entry">
-				<div class="feed-node" aria-hidden="true"></div>
-				<div class="feed-panel">
-					<div class="feed-meta"><span>{copy.chainLabel}</span></div>
-					<h2>{copy.chainTitle}</h2>
-					<p>{copy.chainBody}</p>
-					<ol class="method-list">
-						{chain.map(([_index, title, body]) => (
-								<li>
-									<strong>{title}</strong>
-									<p>{body}</p>
-								</li>
-							))}
-					</ol>
+		<section class="lab-section reveal" id="focus">
+			<header class="lab-head">
+				<p class="lab-label">{copy.focusLabel}</p>
+				<h2>{copy.focusTitle}</h2>
+				<p>{copy.focusBody}</p>
+			</header>
+			<ol class="bet-list">
+				{focus.map((bet) => (
+	<li class="bet">
+		<div class="bet-rank">
+			<span>{String(bet.rank).padStart(2, "0")}</span>
+			<code>{bet.id}</code>
+		</div>
+		<div class="bet-body">
+			<h3>{bet.title[cl]}</h3>
+			<p class="bet-belief">{bet.belief[cl]}</p>
+			<dl>
+				<div>
+					<dt>{copy.oracleLabel}</dt>
+					<dd>{bet.oracle[cl]}</dd>
 				</div>
-			</article>
-
-			<article class="feed-entry">
-				<div class="feed-node" aria-hidden="true"></div>
-				<div class="feed-panel">
-					<div class="feed-meta"><span>{copy.ledgerLabel}</span></div>
-					<h2>{copy.ledgerTitle}</h2>
-					<p>{copy.ledgerBody}</p>
-					<div class="program-feed">
-						{ledger.map(([field, instrument, question, surface]) => (
-								<article>
-									<div>
-										<strong>{field}</strong>
-										<em>{instrument}</em>
-									</div>
-									<p>{question}</p>
-									<small>{surface}</small>
-								</article>
-							))}
-					</div>
+				<div>
+					<dt>{copy.killLabel}</dt>
+					<dd>{bet.kill[cl]}</dd>
 				</div>
-			</article>
+			</dl>
+		</div>
+		<span class={`bet-stream bet-stream-${bet.stream}`}>
+			{bet.stream === "frontier" ? copy.frontierStream : copy.publicStream}
+		</span>
+	</li>
+))}
+			</ol>
+		</section>
 
-			<article class="feed-entry">
-				<div class="feed-node" aria-hidden="true"></div>
-				<div class="feed-panel">
-					<div class="feed-meta">
-						<span>{copy.logLabel}</span>
-						<a href={researchHref}>{copy.logCta}</a>
+		<section class="lab-section reveal" id="map">
+			<header class="lab-head">
+				<p class="lab-label">{copy.mapLabel}</p>
+				<h2>{copy.mapTitle}</h2>
+				<p>{copy.mapBody}</p>
+			</header>
+			<div class="field-grid">
+				{fieldStats.map((f) => (
+	<a class="field-tile" href={`${frontierHref}#${f.id}`}>
+		<div class="field-top">
+			<strong>{f.label}</strong>
+			<span>{f.total}</span>
+		</div>
+		<div class="tier-bar" aria-hidden="true">
+			<i class="t-tractable" style={`flex:${f.tractable}`} />
+			<i class="t-hard" style={`flex:${f.hard}`} />
+			<i class="t-long" style={`flex:${f.longBet}`} />
+		</div>
+		<small>
+			{f.gradeA}/{f.total} {tierText.gradeA}
+		</small>
+	</a>
+))}
+			</div>
+			<div class="tier-legend">
+				<span><i class="t-tractable"></i>{tierText.tractable}</span>
+				<span><i class="t-hard"></i>{tierText.hard}</span>
+				<span><i class="t-long"></i>{tierText.long}</span>
+				<a href={frontierHref}>{copy.mapCta} →</a>
+			</div>
+		</section>
+
+		<section class="lab-section reveal" id="protocol">
+			<header class="lab-head">
+				<p class="lab-label">{copy.protocolLabel}</p>
+				<h2>{copy.protocolTitle}</h2>
+				<p>{copy.protocolBody}</p>
+			</header>
+			<ol class="protocol">
+				{protocol.map(([title, body], i) => (
+	<li>
+		<span>{String(i + 1).padStart(2, "0")}</span>
+		<strong>{title}</strong>
+		<p>{body}</p>
+	</li>
+))}
+			</ol>
+		</section>
+
+		<section class="lab-section reveal" id="people">
+			<header class="lab-head">
+				<p class="lab-label">{copy.streamsLabel}</p>
+				<h2>{copy.streamsTitle}</h2>
+			</header>
+			<div class="streams">
+				{streams.map((stream) => (
+	<div class="stream">
+		<h3>{stream.title}</h3>
+		<p>{stream.body}</p>
+		<ul class:list={[{ "stream-wide": stream.wide }]}>
+			{stream.list.map((person) => (
+				<li>
+					<div>
+						<strong>{person.name}</strong>
+						{person.affiliation && <em>{person.affiliation}</em>}
 					</div>
-					<h2>{copy.logTitle}</h2>
-					<div class="note-feed">
-						{posts.map((post) => (
-								<a href={`${researchHref}/${post.data.urlSlug}`} class="note-row">
-									<div>
-										<strong>{post.data.title}</strong>
-										<span>{fmtDate(post.data.date)} / {post.data.project}</span>
-									</div>
-									<p>{post.data.description}</p>
+					<p>{person.role[cl]}</p>
+					<nav>
+						{person.links.map((link) => (
+							<a href={link.url} target="_blank" rel="noreferrer">
+								{link.label}
 							</a>
 						))}
-					</div>
-				</div>
-			</article>
+					</nav>
+				</li>
+			))}
+		</ul>
+	</div>
+))}
+			</div>
+		</section>
 
-			<article class="feed-entry feed-entry-plain">
-				<div class="feed-node" aria-hidden="true"></div>
-				<div class="feed-panel">
-					<div class="feed-meta"><span>{copy.stanceLabel}</span></div>
-					<h2>{copy.stanceTitle}</h2>
-					<div class="stance-feed">
-						{stance.map(([title, body]) => (
-								<article>
-									<strong>{title}</strong>
-									<p>{body}</p>
-								</article>
-							))}
-					</div>
+		<section class="lab-section reveal" id="work">
+			<header class="lab-head">
+				<p class="lab-label">{copy.workLabel}</p>
+				<h2>{copy.workTitle}</h2>
+				<p>{copy.workBody}</p>
+			</header>
+			<ul class="work-list">
+				{featuredProjects.map((project) => {
+	const url = project.links[0]?.url ?? "/research";
+	return (
+		<li>
+			<a
+				href={projectHref(url)}
+				target={isLocal(url) ? undefined : "_blank"}
+				rel={isLocal(url) ? undefined : "noreferrer"}
+			>
+				<strong>{project.name}</strong>
+				<p>{project.summary[cl]}</p>
+				<span>{project.artifactTypes.join(" · ")}</span>
+			</a>
+		</li>
+	);
+})}
+			</ul>
+		</section>
+
+		<section class="lab-section reveal" id="log">
+			<header class="lab-head lab-head-row">
+				<div>
+					<p class="lab-label">{copy.logLabel}</p>
+					<h2>{copy.logTitle}</h2>
 				</div>
-			</article>
+				<a href={researchHref}>{copy.logCta} →</a>
+			</header>
+			<ul class="log-list">
+				{posts.map((post) => (
+	<li>
+		<a href={`${researchHref}/${post.data.urlSlug}`}>
+			<span>
+				{fmtDate(post.data.date)} · {post.data.project}
+			</span>
+			<strong>{post.data.title}</strong>
+			<p>{post.data.description}</p>
+		</a>
+	</li>
+))}
+			</ul>
 		</section>
 	</main>
 </Layout>
+
+<script>
+const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+document.documentElement.classList.add("lab-js");
+
+const io = new IntersectionObserver(
+	(entries) => {
+		for (const entry of entries) {
+			if (!entry.isIntersecting) continue;
+			entry.target.classList.add("is-in");
+			io.unobserve(entry.target);
+		}
+	},
+	{ threshold: 0.04 },
+);
+for (const el of document.querySelectorAll(".reveal")) io.observe(el);
+
+if (!reduce) {
+	for (const el of document.querySelectorAll<HTMLElement>("[data-count]")) {
+		const end = Number(el.dataset.count);
+		if (!end) continue;
+		const t0 = performance.now() + 450;
+		el.textContent = "0";
+		const tick = (now: number) => {
+			const k = Math.min(1, Math.max(0, (now - t0) / 1100));
+			el.textContent = String(Math.round(end * (1 - (1 - k) ** 3)));
+			if (k < 1) requestAnimationFrame(tick);
+		};
+		requestAnimationFrame(tick);
+	}
+}
+</script>
+
+<style>
+.lab {
+	margin: 0 auto;
+	max-width: 72rem;
+	padding: calc(var(--header-height) + 4rem) var(--layout-padding) 6rem;
+}
+.lab-kicker,
+.lab-label {
+	color: var(--color-muted);
+	font-family: var(--font-mono);
+	font-size: 0.72rem;
+	letter-spacing: 0.12em;
+	text-transform: uppercase;
+}
+.lab-hero {
+	border-bottom: 1px solid var(--color-border);
+	padding-bottom: 3.5rem;
+}
+.lab-hero h1 {
+	font-size: clamp(2.4rem, 6vw, 4.6rem);
+	font-weight: 600;
+	letter-spacing: -0.035em;
+	line-height: 1.02;
+	margin: 1rem 0 1.5rem;
+	max-width: 14ch;
+	text-wrap: balance;
+}
+.lab-lede {
+	color: var(--color-muted-strong);
+	font-size: 1.12rem;
+	line-height: 1.6;
+	max-width: 40rem;
+}
+.lab-ctas {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.75rem;
+	margin-top: 2rem;
+}
+.lab-btn {
+	border: 1px solid var(--color-border);
+	border-radius: 999px;
+	font-size: 0.92rem;
+	padding: 0.6rem 1.1rem;
+	transition:
+		border-color 0.15s ease,
+		background 0.15s ease;
+}
+.lab-btn:hover {
+	border-color: var(--color-accent);
+}
+.lab-btn-primary {
+	background: var(--color-text);
+	border-color: var(--color-text);
+	color: var(--color-bg);
+}
+.lab-btn-primary:hover {
+	background: var(--color-accent);
+}
+.lab-stats,
+.bet-list,
+.field-grid,
+.protocol,
+.stream ul,
+.work-list,
+.log-list {
+	background: var(--color-border);
+	border: 1px solid var(--color-border);
+	display: grid;
+	gap: 1px;
+}
+.lab-stats {
+	grid-template-columns: repeat(4, minmax(0, 1fr));
+	margin-top: 3rem;
+}
+.lab-stats div {
+	background: var(--color-bg);
+	display: flex;
+	flex-direction: column-reverse;
+	gap: 0.25rem;
+	padding: 1.1rem 1.25rem;
+}
+.lab-stats dd {
+	font-family: var(--font-mono);
+	font-size: 2rem;
+	font-weight: 500;
+	letter-spacing: -0.02em;
+}
+.lab-stats dt {
+	color: var(--color-muted);
+	font-size: 0.82rem;
+}
+.lab-section {
+	border-bottom: 1px solid var(--color-border);
+	padding: 4.5rem 0;
+}
+.lab-head {
+	margin-bottom: 2.25rem;
+	max-width: 42rem;
+}
+.lab-head h2 {
+	font-size: clamp(1.7rem, 3.4vw, 2.4rem);
+	font-weight: 600;
+	letter-spacing: -0.025em;
+	line-height: 1.1;
+	margin: 0.6rem 0 0.8rem;
+}
+.lab-head p:not(.lab-label) {
+	color: var(--color-muted-strong);
+	line-height: 1.6;
+}
+.lab-head-row {
+	align-items: end;
+	display: flex;
+	justify-content: space-between;
+	max-width: none;
+}
+.lab-head-row > a,
+.tier-legend a {
+	color: var(--color-accent);
+	font-size: 0.9rem;
+}
+.bet {
+	background: var(--color-bg);
+	display: grid;
+	gap: 1.5rem;
+	grid-template-columns: 5rem minmax(0, 1fr) auto;
+	padding: 1.75rem 1.5rem;
+}
+.bet-rank {
+	display: flex;
+	flex-direction: column;
+	gap: 0.4rem;
+}
+.bet-rank span {
+	color: var(--color-muted);
+	font-family: var(--font-mono);
+	font-size: 1.6rem;
+}
+.bet-rank code {
+	color: var(--color-muted);
+	font-size: 0.72rem;
+}
+.bet h3 {
+	font-size: 1.25rem;
+	font-weight: 600;
+	letter-spacing: -0.01em;
+}
+.bet-belief {
+	font-size: 1.05rem;
+	line-height: 1.55;
+	margin: 0.5rem 0 1.1rem;
+}
+.bet dl {
+	display: grid;
+	gap: 1rem;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.bet dt {
+	color: var(--color-muted);
+	font-family: var(--font-mono);
+	font-size: 0.68rem;
+	letter-spacing: 0.1em;
+	margin-bottom: 0.3rem;
+	text-transform: uppercase;
+}
+.bet dd {
+	color: var(--color-muted-strong);
+	font-size: 0.9rem;
+	line-height: 1.5;
+}
+.bet-stream {
+	align-self: start;
+	border: 1px solid var(--color-border);
+	border-radius: 999px;
+	color: var(--color-muted-strong);
+	font-size: 0.72rem;
+	padding: 0.25rem 0.6rem;
+	white-space: nowrap;
+}
+.bet-stream-public-goods {
+	border-style: dashed;
+}
+.field-grid {
+	grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+}
+.field-tile {
+	background: var(--color-bg);
+	display: flex;
+	flex-direction: column;
+	gap: 0.8rem;
+	padding: 1.25rem;
+	transition: background 0.15s ease;
+}
+.field-tile:hover {
+	background: var(--color-panel);
+}
+.field-top {
+	align-items: baseline;
+	display: flex;
+	gap: 1rem;
+	justify-content: space-between;
+}
+.field-top span {
+	color: var(--color-muted);
+	font-family: var(--font-mono);
+}
+.field-tile small {
+	color: var(--color-muted);
+	font-size: 0.78rem;
+}
+.tier-bar {
+	display: flex;
+	gap: 2px;
+	height: 6px;
+}
+.tier-bar i,
+.tier-legend i {
+	border-radius: 1px;
+	display: block;
+}
+.t-tractable {
+	background: var(--color-accent);
+}
+.t-hard {
+	background: color-mix(in srgb, var(--color-accent) 50%, transparent);
+}
+.t-long {
+	background: color-mix(in srgb, var(--color-accent) 22%, transparent);
+}
+.tier-legend {
+	align-items: center;
+	color: var(--color-muted);
+	display: flex;
+	flex-wrap: wrap;
+	font-size: 0.82rem;
+	gap: 1.25rem;
+	margin-top: 1rem;
+}
+.tier-legend span {
+	align-items: center;
+	display: flex;
+	gap: 0.45rem;
+}
+.tier-legend i {
+	height: 6px;
+	width: 18px;
+}
+.tier-legend a {
+	margin-left: auto;
+}
+.protocol {
+	grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr));
+}
+.protocol li {
+	background: var(--color-bg);
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+	padding: 1.25rem;
+}
+.protocol span {
+	color: var(--color-muted);
+	font-family: var(--font-mono);
+	font-size: 0.75rem;
+}
+.protocol p {
+	color: var(--color-muted-strong);
+	font-size: 0.9rem;
+	line-height: 1.5;
+}
+.streams {
+	display: grid;
+	gap: 2rem;
+	grid-template-columns: 1fr 2fr;
+}
+.stream h3 {
+	font-size: 1.2rem;
+	font-weight: 600;
+}
+.stream > p {
+	color: var(--color-muted-strong);
+	line-height: 1.55;
+	margin: 0.4rem 0 1.25rem;
+	max-width: 34rem;
+}
+.stream-wide {
+	grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+}
+.stream li {
+	background: var(--color-bg);
+	display: flex;
+	flex-direction: column;
+	gap: 0.45rem;
+	padding: 1.1rem 1.2rem;
+}
+.stream li div {
+	align-items: baseline;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.5rem;
+}
+.stream em {
+	color: var(--color-muted);
+	font-family: var(--font-mono);
+	font-size: 0.72rem;
+	font-style: normal;
+}
+.stream li p {
+	color: var(--color-muted-strong);
+	font-size: 0.88rem;
+	line-height: 1.45;
+}
+.stream nav {
+	display: flex;
+	gap: 0.8rem;
+	margin-top: auto;
+}
+.stream nav a {
+	color: var(--color-accent);
+	font-size: 0.8rem;
+}
+.work-list {
+	grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
+}
+.work-list li,
+.log-list li {
+	background: var(--color-bg);
+}
+.work-list a,
+.log-list a {
+	display: flex;
+	flex-direction: column;
+	gap: 0.45rem;
+	height: 100%;
+	padding: 1.25rem;
+	transition: background 0.15s ease;
+}
+.work-list a:hover,
+.log-list a:hover {
+	background: var(--color-panel);
+}
+.work-list p,
+.log-list p {
+	color: var(--color-muted-strong);
+	font-size: 0.9rem;
+	line-height: 1.5;
+}
+.work-list span,
+.log-list span {
+	color: var(--color-muted);
+	font-family: var(--font-mono);
+	font-size: 0.72rem;
+}
+@media (max-width: 760px) {
+	.lab {
+		padding-top: calc(var(--header-height) + 2.5rem);
+	}
+	.lab-stats {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+	.bet {
+		gap: 0.9rem;
+		grid-template-columns: 1fr;
+	}
+	.bet-rank {
+		align-items: baseline;
+		flex-direction: row;
+		gap: 0.75rem;
+	}
+	.bet dl,
+	.streams {
+		grid-template-columns: 1fr;
+	}
+	.bet-stream {
+		justify-self: start;
+	}
+	.lab-head-row {
+		align-items: start;
+		flex-direction: column;
+		gap: 1rem;
+	}
+	.tier-legend a {
+		margin-left: 0;
+	}
+}
+/* hero layout */
+.lab-hero-grid {
+	align-items: center;
+	display: grid;
+	gap: 2rem;
+	grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+}
+.lab-hero-art {
+	margin-right: -2rem;
+	position: relative;
+}
+.lab-art-caption {
+	color: var(--color-muted);
+	font-family: var(--font-mono);
+	font-size: 0.68rem;
+	letter-spacing: 0.04em;
+	margin-top: -1.5rem;
+	text-align: center;
+}
+
+/* entrance */
+.rise {
+	animation: lab-rise 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+	animation-delay: calc(var(--d, 0) * 90ms);
+}
+@keyframes lab-rise {
+	from {
+		opacity: 0;
+		transform: translateY(14px);
+	}
+}
+:global(.lab-js) .reveal {
+	opacity: 0;
+	transform: translateY(24px);
+	transition:
+		opacity 0.8s ease,
+		transform 0.9s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+:global(.lab-js) .reveal.is-in {
+	opacity: 1;
+	transform: none;
+}
+
+/* micro interactions */
+.lab-btn span {
+	display: inline-block;
+	transition: transform 0.2s ease;
+}
+.lab-btn:hover span {
+	transform: translateX(3px);
+}
+.lab-btn[href="#protocol"]:hover span {
+	transform: translateY(2px);
+}
+.lab-stats div {
+	transition: background 0.2s ease;
+}
+.lab-stats div:hover {
+	background: var(--color-panel);
+}
+.bet {
+	position: relative;
+	transition: background 0.2s ease;
+}
+.bet::before {
+	background: var(--color-accent);
+	content: "";
+	inset: 0 auto 0 0;
+	position: absolute;
+	transform: scaleY(0);
+	transform-origin: top;
+	transition: transform 0.35s cubic-bezier(0.2, 0.7, 0.2, 1);
+	width: 2px;
+}
+.bet:hover {
+	background: var(--color-panel);
+}
+.bet:hover::before {
+	transform: scaleY(1);
+}
+.bet-rank span {
+	transition: color 0.2s ease;
+}
+.bet:hover .bet-rank span {
+	color: var(--color-accent);
+}
+.tier-bar {
+	transition: height 0.2s ease;
+}
+.field-tile:hover .tier-bar {
+	height: 10px;
+}
+.field-top strong {
+	transition: transform 0.2s ease;
+}
+.field-tile:hover .field-top strong {
+	transform: translateX(3px);
+}
+.tier-bar i {
+	transform-origin: left;
+}
+:global(.lab-js) .reveal .tier-bar i {
+	transform: scaleX(0);
+	transition: transform 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) 0.2s;
+}
+:global(.lab-js) .reveal.is-in .tier-bar i {
+	transform: none;
+}
+.protocol li {
+	transition: background 0.2s ease;
+}
+.protocol li:hover {
+	background: var(--color-panel);
+}
+.protocol li:hover span {
+	color: var(--color-accent);
+}
+.stream li,
+.work-list a,
+.log-list a {
+	transition: background 0.2s ease;
+}
+.stream li:hover {
+	background: var(--color-panel);
+}
+.work-list a strong,
+.log-list a strong {
+	transition: color 0.2s ease;
+}
+.work-list a:hover strong,
+.log-list a:hover strong {
+	color: var(--color-accent);
+}
+
+/* instruments as rows */
+.work-list {
+	grid-template-columns: 1fr;
+}
+.work-list a {
+	align-items: baseline;
+	display: grid;
+	gap: 1.5rem;
+	grid-template-columns: 11rem minmax(0, 1fr) auto;
+	padding: 1rem 1.25rem;
+}
+.work-list a::after {
+	color: var(--color-muted);
+	content: "↗";
+	transition: transform 0.2s ease;
+}
+.work-list a:hover::after {
+	color: var(--color-accent);
+	transform: translate(2px, -2px);
+}
+.work-list span {
+	display: none;
+}
+
+/* empty grid cells: no grey blocks */
+.field-grid,
+.protocol,
+.stream ul.stream-wide {
+	background: transparent;
+	border: 0;
+	gap: 0;
+}
+.field-tile,
+.protocol li,
+.stream ul.stream-wide li {
+	box-shadow: 0 0 0 0.5px var(--color-border);
+	outline: 0.5px solid var(--color-border);
+}
+@media (max-width: 760px) {
+	.work-list a {
+		gap: 0.3rem;
+		grid-template-columns: 1fr auto;
+	}
+	.work-list p {
+		grid-column: 1 / -1;
+		grid-row: 2;
+	}
+}
+
+@media (max-width: 900px) {
+	.lab-hero-grid {
+		grid-template-columns: 1fr;
+	}
+	.lab-hero-art {
+		margin: 0 auto -1rem;
+		max-width: 20rem;
+		width: 100%;
+	}
+	.lab-art-caption {
+		margin-top: -1rem;
+	}
+}
+@media (prefers-reduced-motion: reduce) {
+	.rise,
+	:global(.lab-js) .reveal,
+	:global(.lab-js) .reveal .tier-bar i {
+		animation: none;
+		opacity: 1;
+		transform: none;
+		transition: none;
+	}
+}
+</style>

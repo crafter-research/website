@@ -1,7 +1,7 @@
 import { type CollectionEntry, getCollection } from "astro:content";
 import { defaultLang, type Lang } from "../i18n/ui";
 
-export type ContentType = "research" | "blog";
+export type ContentType = "research";
 
 const localeTag: Record<Lang, string> = {
 	en: "en-US",
@@ -28,7 +28,7 @@ export function fmtArticleDate(d: Date, lang: Lang): string {
 	});
 }
 
-type AnyEntry = CollectionEntry<"research"> | CollectionEntry<"blog">;
+type AnyEntry = CollectionEntry<"research">;
 
 export interface ResolvedEntry<T extends AnyEntry = AnyEntry> {
 	entry: T;

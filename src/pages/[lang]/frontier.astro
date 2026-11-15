@@ -1,5 +1,5 @@
 ---
-import SystemsPage from "../../components/SystemsPage.astro";
+import FrontierPage from "../../components/FrontierPage.astro";
 import { type Lang, languages } from "../../i18n/ui";
 
 export function getStaticPaths() {
@@ -11,4 +11,4 @@ export function getStaticPaths() {
 const { lang } = Astro.params as { lang: Lang };
 ---
 
-<SystemsPage lang={lang} />
+<FrontierPage lang={lang} />

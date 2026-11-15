@@ -1,0 +1,426 @@
+---
+import {
+	computeLabel,
+	crowdingLabel,
+	edgeLabel,
+	type FieldId,
+	fields,
+	gradeLabel,
+	problems,
+	stateLabel,
+	tierLabel,
+} from "../data/frontier";
+import type { ProjectLocale } from "../data/projects";
+import type { Lang } from "../i18n/ui";
+import Layout from "../layouts/Layout.astro";
+
+interface Props {
+	lang: Lang;
+}
+
+const { lang } = Astro.props;
+const cl: ProjectLocale = lang === "es" ? "es" : "en";
+
+const copy = {
+	en: {
+		title: "Frontier map",
+		description:
+			"Every open problem Crafter Research would attack, classified by oracle, tier, compute, edge, and crowding.",
+		kicker: "Crafter Research · Frontier map",
+		heading: "The frontier, classified.",
+		lede: "A problem is on this map only if it has an oracle. The axes below say how much each future result can be trusted, what it costs, and why we would be the ones to do it. Rows with no edge stay visible on purpose.",
+		axes: "How to read it",
+		filterTier: "Tier",
+		filterGrade: "Oracle",
+		filterEdge: "Edge",
+		all: "All",
+		shown: "shown",
+		outTitle: "Where we do not compete",
+		out: "Wet labs, materials and DFT, model training, drug discovery, and headline races on formal math already funded by large labs. We contribute pieces there only when an open community makes it useful.",
+		axisList: [
+			[
+				"Oracle grade",
+				"A is machine-checked with no human judgment. B is statistical, held-out, or prospective. C needs a person or fieldwork.",
+			],
+			[
+				"Tier",
+				"Tractable now, hard, or a long bet. Long bets publish their stepping stones.",
+			],
+			[
+				"Compute",
+				"Laptop, modest cloud, or out of reach. We do not pretend to have a cluster.",
+			],
+			["Edge", "Place, language, our own instruments, or none."],
+			["Crowding", "Empty, open community, or a funded race."],
+			[
+				"State",
+				"Catalogued, belief stated, oracle built, survived, killed, published. Killed beliefs stay listed.",
+			],
+		],
+	},
+	es: {
+		title: "Mapa del frontier",
+		description:
+			"Todos los problemas abiertos que atacaría Crafter Research, clasificados por oráculo, tier, compute, ventaja y competencia.",
+		kicker: "Crafter Research · Mapa del frontier",
+		heading: "El frontier, clasificado.",
+		lede: "Un problema entra a este mapa solo si tiene oráculo. Los ejes dicen cuánto se podrá confiar en cada resultado, cuánto cuesta y por qué lo haríamos nosotros. Las filas sin ventaja quedan visibles a propósito.",
+		axes: "Cómo leerlo",
+		filterTier: "Tier",
+		filterGrade: "Oráculo",
+		filterEdge: "Ventaja",
+		all: "Todos",
+		shown: "visibles",
+		outTitle: "Dónde no competimos",
+		out: "Wet labs, materiales y DFT, entrenamiento de modelos, drug discovery y carreras de matemática formal que ya financian los grandes labs. Ahí aportamos piezas solo cuando una comunidad abierta lo hace útil.",
+		axisList: [
+			[
+				"Grado de oráculo",
+				"A se verifica por máquina sin juicio humano. B es estadístico, held-out o prospectivo. C necesita una persona o trabajo de campo.",
+			],
+			[
+				"Tier",
+				"Tratable hoy, difícil o apuesta larga. Las apuestas largas publican sus avances parciales.",
+			],
+			[
+				"Compute",
+				"Laptop, cloud modesto o fuera de alcance. No fingimos tener un cluster.",
+			],
+			["Ventaja", "Lugar, idioma, instrumentos propios o ninguna."],
+			["Competencia", "Vacío, comunidad abierta o carrera financiada."],
+			[
+				"Estado",
+				"Catalogado, creencia escrita, oráculo listo, sobrevivió, descartado, publicado. Lo descartado sigue listado.",
+			],
+		],
+	},
+}[cl];
+
+const fieldIds = Object.keys(fields) as FieldId[];
+const filters = [
+	{ key: "tier", label: copy.filterTier, options: Object.entries(tierLabel) },
+	{
+		key: "grade",
+		label: copy.filterGrade,
+		options: Object.entries(gradeLabel),
+	},
+	{ key: "edge", label: copy.filterEdge, options: Object.entries(edgeLabel) },
+];
+---
+
+<Layout
+	title={`${copy.title} · Crafter Research`}
+	description={copy.description}
+	lang={cl}
+>
+	<main class="fm">
+		<header class="fm-hero">
+			<p class="fm-kicker">{copy.kicker}</p>
+			<h1>{copy.heading}</h1>
+			<p class="fm-lede">{copy.lede}</p>
+		</header>
+
+		<section class="fm-axes" aria-label={copy.axes}>
+			{copy.axisList.map(([title, body]) => (
+	<div>
+		<strong>{title}</strong>
+		<p>{body}</p>
+	</div>
+))}
+		</section>
+
+		<section class="fm-filters" data-filters>
+			{filters.map((f) => (
+	<div class="fm-filter" data-key={f.key}>
+		<span>{f.label}</span>
+		<button type="button" data-value="" aria-pressed="true">
+			{copy.all}
+		</button>
+		{f.options.map(([value, label]) => (
+			<button type="button" data-value={value} aria-pressed="false">
+				{label[cl]}
+			</button>
+		))}
+	</div>
+))}
+			<p class="fm-count">
+				<span data-count>{problems.length}</span>
+				/ {problems.length} {copy.shown}
+			</p>
+		</section>
+
+		{fieldIds.map((id) => (
+	<section class="fm-field" id={id} data-field>
+		<h2>{fields[id][cl]}</h2>
+		<ul>
+			{problems
+				.filter((p) => p.field === id)
+				.map((p) => (
+					<li
+						class:list={["fm-row", { "fm-row-focus": p.state === "belief" }]}
+						data-tier={p.tier}
+						data-grade={p.grade}
+						data-edge={p.edge}
+					>
+						<code>{p.id}</code>
+						<div class="fm-main">
+							<strong>{p.title[cl]}</strong>
+							<p>{p.oracle[cl]}</p>
+						</div>
+						<ul class="fm-tags">
+							<li class={`g g-${p.grade}`}>{p.grade}</li>
+							<li>{tierLabel[p.tier][cl]}</li>
+							<li>{computeLabel[p.compute][cl]}</li>
+							<li class:list={[{ muted: p.edge === "none" }]}>
+								{edgeLabel[p.edge][cl]}
+							</li>
+							{p.crowding && (
+								<li class:list={[{ muted: p.crowding === "race" }]}>
+									{crowdingLabel[p.crowding][cl]}
+								</li>
+							)}
+							<li class:list={[{ state: p.state !== "catalogued" }]}>
+								{stateLabel[p.state][cl]}
+							</li>
+						</ul>
+					</li>
+				))}
+		</ul>
+	</section>
+))}
+
+		<section class="fm-out">
+			<h2>{copy.outTitle}</h2>
+			<p>{copy.out}</p>
+		</section>
+	</main>
+</Layout>
+
+<script>
+const root = document.querySelector("[data-filters]");
+const rows = Array.from(document.querySelectorAll<HTMLElement>(".fm-row"));
+const sections = Array.from(
+	document.querySelectorAll<HTMLElement>("[data-field]"),
+);
+const count = document.querySelector("[data-count]");
+const active: Record<string, string> = { tier: "", grade: "", edge: "" };
+
+function apply() {
+	let shown = 0;
+	for (const row of rows) {
+		const ok = Object.entries(active).every(
+			([k, v]) => !v || row.dataset[k] === v,
+		);
+		row.hidden = !ok;
+		if (ok) shown++;
+	}
+	for (const s of sections) {
+		s.hidden = !s.querySelector(".fm-row:not([hidden])");
+	}
+	if (count) count.textContent = String(shown);
+}
+
+root?.addEventListener("click", (event) => {
+	const btn = (event.target as HTMLElement).closest("button");
+	const group = btn?.closest<HTMLElement>("[data-key]");
+	if (!btn || !group?.dataset.key) return;
+	active[group.dataset.key] = btn.dataset.value ?? "";
+	for (const b of group.querySelectorAll("button")) {
+		b.setAttribute("aria-pressed", String(b === btn));
+	}
+	apply();
+});
+</script>
+
+<style>
+.fm {
+	margin: 0 auto;
+	max-width: 72rem;
+	padding: calc(var(--header-height) + 4rem) var(--layout-padding) 6rem;
+}
+.fm-kicker {
+	color: var(--color-muted);
+	font-family: var(--font-mono);
+	font-size: 0.72rem;
+	letter-spacing: 0.12em;
+	text-transform: uppercase;
+}
+.fm-hero h1 {
+	font-size: clamp(2.2rem, 5vw, 3.8rem);
+	font-weight: 600;
+	letter-spacing: -0.03em;
+	line-height: 1.05;
+	margin: 1rem 0 1.25rem;
+}
+.fm-lede {
+	color: var(--color-muted-strong);
+	font-size: 1.08rem;
+	line-height: 1.6;
+	max-width: 44rem;
+}
+.fm-axes {
+	background: var(--color-border);
+	border: 1px solid var(--color-border);
+	display: grid;
+	gap: 1px;
+	grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));
+	margin: 3rem 0 2.5rem;
+}
+.fm-axes div {
+	background: var(--color-bg);
+	padding: 1.1rem 1.2rem;
+}
+.fm-axes p {
+	color: var(--color-muted-strong);
+	font-size: 0.88rem;
+	line-height: 1.5;
+	margin-top: 0.35rem;
+}
+.fm-filters {
+	background: var(--color-bg);
+	border-bottom: 1px solid var(--color-border);
+	display: flex;
+	flex-direction: column;
+	gap: 0.6rem;
+	padding: 1rem 0;
+}
+.fm-filter {
+	align-items: center;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.4rem;
+}
+.fm-filter span {
+	color: var(--color-muted);
+	font-family: var(--font-mono);
+	font-size: 0.7rem;
+	letter-spacing: 0.1em;
+	text-transform: uppercase;
+	width: 5.5rem;
+}
+.fm-filter button {
+	border: 1px solid var(--color-border);
+	border-radius: 999px;
+	color: var(--color-muted-strong);
+	cursor: pointer;
+	font-size: 0.78rem;
+	padding: 0.25rem 0.7rem;
+}
+.fm-filter button[aria-pressed="true"] {
+	background: var(--color-text);
+	border-color: var(--color-text);
+	color: var(--color-bg);
+}
+.fm-count {
+	color: var(--color-muted);
+	font-family: var(--font-mono);
+	font-size: 0.75rem;
+}
+.fm-field {
+	padding-top: 2.5rem;
+	scroll-margin-top: calc(var(--header-height) + 1.5rem);
+}
+.fm-field h2 {
+	font-size: 1.35rem;
+	font-weight: 600;
+	letter-spacing: -0.01em;
+	margin-bottom: 1rem;
+}
+.fm-field > ul {
+	background: var(--color-border);
+	border: 1px solid var(--color-border);
+	display: grid;
+	gap: 1px;
+}
+.fm-row {
+	align-items: start;
+	background: var(--color-bg);
+	display: grid;
+	gap: 1rem;
+	grid-template-columns: 3rem minmax(0, 1fr) minmax(0, 1.1fr);
+	padding: 0.95rem 1.1rem;
+}
+.fm-row[hidden],
+.fm-field[hidden] {
+	display: none;
+}
+.fm-row-focus {
+	box-shadow: inset 2px 0 0 var(--color-accent);
+}
+.fm-row code {
+	color: var(--color-muted);
+	font-size: 0.75rem;
+	padding-top: 0.15rem;
+}
+.fm-main p {
+	color: var(--color-muted);
+	font-size: 0.85rem;
+	line-height: 1.45;
+	margin-top: 0.2rem;
+}
+.fm-tags {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.35rem;
+	justify-content: flex-end;
+}
+.fm-tags li {
+	border: 1px solid var(--color-border);
+	border-radius: 4px;
+	color: var(--color-muted-strong);
+	font-size: 0.72rem;
+	padding: 0.12rem 0.45rem;
+	white-space: nowrap;
+}
+.fm-tags .muted {
+	color: var(--color-muted);
+	border-style: dashed;
+}
+.fm-tags .state {
+	border-color: var(--color-accent);
+	color: var(--color-accent);
+}
+.fm-tags .g {
+	font-family: var(--font-mono);
+	font-weight: 600;
+}
+.fm-tags .g-A {
+	background: var(--color-accent);
+	border-color: var(--color-accent);
+	color: var(--color-bg);
+}
+.fm-tags .g-B {
+	border-color: var(--color-accent);
+	color: var(--color-accent);
+}
+.fm-out {
+	border-top: 1px solid var(--color-border);
+	margin-top: 4rem;
+	max-width: 44rem;
+	padding-top: 2.5rem;
+}
+.fm-out h2 {
+	font-size: 1.35rem;
+	font-weight: 600;
+}
+.fm-out p {
+	color: var(--color-muted-strong);
+	line-height: 1.6;
+	margin-top: 0.6rem;
+}
+@media (max-width: 760px) {
+	.fm-row {
+		grid-template-columns: 2.5rem minmax(0, 1fr);
+	}
+	.fm-tags {
+		grid-column: 2;
+		justify-content: flex-start;
+	}
+	.fm-filter span {
+		width: 100%;
+	}
+	.fm-filters {
+		position: static;
+	}
+}
+</style>
