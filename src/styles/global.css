@@ -3857,3 +3857,14 @@ body {
 		overflow-wrap: anywhere;
 	}
 }
+
+.research-figure {
+	margin: 2rem 0;
+}
+
+.research-figure figcaption {
+	color: var(--color-muted);
+	font-size: 0.85rem;
+	line-height: 1.5;
+	margin-top: 0.5rem;
+}

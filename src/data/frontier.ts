@@ -220,10 +220,10 @@ export const focus: FocusBet[] = [
 			en: "The real gain falls inside the shuffles' 95% interval, or vanishes on independently verified values.",
 			es: "La ganancia real cae dentro del intervalo del 95% de los barajados, o desaparece con valores verificados por otra fuente.",
 		},
-		state: "survived",
+		state: "killed",
 		result: {
-			en: "+0.05 bits per cord; all 200 shuffles do worse, also on values checked against the Khipu Field Guide. Small and consistent; it does not yet say what any colour means.",
-			es: "+0,05 bits por cuerda; los 200 barajados quedan peor, también con valores cotejados con el Khipu Field Guide. Es pequeña y consistente; todavía no dice qué significa cada color.",
+			en: "Withdrawn. Colour beats 200 shuffles in both recording traditions, but with the layout controlled it saves 0.016 bits per cord, below the 0.02 we set before running.",
+			es: "Retirada. El color le gana a 200 barajados en las dos tradiciones de registro, pero con la disposición controlada ahorra 0,016 bits por cuerda, por debajo del 0,02 que fijamos antes de correr.",
 		},
 	},
 	{
