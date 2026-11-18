@@ -49,6 +49,8 @@ export interface FocusBet {
 	oracle: L;
 	kill: L;
 	stream: "frontier" | "public-goods";
+	state?: State;
+	result?: L;
 }
 
 export const fields: Record<FieldId, L> = {
@@ -192,6 +194,37 @@ export const focus: FocusBet[] = [
 			en: "No gain outside the null interval. The benchmark ships either way.",
 			es: "Ninguna ganancia fuera del intervalo nulo. El benchmark se publica igual.",
 		},
+		state: "killed",
+		result: {
+			en: "On khipus from unseen provenances the model does worse than digit frequencies (-0.21 bits per cord). What survived became D1b.",
+			es: "En khipus de procedencias no vistas, el modelo predice peor que la sola frecuencia de dígitos (-0,21 bits por cuerda). Lo que sobrevivió pasó a D1b.",
+		},
+	},
+	{
+		id: "D1b",
+		rank: 4,
+		stream: "frontier",
+		title: {
+			en: "Each khipu has its own colour legend",
+			es: "Cada khipu tiene su propia leyenda de colores",
+		},
+		belief: {
+			en: "Within a khipu, a cord's colour predicts the size of its value beyond its cluster and position. No colour code carries over between khipus.",
+			es: "Dentro de un khipu, el color de una cuerda predice el tamaño de su valor más allá de su grupo y su posición. Ningún código de colores pasa de un khipu a otro.",
+		},
+		oracle: {
+			en: "Bits per cord on held-out clusters, against 200 within-cluster colour shuffles, with a calibrated model.",
+			es: "Bits por cuerda en grupos guardados aparte, contra 200 barajados de color dentro de cada grupo, con un modelo calibrado.",
+		},
+		kill: {
+			en: "The real gain falls inside the shuffles' 95% interval, or vanishes on independently verified values.",
+			es: "La ganancia real cae dentro del intervalo del 95% de los barajados, o desaparece con valores verificados por otra fuente.",
+		},
+		state: "survived",
+		result: {
+			en: "+0.05 bits per cord; all 200 shuffles do worse, also on values checked against the Khipu Field Guide. Small and consistent; it does not yet say what any colour means.",
+			es: "+0,05 bits por cuerda; los 200 barajados quedan peor, también con valores cotejados con el Khipu Field Guide. Es pequeña y consistente; todavía no dice qué significa cada color.",
+		},
 	},
 	{
 		id: "P4",
@@ -235,7 +268,9 @@ const p = (
 	compute,
 	edge,
 	crowding,
-	state: focus.some((f) => f.id === id) ? "belief" : "catalogued",
+	state:
+		focus.find((f) => f.id === id)?.state ??
+		(focus.some((f) => f.id === id) ? "belief" : "catalogued"),
 });
 
 export const problems: Problem[] = [
@@ -963,6 +998,19 @@ export const problems: Problem[] = [
 		"Khipu: predecir cuerdas guardadas aparte",
 		"Held-out khipus against a null",
 		"Khipus held-out contra un nulo",
+		"B",
+		"hard",
+		"laptop",
+		"place",
+		"empty",
+	),
+	p(
+		"D1b",
+		"decipher",
+		"Khipu: a colour legend local to each khipu",
+		"Khipu: una leyenda de colores propia de cada khipu",
+		"Held-out clusters against 200 colour shuffles",
+		"Grupos guardados aparte contra 200 barajados de color",
 		"B",
 		"hard",
 		"laptop",
