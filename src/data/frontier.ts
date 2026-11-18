@@ -196,34 +196,8 @@ export const focus: FocusBet[] = [
 		},
 		state: "killed",
 		result: {
-			en: "On khipus from unseen provenances the model does worse than digit frequencies (-0.21 bits per cord). What survived became D1b.",
-			es: "En khipus de procedencias no vistas, el modelo predice peor que la sola frecuencia de dígitos (-0,21 bits por cuerda). Lo que sobrevivió pasó a D1b.",
-		},
-	},
-	{
-		id: "D1b",
-		rank: 4,
-		stream: "frontier",
-		title: {
-			en: "Each khipu has its own colour legend",
-			es: "Cada khipu tiene su propia leyenda de colores",
-		},
-		belief: {
-			en: "Within a khipu, a cord's colour predicts the size of its value beyond its cluster and position. No colour code carries over between khipus.",
-			es: "Dentro de un khipu, el color de una cuerda predice el tamaño de su valor más allá de su grupo y su posición. Ningún código de colores pasa de un khipu a otro.",
-		},
-		oracle: {
-			en: "Bits per cord on held-out clusters, against 200 within-cluster colour shuffles, with a calibrated model.",
-			es: "Bits por cuerda en grupos guardados aparte, contra 200 barajados de color dentro de cada grupo, con un modelo calibrado.",
-		},
-		kill: {
-			en: "The real gain falls inside the shuffles' 95% interval, or vanishes on independently verified values.",
-			es: "La ganancia real cae dentro del intervalo del 95% de los barajados, o desaparece con valores verificados por otra fuente.",
-		},
-		state: "killed",
-		result: {
-			en: "Withdrawn. Colour beats 200 shuffles in both recording traditions, but with the layout controlled it saves 0.016 bits per cord, below the 0.02 we set before running.",
-			es: "Retirada. El color le gana a 200 barajados en las dos tradiciones de registro, pero con la disposición controlada ahorra 0,016 bits por cuerda, por debajo del 0,02 que fijamos antes de correr.",
+			en: "On khipus from unseen sites the model does worse than digit frequencies. Within a khipu, colour carries a small signal, 0.016 bits per cord with the layout controlled, below the 0.02 we set before running, so the local legend claim was withdrawn too.",
+			es: "En khipus de sitios no vistos, el modelo predice peor que la sola frecuencia de dígitos. Dentro de un khipu, el color lleva una señal pequeña, 0,016 bits por cuerda con la disposición controlada, por debajo del 0,02 que fijamos antes de correr, así que también retiramos la leyenda local.",
 		},
 	},
 	{
@@ -998,19 +972,6 @@ export const problems: Problem[] = [
 		"Khipu: predecir cuerdas guardadas aparte",
 		"Held-out khipus against a null",
 		"Khipus held-out contra un nulo",
-		"B",
-		"hard",
-		"laptop",
-		"place",
-		"empty",
-	),
-	p(
-		"D1b",
-		"decipher",
-		"Khipu: a colour legend local to each khipu",
-		"Khipu: una leyenda de colores propia de cada khipu",
-		"Held-out clusters against 200 colour shuffles",
-		"Grupos guardados aparte contra 200 barajados de color",
 		"B",
 		"hard",
 		"laptop",
