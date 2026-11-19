@@ -72,7 +72,7 @@ export const projects = [
 				url: "https://github.com/crafter-research/sismo-abierto",
 			},
 		],
-		verifiedAt: "2026-08-20",
+		verifiedAt: "2026-11-18",
 		limitation: {
 			en: "Operational history begins in July 2026, so long-term reliability is still unproven.",
 			es: "La historia operativa empieza en julio de 2026, así que la confiabilidad de largo plazo aún no está probada.",
@@ -92,12 +92,12 @@ export const projects = [
 		evidence: [
 			{
 				label: { en: "Current release", es: "Release actual" },
-				value: { en: "npm v0.6.1", es: "npm v0.6.1" },
+				value: { en: "npm v0.16.0", es: "npm v0.16.0" },
 				sourceUrl: "https://registry.npmjs.org/%40crafter%2Fsunat-cli/latest",
 			},
 			{
 				label: { en: "Release record", es: "Historial de releases" },
-				value: { en: "12 GitHub releases", es: "12 releases en GitHub" },
+				value: { en: "28 GitHub releases", es: "28 releases en GitHub" },
 				sourceUrl: "https://github.com/crafter-research/sunat-cli/releases",
 			},
 		],
@@ -111,7 +111,7 @@ export const projects = [
 				url: "https://github.com/crafter-research/sunat-cli",
 			},
 		],
-		verifiedAt: "2026-08-20",
+		verifiedAt: "2026-11-18",
 		limitation: {
 			en: "Several workflows depend on government portals whose interfaces and availability can change without notice.",
 			es: "Varios flujos dependen de portales públicos cuyas interfaces y disponibilidad pueden cambiar sin aviso.",
