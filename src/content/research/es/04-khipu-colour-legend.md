@@ -1,10 +1,10 @@
 ---
-title: "Colores y números en los khipus: una medición, una corrección a la base de datos y una herramienta"
-description: "Una medición preregistrada de cuánto dice el color de una cuerda sobre los números de un khipu, una corrección al Open Khipu Repository y khipu-null, una herramienta abierta para poner a prueba patrones en khipus frente al azar."
+title: "Colores y números en los khipus: una medición, una auditoría de datos y una herramienta"
+description: "Una medición preregistrada de cuánto dice el color de una cuerda sobre los números de un khipu, una auditoría del Open Khipu Repository y khipu-null, una herramienta abierta para poner a prueba patrones en khipus frente al azar."
 abstract: |
   Medimos cuánto dice el color de una cuerda de khipu sobre el número anudado en ella. Dentro de un mismo khipu, el color aporta 0,016 bits por cuerda sobre el tamaño del número cuando se controla la disposición de las cuerdas, en las dos grandes colecciones publicadas. Eso queda por debajo del umbral de 0,02 que fijamos para una leyenda de colores, así que esa afirmación se retira.
 
-  También revisamos el emparejamiento más conocido entre khipus y un documento colonial, documentamos un error de codificación en la base pública y publicamos khipu-null, la herramienta detrás de estas pruebas.
+  También revisamos el emparejamiento más conocido entre khipus y un documento colonial, documentamos una discrepancia en la base pública y publicamos khipu-null, la herramienta detrás de estas pruebas.
 date: 2026-11-18T22:00:00Z
 status: result
 urlSlug: khipu-colour-legend
@@ -71,7 +71,7 @@ Seis khipus del valle de Santa se emparejaron con un censo de 1670 de San Pedro 
 - La propia tabla de Urton da 359. Llega a 367 y una fracción asignando valores a dos cuerdas rotas. Otras doce primeras cuerdas valen cero y se quedan en cero.
 - Un paper posterior cita totales de 381 o 382 y 86 para las dos mitades. Eso no suma 367. Si una mitad es 86, la otra tiene que ser 281 o 282, así que 381 podría ser una errata. Usamos la edición en español del libro de Urton y no revisamos la edición en inglés.
 
-La base pública codifica mal KH0326, el khipu del dibujo. Los nudos de las decenas aparecen como centenas, así que 15 se vuelve 105. Al mover ese dígito, 106 de sus 108 cuerdas colgantes coinciden con el Khipu Field Guide, y la tabla de Urton muestra los mismos valores en escala de decenas. La corrección está documentada en el repositorio para quienes mantienen la base.
+La base pública y el Khipu Field Guide no coinciden en KH0326, el khipu del dibujo. La base les da a sus nudos simples el valor 100 y el Field Guide les da 10, así que una cuerda que en uno se lee 15 en el otro es 105. Con la lectura del Field Guide coinciden 105 de sus 108 cuerdas colgantes, y la tabla de Urton muestra los mismos valores en escala de decenas. Un segundo khipu, KH0472, muestra el mismo desacuerdo. Las dos fuentes comparten origen, así que se lo planteamos a quienes mantienen la base en vez de llamarlo error.
 
 ## La herramienta: khipu-null
 
