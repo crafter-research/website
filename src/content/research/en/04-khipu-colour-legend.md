@@ -1,10 +1,10 @@
 ---
-title: "Khipu colours and numbers: a measurement, a database correction and a tool"
-description: "A preregistered measurement of how much cord colour says about khipu numbers, a correction to the Open Khipu Repository, and khipu-null, an open tool for testing khipu patterns against chance."
+title: "Khipu colours and numbers: a measurement, a data audit and a tool"
+description: "A preregistered measurement of how much cord colour says about khipu numbers, an audit of the Open Khipu Repository, and khipu-null, an open tool for testing khipu patterns against chance."
 abstract: |
   We measured how much the colour of a khipu cord says about the number knotted on it. Inside a single khipu, colour carries 0.016 bits per cord about the size of a cord's number once cord layout is controlled, in both large published collections. That is below the 0.02 threshold we set for a colour legend, so the legend claim is withdrawn.
 
-  We also rechecked the best-known match between khipus and a colonial document, documented a coding error in the public database, and released khipu-null, the tool behind these tests.
+  We also rechecked the best-known match between khipus and a colonial document, documented a discrepancy in the public database, and released khipu-null, the tool behind these tests.
 date: 2026-11-18T22:00:00Z
 status: result
 urlSlug: khipu-colour-legend
@@ -71,7 +71,7 @@ Six khipus from the Santa Valley were matched to a 1670 census of San Pedro de C
 - Urton's own table reads 359. He reaches 367 and a fraction by giving values to two broken cords. Twelve other first cords are zero and stay zero.
 - A later paper cites totals of 381 or 382 and 86 for the two halves. Those do not add up to 367. If one half is 86, the other must be 281 or 282, so 381 may be a misprint. We used the Spanish edition of Urton's book and have not checked the English one.
 
-The public database miscodes KH0326, the khipu in the drawing. Knots in the tens place are recorded as hundreds, so 15 becomes 105. After moving that digit, 106 of its 108 hanging cords match the Khipu Field Guide, and Urton's table shows the same tens-scale values. The correction is documented in the repository for the maintainers.
+The public database and the Khipu Field Guide disagree on KH0326, the khipu in the drawing. The database gives its single knots the value 100 and the Field Guide gives them 10, so a cord read as 15 in one is 105 in the other. With the Field Guide reading, 105 of its 108 hanging cords match, and Urton's table shows the same tens-scale values. A second khipu, KH0472, shows the same disagreement. Both sources share a lineage, so we have put the question to the maintainers rather than calling it an error.
 
 ## The tool: khipu-null
 
