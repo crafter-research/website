@@ -1,6 +1,12 @@
 ---
 import { getCollection } from "astro:content";
-import { type FieldId, fields, focus, problems } from "../data/frontier";
+import {
+	type FieldId,
+	fields,
+	focus,
+	problems,
+	stateLabel,
+} from "../data/frontier";
 import { people } from "../data/people";
 import { featuredProjects, type ProjectLocale } from "../data/projects";
 import { labCopy, protocolByLang } from "../i18n/lab";
@@ -39,7 +45,15 @@ const stats = [
 	[problems.length, copy.statProblems],
 	[fieldIds.length, copy.statFields],
 	[focus.length, copy.statBeliefs],
-	[0, copy.statResults],
+	[
+		focus.filter(
+			(f) =>
+				f.state === "killed" ||
+				f.state === "survived" ||
+				f.state === "published",
+		).length,
+		copy.statResults,
+	],
 ] as const;
 
 const streams = [
@@ -128,6 +142,12 @@ const tierText = {
 		<div class="bet-body">
 			<h3>{bet.title[cl]}</h3>
 			<p class="bet-belief">{bet.belief[cl]}</p>
+			{bet.result && (
+				<p class={`bet-result bet-result-${bet.state}`}>
+					<span>{stateLabel[bet.state ?? "belief"][cl]}</span>
+					{bet.result[cl]}
+				</p>
+			)}
 			<dl>
 				<div>
 					<dt>{copy.oracleLabel}</dt>
@@ -465,6 +485,29 @@ if (!reduce) {
 	line-height: 1.55;
 	margin: 0.5rem 0 1.1rem;
 }
+.bet-result {
+	border-left: 2px solid var(--color-border);
+	color: var(--color-muted-strong);
+	font-size: 0.9rem;
+	line-height: 1.5;
+	margin: 0.75rem 0 1rem;
+	padding-left: 0.75rem;
+}
+
+.bet-result span {
+	color: var(--color-text);
+	display: block;
+	font-family: var(--font-mono);
+	font-size: 0.7rem;
+	letter-spacing: 0.08em;
+	margin-bottom: 0.2rem;
+	text-transform: uppercase;
+}
+
+.bet-result-survived {
+	border-left-color: var(--color-accent);
+}
+
 .bet dl {
 	display: grid;
 	gap: 1rem;

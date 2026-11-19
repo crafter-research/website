@@ -49,6 +49,8 @@ export interface FocusBet {
 	oracle: L;
 	kill: L;
 	stream: "frontier" | "public-goods";
+	state?: State;
+	result?: L;
 }
 
 export const fields: Record<FieldId, L> = {
@@ -192,6 +194,11 @@ export const focus: FocusBet[] = [
 			en: "No gain outside the null interval. The benchmark ships either way.",
 			es: "Ninguna ganancia fuera del intervalo nulo. El benchmark se publica igual.",
 		},
+		state: "killed",
+		result: {
+			en: "On khipus from unseen sites the model does worse than digit frequencies. Within a khipu, colour carries a small signal, 0.016 bits per cord with the layout controlled, below the 0.02 we set before running, so the local legend claim was withdrawn too.",
+			es: "En khipus de sitios no vistos, el modelo predice peor que la sola frecuencia de dígitos. Dentro de un khipu, el color lleva una señal pequeña, 0,016 bits por cuerda con la disposición controlada, por debajo del 0,02 que fijamos antes de correr, así que también retiramos la leyenda local.",
+		},
 	},
 	{
 		id: "P4",
@@ -235,7 +242,9 @@ const p = (
 	compute,
 	edge,
 	crowding,
-	state: focus.some((f) => f.id === id) ? "belief" : "catalogued",
+	state:
+		focus.find((f) => f.id === id)?.state ??
+		(focus.some((f) => f.id === id) ? "belief" : "catalogued"),
 });
 
 export const problems: Problem[] = [

@@ -16,7 +16,7 @@ export const labCopy = {
 		statBeliefs: "beliefs stated",
 		statResults: "results so far",
 		focusLabel: "Focus",
-		focusTitle: "Five bets we are starting with.",
+		focusTitle: "Our bets, and what became of them.",
 		focusBody:
 			"Each bet is a falsifiable sentence, the oracle that judges it, and what would kill it. Killed bets stay on this page.",
 		beliefLabel: "Belief",
@@ -64,7 +64,7 @@ export const labCopy = {
 		statBeliefs: "creencias escritas",
 		statResults: "resultados hasta hoy",
 		focusLabel: "Foco",
-		focusTitle: "Cinco apuestas para empezar.",
+		focusTitle: "Nuestras apuestas y qué pasó con ellas.",
 		focusBody:
 			"Cada apuesta es una oración falsable, el oráculo que la juzga y lo que la mataría. Las apuestas descartadas se quedan en esta página.",
 		beliefLabel: "Creencia",

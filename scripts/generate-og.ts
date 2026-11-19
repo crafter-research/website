@@ -88,7 +88,8 @@ const posts: Card[] = [];
 for (const lang of readdirSync(join(ROOT, "src/content/research"))) {
 	for (const file of readdirSync(join(ROOT, "src/content/research", lang))) {
 		const fm = readFileSync(join(ROOT, "src/content/research", lang, file), "utf8").split("---")[1] ?? "";
-		const date = new Date(`${field(fm, "date")}T00:00:00Z`).toLocaleDateString(lang === "en" ? "en-US" : lang, {
+		const raw = field(fm, "date");
+		const date = new Date(raw.includes("T") ? raw : `${raw}T00:00:00Z`).toLocaleDateString(lang === "en" ? "en-US" : lang, {
 			day: "numeric",
 			month: "short",
 			timeZone: "UTC",
