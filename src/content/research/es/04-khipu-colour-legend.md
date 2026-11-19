@@ -1,24 +1,24 @@
 ---
-title: "Buscamos un código de colores en 619 khipus y retiramos nuestra propia afirmación"
-description: "El color de una cuerda de khipu lleva una señal débil sobre el número anudado en ella, demasiado débil para llamarla código. Notas de un día de pruebas preregistradas, con lo que hicimos mal."
+title: "Colores y números en los khipus: una medición, una corrección a la base de datos y una herramienta"
+description: "Una medición preregistrada de cuánto dice el color de una cuerda sobre los números de un khipu, una corrección al Open Khipu Repository y khipu-null, una herramienta abierta para poner a prueba patrones en khipus frente al azar."
 abstract: |
-  Preguntamos si el color de una cuerda de khipu dice algo sobre el número anudado en ella. La respuesta es un poco. Dentro de un mismo khipu, el color ayuda a adivinar el tamaño del número de una cuerda, y el efecto aparece en las dos grandes colecciones publicadas. Cuando tomamos en cuenta dónde está cada cuerda, la ganancia es mínima y queda por debajo de un mínimo que habíamos escrito antes. Así que retiramos la afirmación.
+  Medimos cuánto dice el color de una cuerda de khipu sobre el número anudado en ella. Dentro de un mismo khipu, el color aporta 0,016 bits por cuerda sobre el tamaño del número cuando se controla la disposición de las cuerdas, en las dos grandes colecciones publicadas. Eso queda por debajo del umbral de 0,02 que fijamos para una leyenda de colores, así que esa afirmación se retira.
 
-  En el camino revisamos el emparejamiento más conocido entre khipus y un documento colonial, y encontramos un problema de codificación en la base de datos pública.
+  También revisamos el emparejamiento más conocido entre khipus y un documento colonial, documentamos un error de codificación en la base pública y publicamos khipu-null, la herramienta detrás de estas pruebas.
 date: 2026-11-18T22:00:00Z
 status: result
 urlSlug: khipu-colour-legend
 lang: es
 project: khipu
 author: railly
-tags: [khipu, desciframiento, preregistro, resultado-negativo, peru]
+tags: [khipu, desciframiento, preregistro, codigo-abierto, peru]
 ---
 
 <figure class="research-hero"><img src="/research/khipu/kh0326.svg" alt="Un khipu dibujado a partir de sus registros, con cerca de cien cuerdas de colores colgando de una cuerda principal horizontal y nudos blancos a lo largo de ellas" width="850" height="558"><figcaption>KH0326, uno de los seis khipus del valle de Santa, dibujado a partir de sus registros. Cada línea es una cuerda en su color registrado, a escala. Los puntos de arriba son decenas y las barras de abajo son unidades, así que una cuerda con un punto y una barra de cinco vueltas se lee 15.</figcaption></figure>
 
 ## La respuesta corta
 
-El color lleva una señal débil sobre los números de un khipu. Es demasiado débil para llamarla código, así que retiramos nuestra afirmación de que cada khipu tiene su propia leyenda de colores.
+El color aporta 0,016 bits por cuerda sobre el número de una cuerda, en las dos grandes colecciones. Eso queda por debajo del umbral de 0,02 que fijamos para una leyenda de colores, así que retiramos esa afirmación.
 
 ## Cómo guarda números un khipu
 
@@ -32,15 +32,15 @@ Partimos de una pregunta: si conoces el color de una cuerda, ¿puedes adivinar m
 
 Cada prueba quedó escrita antes de mirar el resultado, con la medida que la decidía y lo que contaría como fracaso. Eso es un <span class="term" tabindex="0" data-tip="Escribir la apuesta, la medida y lo que la descartaría antes de mirar los resultados.">preregistro</span>. La mayoría comparó los colores reales con las mismas cuerdas con los colores <span class="term" tabindex="0" data-tip="Repetimos la prueba con los colores mezclados al azar. Si el resultado no cambia, el color no aportaba nada.">barajados al azar</span>. Medimos la diferencia en <span class="term" tabindex="0" data-tip="Cuántas preguntas de sí o no te ahorras, en promedio, al adivinar el número de una cuerda. 0,016 es casi nada.">bits por cuerda</span>.
 
-## Las pruebas más estrictas dejaron poca señal
+## Cuatro controles, una estimación
 
-La primera versión decía que sí, con claridad. Los controles que siguieron quitaron cosas que podían imitar un código de colores, y lo que queda es poco.
+Cada control quitó algo que puede imitar un código de colores. La estimación pasó de 0,085 a 0,016 bits por cuerda.
 
 <figure class="research-figure"><svg viewBox="0 0 720 250" role="img" aria-label="Señal del color por prueba" style="width:100%;height:auto;font-family:var(--font-sans);font-size:13px"><text x="288" y="51" text-anchor="end" style="fill:var(--color-text)">Colores barajados dentro de cada khipu</text><rect x="300" y="34" width="296.9" height="26" rx="4" style="fill:var(--color-accent);opacity:0.55"/><text x="604.9" y="51" style="fill:var(--color-muted-strong)">0,085</text><text x="288" y="95" text-anchor="end" style="fill:var(--color-text)">Barajados dentro de cada grupo de cuerdas</text><rect x="300" y="78" width="150.7" height="26" rx="4" style="fill:var(--color-accent);opacity:0.55"/><text x="458.7" y="95" style="fill:var(--color-muted-strong)">0,043</text><text x="288" y="139" text-anchor="end" style="fill:var(--color-text)">Grupos enteros apartados, 200 barajados</text><rect x="300" y="122" width="189.4" height="26" rx="4" style="fill:var(--color-accent);opacity:0.55"/><text x="497.4" y="139" style="fill:var(--color-muted-strong)">0,054</text><text x="288" y="183" text-anchor="end" style="fill:var(--color-text)">Posición de la cuerda descontada</text><rect x="300" y="166" width="55.7" height="26" rx="4" style="fill:var(--color-accent);opacity:1"/><text x="378.0" y="183" style="fill:var(--color-muted-strong)">0,016</text><line x1="370.0" x2="370.0" y1="24" y2="198" style="stroke:var(--color-muted-strong);stroke-width:1.5;stroke-dasharray:4 4"/><text x="376.0" y="20" style="fill:var(--color-muted-strong)">Mínimo fijado: 0,02</text><line x1="300" x2="300" y1="28" y2="198" style="stroke:var(--color-border)"/><text x="300" y="240" style="fill:var(--color-muted)">Bits por cuerda ganados con los colores reales</text></svg>
 
 <figcaption>La señal del color en cada prueba más estricta. La última barra toma en cuenta dónde está cada cuerda dentro de su grupo, y no llega a la línea de 0,02.</figcaption></figure>
 
-La última caída vino de la posición. Las cuerdas en el mismo lugar de un patrón que se repite suelen compartir color y tamaño de número, así que parte de la señal "del color" era en realidad disposición. Lo señaló una revisión independiente de Fable, un modelo de IA corrido por separado, con acceso de solo lectura a nuestro código y nuestros datos.
+La última caída vino de la posición. Las cuerdas en el mismo lugar de un patrón que se repite suelen compartir color y tamaño de número, así que parte de la señal "del color" era en realidad disposición. Una revisión independiente de Fable, un modelo de IA corrido por separado y con acceso de solo lectura a nuestro código y nuestros datos, identificó el confusor, y la prueba final lo controla.
 
 La prueba final tomó en cuenta la posición y corrió por separado en las dos grandes colecciones, los khipus descritos por <span class="term" tabindex="0" data-tip="Los dos equipos de investigación cuyos registros forman la mayor parte de la base pública: Marcia y Robert Ascher, y el proyecto de Gary Urton en Harvard.">los proyectos Ascher y Urton</span>. Para pasar, el color tenía que ganarle a 200 barajados, ahorrar al menos 0,02 bits por cuerda y ayudar en más de la mitad de los khipus.
 
@@ -49,7 +49,9 @@ La prueba final tomó en cuenta la posición y corrió por separado en las dos g
 
 Las dos colecciones le ganan a todos los barajados, y el color ayuda en el 75% de los khipus Ascher y en el 58% de los khipus Urton. La ganancia es de 0,016 bits por cuerda en ambas, por debajo de 0,02, así que la afirmación se retira.
 
-## En qué nos equivocamos
+## Desviaciones del protocolo
+
+Seis desviaciones, cada una registrada en el repositorio.
 
 - Fijamos el mínimo de 0,02 después de ver resultados previos de 0,054 y 0,036. No fue un umbral a ciegas.
 - Hasta que publicamos, los preregistros estaban guardados solo en una computadora local. Nadie más puede comprobar sus fechas antes de ese día.
@@ -60,7 +62,7 @@ Las dos colecciones le ganan a todos los barajados, y el color ayuda en el 75% d
 
 La lista completa, con cada prueba y cada cambio, está en el [repositorio](https://github.com/crafter-research/khipu).
 
-## De paso, el caso del valle de Santa
+## Revisión del emparejamiento del valle de Santa
 
 Seis khipus del valle de Santa se emparejaron con un censo de 1670 de San Pedro de Corongo, un pueblo de 132 tributarios en seis <span class="term" tabindex="0" data-tip="Grupos de parentesco locales, que los censos coloniales contaban como unidades.">pachacas</span> que debían 367 pesos. Urton tituló su capítulo sobre ellos con la pregunta de si son un "khipu Rosetta".
 
@@ -69,13 +71,25 @@ Seis khipus del valle de Santa se emparejaron con un censo de 1670 de San Pedro 
 - La propia tabla de Urton da 359. Llega a 367 y una fracción asignando valores a dos cuerdas rotas. Otras doce primeras cuerdas valen cero y se quedan en cero.
 - Un paper posterior cita totales de 381 o 382 y 86 para las dos mitades. Eso no suma 367. Si una mitad es 86, la otra tiene que ser 281 o 282, así que 381 podría ser una errata. Usamos la edición en español del libro de Urton y no revisamos la edición en inglés.
 
-También encontramos un problema de codificación. En KH0326, el khipu del dibujo, la base pública registra los nudos de las decenas como centenas, así que 15 se vuelve 105. Al mover ese dígito, 106 de sus 108 cuerdas colgantes coinciden con el Khipu Field Guide, y la tabla de Urton muestra los mismos valores en escala de decenas. Vamos a compartirlo con quienes mantienen la base.
+La base pública codifica mal KH0326, el khipu del dibujo. Los nudos de las decenas aparecen como centenas, así que 15 se vuelve 105. Al mover ese dígito, 106 de sus 108 cuerdas colgantes coinciden con el Khipu Field Guide, y la tabla de Urton muestra los mismos valores en escala de decenas. La corrección está documentada en el repositorio para quienes mantienen la base.
+
+## La herramienta: khipu-null
+
+Empaquetamos los nulos de estas pruebas en [khipu-null](https://github.com/crafter-research/khipu-null), una herramienta de línea de comandos de código abierto. Describes un patrón (tamaños de grupo, qué cuerdas llevan totales, repeticiones de color, amarre) y la herramienta ordena todos los khipus de un corpus según ese patrón. Cada puntaje se compara con versiones del mismo khipu donde solo se permuta el campo que lee esa característica, así que la disposición nunca se mueve. Con un patrón escrito a partir de los khipus del valle de Santa, cinco de los seis quedan en el top 6 de 328, y el promedio del top 6 es 0,994 frente a un rango nulo de 0,954 a 0,986 (p = 0,001). Es una prueba de cordura, porque el patrón sale de esos mismos khipus, y ningún khipu individual llega a q ≤ 0,05.
+
+```bash
+uvx --from git+https://github.com/crafter-research/khipu-null khipu-null rank okr.csv santa-valley.yaml -o out --top 6
+```
+
+<figure class="research-figure"><svg viewBox="0 0 720 300" role="img" aria-label="Puntaje de coincidencia" style="width:100%;height:auto;font-family:var(--font-sans);font-size:13px"><line x1="60" x2="700" y1="198.8" y2="198.8" style="stroke:var(--color-border)"/><text x="52" y="202.8" text-anchor="end" style="fill:var(--color-muted)">0,80</text><line x1="60" x2="700" y1="116.5" y2="116.5" style="stroke:var(--color-border)"/><text x="52" y="120.5" text-anchor="end" style="fill:var(--color-muted)">0,90</text><line x1="60" x2="700" y1="34.1" y2="34.1" style="stroke:var(--color-border)"/><text x="52" y="38.1" text-anchor="end" style="fill:var(--color-muted)">1,00</text><rect x="62.7" y="45.9" width="122.7" height="26.0" rx="3" style="fill:var(--color-muted);opacity:0.18"/><text x="62.7" y="87.9" style="fill:var(--color-muted-strong)">Top 6 bajo el nulo</text><circle cx="70.7" cy="34.1" r="6" style="fill:var(--color-accent)"><title>KH0324</title></circle><circle cx="92.0" cy="34.1" r="6" style="fill:var(--color-accent)"><title>KH0327</title></circle><circle cx="113.3" cy="34.1" r="4" style="fill:var(--color-muted);opacity:0.6"><title>KH0109</title></circle><circle cx="134.7" cy="34.1" r="6" style="fill:var(--color-accent)"><title>KH0328</title></circle><circle cx="156.0" cy="38.1" r="6" style="fill:var(--color-accent)"><title>KH0325</title></circle><circle cx="177.3" cy="58.3" r="6" style="fill:var(--color-accent)"><title>KH0323</title></circle><circle cx="198.7" cy="59.9" r="4" style="fill:var(--color-muted);opacity:0.6"><title>KH0384</title></circle><circle cx="220.0" cy="71.6" r="4" style="fill:var(--color-muted);opacity:0.6"><title>KH0630</title></circle><circle cx="241.3" cy="87.2" r="4" style="fill:var(--color-muted);opacity:0.6"><title>KH0488</title></circle><circle cx="262.7" cy="92.9" r="4" style="fill:var(--color-muted);opacity:0.6"><title>KH0527</title></circle><circle cx="284.0" cy="105.1" r="4" style="fill:var(--color-muted);opacity:0.6"><title>KH0055</title></circle><circle cx="305.3" cy="119.2" r="4" style="fill:var(--color-muted);opacity:0.6"><title>KH0469</title></circle><circle cx="326.7" cy="145.4" r="4" style="fill:var(--color-muted);opacity:0.6"><title>KH0092</title></circle><circle cx="348.0" cy="146.4" r="4" style="fill:var(--color-muted);opacity:0.6"><title>KH0272</title></circle><circle cx="369.3" cy="151.8" r="4" style="fill:var(--color-muted);opacity:0.6"><title>KH0098</title></circle><circle cx="390.7" cy="163.5" r="4" style="fill:var(--color-muted);opacity:0.6"><title>KH0448</title></circle><circle cx="412.0" cy="176.7" r="4" style="fill:var(--color-muted);opacity:0.6"><title>KH0436</title></circle><circle cx="433.3" cy="178.9" r="4" style="fill:var(--color-muted);opacity:0.6"><title>KH0162</title></circle><circle cx="454.7" cy="198.8" r="4" style="fill:var(--color-muted);opacity:0.6"><title>KH0062</title></circle><circle cx="476.0" cy="198.8" r="4" style="fill:var(--color-muted);opacity:0.6"><title>KH0316</title></circle><circle cx="497.3" cy="216.1" r="4" style="fill:var(--color-muted);opacity:0.6"><title>KH0364</title></circle><circle cx="518.7" cy="221.3" r="4" style="fill:var(--color-muted);opacity:0.6"><title>KH0460</title></circle><circle cx="470" cy="282" r="6" style="fill:var(--color-accent)"/><text x="482" y="286" style="fill:var(--color-text)">Khipu del valle de Santa</text><circle cx="66" cy="282" r="4" style="fill:var(--color-muted);opacity:0.6"/><text x="76" y="286" style="fill:var(--color-text)">Otros khipus</text><text x="380" y="262" text-anchor="middle" style="fill:var(--color-muted)">Puesto entre 328 khipus</text></svg>
+
+<figcaption>Las 30 mejores coincidencias con el patrón del valle de Santa. Los puntos verdes son khipus del valle de Santa. La banda gris es donde quedaría el top 6 si se barajaran los valores de cada khipu.</figcaption></figure>
 
 ## Qué queda en pie y qué sigue
 
 El color lleva una cantidad pequeña y consistente de información sobre el tamaño del número de una cuerda dentro de un khipu, más allá de su posición. No es una costumbre de un solo equipo de investigación, y es demasiado pequeña para llamarla código.
 
-La pieza que falta no es un mejor modelo. El espaciado entre cuerdas casi nunca está registrado, solo en el 0,008% de las cuerdas colgantes de la base. Las preguntas sobre cómo se agrupan las cuerdas lo necesitan, y tiene que salir de fotografías. Ese es el próximo instrumento que queremos construir.
+El límite son los datos, no el modelo. El espaciado entre cuerdas casi nunca está registrado, solo en el 0,008% de las cuerdas colgantes de la base. Las preguntas sobre cómo se agrupan las cuerdas lo necesitan, y tiene que salir de fotografías. Es el próximo instrumento que planeamos construir.
 
 ## Datos y artefactos
 
@@ -83,4 +97,4 @@ La pieza que falta no es un mejor modelo. El espaciado entre cuerdas casi nunca 
 - Los libros de trabajo del [Khipu Field Guide](https://www.khipufieldguide.com) para 611 de ellos.
 - Medrano y Urton (2018), FitzPatrick (2024) y Urton (2017), capítulo 12 y su apéndice con los 133 grupos de seis cuerdas.
 
-Preregistros, scripts, resultados y las dos revisiones están en [github.com/crafter-research/khipu](https://github.com/crafter-research/khipu). Los datos se descargan de sus fuentes públicas, así que puedes volver a correr cada número. Si usas o mencionas este trabajo, por favor da crédito a "Crafter Research (2026), Khipu colours and numbers".
+La herramienta está en [github.com/crafter-research/khipu-null](https://github.com/crafter-research/khipu-null). Preregistros, scripts, resultados y las dos revisiones están en [github.com/crafter-research/khipu](https://github.com/crafter-research/khipu). Los datos se descargan de sus fuentes públicas, así que puedes volver a correr cada número. Si usas o mencionas este trabajo, por favor da crédito a "Crafter Research (2026), Khipu colours and numbers".

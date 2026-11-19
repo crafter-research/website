@@ -1,24 +1,24 @@
 ---
-title: "We looked for a colour code in 619 khipus and withdrew our own claim"
-description: "The colour of a khipu cord carries a faint signal about the number knotted on it, too faint to call a code. Notes from a day of preregistered tests, including what we got wrong."
+title: "Khipu colours and numbers: a measurement, a database correction and a tool"
+description: "A preregistered measurement of how much cord colour says about khipu numbers, a correction to the Open Khipu Repository, and khipu-null, an open tool for testing khipu patterns against chance."
 abstract: |
-  We asked whether the colour of a khipu cord tells you anything about the number knotted on it. The answer is a little. Inside a single khipu, colour helps guess the size of a cord's number, and the effect shows up in both of the large published collections. Once we account for where each cord sits, the gain is tiny, below a minimum we had written down. So we withdrew the claim.
+  We measured how much the colour of a khipu cord says about the number knotted on it. Inside a single khipu, colour carries 0.016 bits per cord about the size of a cord's number once cord layout is controlled, in both large published collections. That is below the 0.02 threshold we set for a colour legend, so the legend claim is withdrawn.
 
-  Along the way we rechecked the best-known match between khipus and a colonial document, and found a coding problem in the public database.
+  We also rechecked the best-known match between khipus and a colonial document, documented a coding error in the public database, and released khipu-null, the tool behind these tests.
 date: 2026-11-18T22:00:00Z
 status: result
 urlSlug: khipu-colour-legend
 lang: en
 project: khipu
 author: railly
-tags: [khipu, decipherment, preregistration, negative-result, peru]
+tags: [khipu, decipherment, preregistration, open-source, peru]
 ---
 
 <figure class="research-hero"><img src="/research/khipu/kh0326.svg" alt="A khipu drawn from its records, with about a hundred coloured cords hanging from a horizontal main cord and white knots along them" width="850" height="558"><figcaption>KH0326, one of six khipus from the Santa Valley, drawn from its records. Each line is a cord in its recorded colour, to scale. Dots higher up are tens and bars lower down are units, so a cord with one dot and a five-turn bar reads 15.</figcaption></figure>
 
 ## The short answer
 
-Colour carries a faint signal about the numbers on a khipu. It is too faint to call a code, so we withdrew our claim that each khipu has its own colour legend.
+Colour carries 0.016 bits per cord about a cord's number, in both major collections. That is below the 0.02 threshold we set for a colour legend, so we withdrew the legend claim.
 
 ## How a khipu holds numbers
 
@@ -32,15 +32,15 @@ We started with one question: if you know a cord's colour, can you guess its num
 
 Each test was written down before we looked at the outcome, with the measure that would decide it and what would count as failure. That is a <span class="term" tabindex="0" data-tip="Writing down the bet, the measure and what would kill it before looking at the results.">preregistration</span>. Most of them compared the real colours against the same cords with their colours <span class="term" tabindex="0" data-tip="We rerun the test with the colours mixed up at random. If the result does not change, colour was not adding anything.">shuffled at random</span>. We measured the difference in <span class="term" tabindex="0" data-tip="How many yes-or-no questions you save, on average, when guessing a cord's number. 0.016 is almost nothing.">bits per cord</span>.
 
-## Stricter tests left little signal
+## Four controls, one estimate
 
-The first version said yes, clearly. The controls that followed removed things that could imitate a colour code, and what is left is small.
+Each control removed something that can imitate a colour code. The estimate went from 0.085 to 0.016 bits per cord.
 
 <figure class="research-figure"><svg viewBox="0 0 720 250" role="img" aria-label="Colour signal per test" style="width:100%;height:auto;font-family:var(--font-sans);font-size:13px"><text x="288" y="51" text-anchor="end" style="fill:var(--color-text)">Colours shuffled inside each khipu</text><rect x="300" y="34" width="296.9" height="26" rx="4" style="fill:var(--color-accent);opacity:0.55"/><text x="604.9" y="51" style="fill:var(--color-muted-strong)">0.085</text><text x="288" y="95" text-anchor="end" style="fill:var(--color-text)">Shuffled inside each group of cords</text><rect x="300" y="78" width="150.7" height="26" rx="4" style="fill:var(--color-accent);opacity:0.55"/><text x="458.7" y="95" style="fill:var(--color-muted-strong)">0.043</text><text x="288" y="139" text-anchor="end" style="fill:var(--color-text)">Whole groups held out, 200 shuffles</text><rect x="300" y="122" width="189.4" height="26" rx="4" style="fill:var(--color-accent);opacity:0.55"/><text x="497.4" y="139" style="fill:var(--color-muted-strong)">0.054</text><text x="288" y="183" text-anchor="end" style="fill:var(--color-text)">Cord position taken into account</text><rect x="300" y="166" width="55.7" height="26" rx="4" style="fill:var(--color-accent);opacity:1"/><text x="378.0" y="183" style="fill:var(--color-muted-strong)">0.016</text><line x1="370.0" x2="370.0" y1="24" y2="198" style="stroke:var(--color-muted-strong);stroke-width:1.5;stroke-dasharray:4 4"/><text x="376.0" y="20" style="fill:var(--color-muted-strong)">Minimum we set: 0.02</text><line x1="300" x2="300" y1="28" y2="198" style="stroke:var(--color-border)"/><text x="300" y="240" style="fill:var(--color-muted)">Bits per cord gained from real colours</text></svg>
 
 <figcaption>The colour signal under each stricter test. The last bar accounts for where each cord sits in its group, and it falls short of the 0.02 line.</figcaption></figure>
 
-The last drop came from position. Cords in the same place of a repeating pattern tend to share both a colour and a size of number, so part of the "colour" signal was really layout. An independent review by Fable, an AI model run separately with read-only access to our code and data, pointed this out.
+The last drop came from position. Cords in the same place of a repeating pattern tend to share both a colour and a size of number, so part of the "colour" signal was really layout. An independent review by Fable, an AI model run separately with read-only access to our code and data, identified the confound, and the final test controls for it.
 
 The final test accounted for position and ran separately on the two large collections, the khipus described by <span class="term" tabindex="0" data-tip="The two research teams whose recordings make up most of the public database: Marcia and Robert Ascher, and Gary Urton's Harvard project.">the Ascher and Urton projects</span>. To pass, colour had to beat 200 shuffles, gain at least 0.02 bits per cord, and help in more than half of the khipus.
 
@@ -49,7 +49,9 @@ The final test accounted for position and ran separately on the two large collec
 
 Both collections beat every shuffle, and colour helps in 75% of the Ascher khipus and 58% of the Urton khipus. The gain is 0.016 bits per cord in both, below 0.02, so the claim is withdrawn.
 
-## What we got wrong
+## Deviations from protocol
+
+Six departures, each recorded in the repository.
 
 - We set the 0.02 minimum after seeing earlier results of 0.054 and 0.036. It was not a blind threshold.
 - Our preregistrations were committed only on a local computer until we published. Their timestamps cannot be checked by anyone else before that day.
@@ -60,7 +62,7 @@ Both collections beat every shuffle, and colour helps in 75% of the Ascher khipu
 
 The full list, with every test and each change, is in the [repository](https://github.com/crafter-research/khipu).
 
-## Along the way, the Santa Valley case
+## Rechecking the Santa Valley match
 
 Six khipus from the Santa Valley were matched to a 1670 census of San Pedro de Corongo, a town of 132 tributaries in six <span class="term" tabindex="0" data-tip="Local kin groups, each counted as a unit in colonial censuses.">pachacas</span> who owed 367 pesos. Urton titled his chapter on them with the question of whether they are a "Rosetta khipu".
 
@@ -69,13 +71,25 @@ Six khipus from the Santa Valley were matched to a 1670 census of San Pedro de C
 - Urton's own table reads 359. He reaches 367 and a fraction by giving values to two broken cords. Twelve other first cords are zero and stay zero.
 - A later paper cites totals of 381 or 382 and 86 for the two halves. Those do not add up to 367. If one half is 86, the other must be 281 or 282, so 381 may be a misprint. We used the Spanish edition of Urton's book and have not checked the English one.
 
-We also found a coding problem. On KH0326, the khipu in the drawing, the public database records knots in the tens place as hundreds, so 15 becomes 105. After moving that digit, 106 of its 108 hanging cords match the Khipu Field Guide, and Urton's table shows the same tens-scale values. We will share this with the database maintainers.
+The public database miscodes KH0326, the khipu in the drawing. Knots in the tens place are recorded as hundreds, so 15 becomes 105. After moving that digit, 106 of its 108 hanging cords match the Khipu Field Guide, and Urton's table shows the same tens-scale values. The correction is documented in the repository for the maintainers.
+
+## The tool: khipu-null
+
+We packaged the nulls from these tests as [khipu-null](https://github.com/crafter-research/khipu-null), an open-source command-line tool. You describe a pattern (group sizes, which cords hold totals, colour repeats, attachment) and it ranks every khipu in a corpus against it. Each score is compared with versions of the same khipu where only the field that feature reads is permuted, so the layout never moves. With a pattern written from the Santa Valley khipus, five of the six rank in the top 6 of 328, and the top-6 mean is 0.994 against a null range of 0.954 to 0.986 (p = 0.001). That is a sanity check, since the pattern comes from those khipus, and no single khipu reaches q ≤ 0.05.
+
+```bash
+uvx --from git+https://github.com/crafter-research/khipu-null khipu-null rank okr.csv santa-valley.yaml -o out --top 6
+```
+
+<figure class="research-figure"><svg viewBox="0 0 720 300" role="img" aria-label="Match score" style="width:100%;height:auto;font-family:var(--font-sans);font-size:13px"><line x1="60" x2="700" y1="198.8" y2="198.8" style="stroke:var(--color-border)"/><text x="52" y="202.8" text-anchor="end" style="fill:var(--color-muted)">0.80</text><line x1="60" x2="700" y1="116.5" y2="116.5" style="stroke:var(--color-border)"/><text x="52" y="120.5" text-anchor="end" style="fill:var(--color-muted)">0.90</text><line x1="60" x2="700" y1="34.1" y2="34.1" style="stroke:var(--color-border)"/><text x="52" y="38.1" text-anchor="end" style="fill:var(--color-muted)">1.00</text><rect x="62.7" y="45.9" width="122.7" height="26.0" rx="3" style="fill:var(--color-muted);opacity:0.18"/><text x="62.7" y="87.9" style="fill:var(--color-muted-strong)">Top 6 under the null</text><circle cx="70.7" cy="34.1" r="6" style="fill:var(--color-accent)"><title>KH0324</title></circle><circle cx="92.0" cy="34.1" r="6" style="fill:var(--color-accent)"><title>KH0327</title></circle><circle cx="113.3" cy="34.1" r="4" style="fill:var(--color-muted);opacity:0.6"><title>KH0109</title></circle><circle cx="134.7" cy="34.1" r="6" style="fill:var(--color-accent)"><title>KH0328</title></circle><circle cx="156.0" cy="38.1" r="6" style="fill:var(--color-accent)"><title>KH0325</title></circle><circle cx="177.3" cy="58.3" r="6" style="fill:var(--color-accent)"><title>KH0323</title></circle><circle cx="198.7" cy="59.9" r="4" style="fill:var(--color-muted);opacity:0.6"><title>KH0384</title></circle><circle cx="220.0" cy="71.6" r="4" style="fill:var(--color-muted);opacity:0.6"><title>KH0630</title></circle><circle cx="241.3" cy="87.2" r="4" style="fill:var(--color-muted);opacity:0.6"><title>KH0488</title></circle><circle cx="262.7" cy="92.9" r="4" style="fill:var(--color-muted);opacity:0.6"><title>KH0527</title></circle><circle cx="284.0" cy="105.1" r="4" style="fill:var(--color-muted);opacity:0.6"><title>KH0055</title></circle><circle cx="305.3" cy="119.2" r="4" style="fill:var(--color-muted);opacity:0.6"><title>KH0469</title></circle><circle cx="326.7" cy="145.4" r="4" style="fill:var(--color-muted);opacity:0.6"><title>KH0092</title></circle><circle cx="348.0" cy="146.4" r="4" style="fill:var(--color-muted);opacity:0.6"><title>KH0272</title></circle><circle cx="369.3" cy="151.8" r="4" style="fill:var(--color-muted);opacity:0.6"><title>KH0098</title></circle><circle cx="390.7" cy="163.5" r="4" style="fill:var(--color-muted);opacity:0.6"><title>KH0448</title></circle><circle cx="412.0" cy="176.7" r="4" style="fill:var(--color-muted);opacity:0.6"><title>KH0436</title></circle><circle cx="433.3" cy="178.9" r="4" style="fill:var(--color-muted);opacity:0.6"><title>KH0162</title></circle><circle cx="454.7" cy="198.8" r="4" style="fill:var(--color-muted);opacity:0.6"><title>KH0062</title></circle><circle cx="476.0" cy="198.8" r="4" style="fill:var(--color-muted);opacity:0.6"><title>KH0316</title></circle><circle cx="497.3" cy="216.1" r="4" style="fill:var(--color-muted);opacity:0.6"><title>KH0364</title></circle><circle cx="518.7" cy="221.3" r="4" style="fill:var(--color-muted);opacity:0.6"><title>KH0460</title></circle><circle cx="470" cy="282" r="6" style="fill:var(--color-accent)"/><text x="482" y="286" style="fill:var(--color-text)">Santa Valley khipu</text><circle cx="66" cy="282" r="4" style="fill:var(--color-muted);opacity:0.6"/><text x="76" y="286" style="fill:var(--color-text)">Other khipus</text><text x="380" y="262" text-anchor="middle" style="fill:var(--color-muted)">Rank among 328 khipus</text></svg>
+
+<figcaption>The 30 best matches for the Santa Valley pattern. Green dots are Santa Valley khipus. The grey band is where the top 6 would land if each khipu's values were shuffled.</figcaption></figure>
 
 ## What stands and what is next
 
 Colour carries a small, consistent amount of information about the size of a cord's number inside a khipu, beyond position. It is not a quirk of one research team, and it is too small to call a code.
 
-The missing piece is not a better model. The spacing between cords is almost never recorded, in 0.008% of hanging cords in the database. Questions about how cords are grouped need it, and it has to come from photographs. That is the next instrument we want to build.
+The limit is data, not modelling. The spacing between cords is almost never recorded, in 0.008% of hanging cords in the database. Questions about how cords are grouped need it, and it has to come from photographs. It is the next instrument we plan to build.
 
 ## Data and artifacts
 
@@ -83,4 +97,4 @@ The missing piece is not a better model. The spacing between cords is almost nev
 - The [Khipu Field Guide](https://www.khipufieldguide.com) workbooks for 611 of them.
 - Medrano and Urton (2018), FitzPatrick (2024), and Urton (2017), chapter 12 and its appendix with all 133 groups of six cords.
 
-Preregistrations, scripts, results and both reviews are in [github.com/crafter-research/khipu](https://github.com/crafter-research/khipu). The data downloads from its public sources, so you can rerun every number. If you use or mention this work, please credit "Crafter Research (2026), Khipu colours and numbers".
+The tool is [github.com/crafter-research/khipu-null](https://github.com/crafter-research/khipu-null). Preregistrations, scripts, results and both reviews are in [github.com/crafter-research/khipu](https://github.com/crafter-research/khipu). The data downloads from its public sources, so you can rerun every number. If you use or mention this work, please credit "Crafter Research (2026), Khipu colours and numbers".
