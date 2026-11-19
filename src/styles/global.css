@@ -3860,9 +3860,79 @@ body {
 
 .research-figure {
 	margin: 2rem 0;
+	overflow-x: auto;
+}
+
+.research-figure svg {
+	min-width: 34rem;
 }
 
 .research-figure figcaption {
+	color: var(--color-muted);
+	font-size: 0.85rem;
+	line-height: 1.5;
+	margin-top: 0.5rem;
+}
+
+.term {
+	cursor: help;
+	position: relative;
+	text-decoration: underline dotted;
+	text-decoration-color: var(--color-muted);
+	text-underline-offset: 0.2em;
+}
+
+.term::after {
+	background: var(--color-bg);
+	border: 1px solid var(--color-border);
+	border-radius: 8px;
+	bottom: calc(100% + 0.5rem);
+	box-shadow: var(--shadow);
+	color: var(--color-text);
+	content: attr(data-tip);
+	font-size: 0.85rem;
+	font-weight: 400;
+	left: 50%;
+	line-height: 1.45;
+	opacity: 0;
+	padding: 0.5rem 0.65rem;
+	pointer-events: none;
+	position: absolute;
+	transform: translate(-50%, 4px);
+	transition:
+		opacity 0.15s ease,
+		transform 0.15s ease;
+	width: max-content;
+	max-width: min(18rem, 80vw);
+	white-space: normal;
+	z-index: 20;
+}
+
+.term:hover::after,
+.term:focus-visible::after,
+.term:focus::after {
+	opacity: 1;
+	transform: translate(-50%, 0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.term::after {
+		transition: none;
+	}
+}
+
+.research-hero {
+	margin: 0 0 2rem;
+}
+
+.research-hero img {
+	border-radius: 14px;
+	display: block;
+	height: auto;
+	width: 100%;
+}
+
+.research-hero figcaption {
 	color: var(--color-muted);
 	font-size: 0.85rem;
 	line-height: 1.5;
