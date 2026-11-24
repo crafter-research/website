@@ -95,7 +95,7 @@ Most work that compares khipus (quipus) with a model comes down to three questio
 | Which five khipus best represent it? | `--top 5` and a test of whether that top five beats five picked from null versions of every khipu |
 | Is the match a regularity or a coincidence? | A permutation p and a Benjamini-Hochberg q per khipu, with nulls that keep groups, positions and levels fixed |
 
-It reads any CSV with one row per cord, including exports of the Open Khipu Repository 2.1.0 with Spanish column names (`codigo_kh`, `posicion`, `color`, `valor`). The column mapping is in the [khipu-null README](https://github.com/crafter-research/khipu-null#spanish-column-csvs).
+It reads any CSV with one row per cord, including exports of the Open Khipu Repository 2.1.0 with Spanish column names (`codigo_kh`, `posicion`, `color`, `valor`). The column mapping is in the [khipu-null README](https://github.com/crafter-research/khipu-null#spanish-column-csvs). To try it end to end, open the [quipu analysis notebook](https://github.com/crafter-research/khipu-null/blob/main/examples/quipu-analysis.ipynb) ([Colab](https://colab.research.google.com/github/crafter-research/khipu-null/blob/main/examples/quipu-analysis.ipynb)), in Spanish, which runs in under a minute.
 
 ## What stands and what is next
 
