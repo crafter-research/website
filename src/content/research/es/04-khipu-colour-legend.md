@@ -95,7 +95,7 @@ Casi todo trabajo que compara khipus (quipus) con un modelo se reduce a tres pre
 | ¿Cuáles son los cinco quipus que mejor lo representan? | `--top 5` y una prueba de si ese top 5 le gana a cinco elegidos de versiones nulas de cada khipu |
 | ¿La correspondencia es una regularidad o una coincidencia? | Un p de permutación y un q de Benjamini-Hochberg por khipu, con nulos que mantienen fijos grupos, posiciones y niveles |
 
-Lee cualquier CSV con una fila por cuerda, incluidas las exportaciones del Open Khipu Repository 2.1.0 con columnas en español (`codigo_kh`, `posicion`, `color`, `valor`). El mapeo de columnas está en el [README de khipu-null](https://github.com/crafter-research/khipu-null#spanish-column-csvs).
+Lee cualquier CSV con una fila por cuerda, incluidas las exportaciones del Open Khipu Repository 2.1.0 con columnas en español (`codigo_kh`, `posicion`, `color`, `valor`). El mapeo de columnas está en el [README de khipu-null](https://github.com/crafter-research/khipu-null#spanish-column-csvs). Para probarlo de punta a punta, abre el [notebook de análisis de quipus en Python](https://github.com/crafter-research/khipu-null/blob/main/examples/quipu-analysis.ipynb) ([Colab](https://colab.research.google.com/github/crafter-research/khipu-null/blob/main/examples/quipu-analysis.ipynb)), que corre en menos de un minuto.
 
 ## Qué queda en pie y qué sigue
 
