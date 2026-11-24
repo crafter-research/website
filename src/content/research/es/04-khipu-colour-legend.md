@@ -85,17 +85,17 @@ uvx khipu-null rank okr.csv santa-valley.yaml -o out --top 6
 
 <figcaption>Las 30 mejores coincidencias con el patrón del valle de Santa. Los puntos verdes son khipus del valle de Santa. La banda gris es donde quedaría el top 6 si se barajaran los valores de cada khipu.</figcaption></figure>
 
-## Para el Hackatón Global del Quipu 2026
+## Tres preguntas que responde khipu-null
 
-El [Hackatón Global del Quipu 2026](https://hackatonquipu.com/) (Cusco y online, 27 al 29 de noviembre) plantea tres preguntas. La pregunta 3 es justo para la que se hizo khipu-null: cómo demostrar que una correspondencia es una regularidad verificable y no una coincidencia. La pregunta 2, elegir los cinco mejores candidatos, es lo que revisa su prueba top-k.
+Casi todo trabajo que compara khipus (quipus) con un modelo se reduce a tres preguntas. khipu-null se hizo para responderlas con los mismos nulos usados arriba.
 
-| Pregunta del hackatón | Qué te da khipu-null |
+| Pregunta | Qué te da khipu-null |
 |---|---|
-| 1. ¿Qué quipus son compatibles con el modelo? | Un puntaje por khipu para las características que escribas en un patrón YAML |
-| 2. ¿Cuáles son los cinco quipus que mejor lo representan? | `--top 5` y una prueba de si ese top 5 le gana a cinco elegidos de versiones nulas de cada khipu |
-| 3. ¿Regularidad o coincidencia? | Un p de permutación y un q de Benjamini-Hochberg por khipu, con nulos que mantienen fijos grupos, posiciones y niveles |
+| ¿Qué quipus son compatibles con un modelo? | Un puntaje por khipu para las características que escribas en un patrón YAML |
+| ¿Cuáles son los cinco quipus que mejor lo representan? | `--top 5` y una prueba de si ese top 5 le gana a cinco elegidos de versiones nulas de cada khipu |
+| ¿La correspondencia es una regularidad o una coincidencia? | Un p de permutación y un q de Benjamini-Hochberg por khipu, con nulos que mantienen fijos grupos, posiciones y niveles |
 
-El corpus del reto deriva del Open Khipu Repository 2.1.0, la misma fuente que importa khipu-null. El CSV del reto se convierte a la entrada de khipu-null en un paso; el mapeo de columnas está en el [README de khipu-null](https://github.com/crafter-research/khipu-null#hackatón-global-del-quipu-2026). khipu-null es una librería pública y no trae un patrón de Huánuco: según las bases, tu equipo escribe su propio patrón durante el hackatón y declara la herramienta en su README.
+Lee cualquier CSV con una fila por cuerda, incluidas las exportaciones del Open Khipu Repository 2.1.0 con columnas en español (`codigo_kh`, `posicion`, `color`, `valor`). El mapeo de columnas está en el [README de khipu-null](https://github.com/crafter-research/khipu-null#spanish-column-csvs).
 
 ## Qué queda en pie y qué sigue
 

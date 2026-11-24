@@ -35,7 +35,6 @@ const projectSeo: Record<string, ProjectSeo> = {
 			"Inca quipu",
 			"desciframiento del quipu",
 			"khipu decipherment",
-			"Quipu de Huánuco",
 			"Open Khipu Repository",
 			"permutation test",
 			"prueba de permutación",
