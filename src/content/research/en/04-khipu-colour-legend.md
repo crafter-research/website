@@ -1,6 +1,6 @@
 ---
-title: "Khipu colours and numbers: a measurement, a data audit and a tool"
-description: "A preregistered measurement of how much cord colour says about khipu numbers, an audit of the Open Khipu Repository, and khipu-null, an open tool for testing khipu patterns against chance."
+title: "Khipu (quipu) colours and numbers: a measurement, a data audit and a tool"
+description: "A preregistered measurement of how much cord colour says about khipu (quipu) numbers, an audit of the Open Khipu Repository, and khipu-null, an open tool for testing quipu patterns against chance."
 abstract: |
   We measured how much the colour of a khipu cord says about the number knotted on it. Inside a single khipu, colour carries 0.016 bits per cord about the size of a cord's number once cord layout is controlled, in both large published collections. That is below the 0.02 threshold we set for a colour legend, so the legend claim is withdrawn.
 
@@ -11,10 +11,10 @@ urlSlug: khipu-colour-legend
 lang: en
 project: khipu
 author: railly
-tags: [khipu, decipherment, preregistration, open-source, peru]
+tags: [khipu, quipu, decipherment, preregistration, open-source, peru]
 ---
 
-<figure class="research-hero"><img src="/research/khipu/kh0326.svg" alt="A khipu drawn from its records, with about a hundred coloured cords hanging from a horizontal main cord and white knots along them" width="850" height="558"><figcaption>KH0326, one of six khipus from the Santa Valley, drawn from its records. Each line is a cord in its recorded colour, to scale. Dots higher up are tens and bars lower down are units, so a cord with one dot and a five-turn bar reads 15.</figcaption></figure>
+<figure class="research-hero"><img src="/research/khipu/kh0326.svg" alt="A khipu (quipu) drawn from its records, with about a hundred coloured cords hanging from a horizontal main cord and white knots along them" width="850" height="558"><figcaption>KH0326, one of six khipus from the Santa Valley, drawn from its records. Each line is a cord in its recorded colour, to scale. Dots higher up are tens and bars lower down are units, so a cord with one dot and a five-turn bar reads 15.</figcaption></figure>
 
 ## The short answer
 
@@ -22,7 +22,7 @@ Colour carries 0.016 bits per cord about a cord's number, in both major collecti
 
 ## How a khipu holds numbers
 
-Khipus are the knotted cords the Inka state used for its records. Since Leland Locke's work in 1912 we can read most of their numbers. The position of a knot along the cord gives its decimal place, and the type of knot gives the digit. The drawing above shows it: a row of dots for the tens, a row of bars for the units.
+Khipus (also spelled quipus) are the knotted cords the Inka state used for its records. Since Leland Locke's work in 1912 we can read most of their numbers. The position of a knot along the cord gives its decimal place, and the type of knot gives the digit. The drawing above shows it: a row of dots for the tens, a row of bars for the units.
 
 What nobody can read is the rest. Every cord also has a colour, a twist and a side it hangs from. Spanish chroniclers wrote that specialists read histories and laws from these devices. No khipu with a reliable translation has survived.
 
@@ -84,6 +84,18 @@ uvx khipu-null rank okr.csv santa-valley.yaml -o out --top 6
 <figure class="research-figure"><svg viewBox="0 0 720 300" role="img" aria-label="Match score" style="width:100%;height:auto;font-family:var(--font-sans);font-size:13px"><line x1="60" x2="700" y1="198.8" y2="198.8" style="stroke:var(--color-border)"/><text x="52" y="202.8" text-anchor="end" style="fill:var(--color-muted)">0.80</text><line x1="60" x2="700" y1="116.5" y2="116.5" style="stroke:var(--color-border)"/><text x="52" y="120.5" text-anchor="end" style="fill:var(--color-muted)">0.90</text><line x1="60" x2="700" y1="34.1" y2="34.1" style="stroke:var(--color-border)"/><text x="52" y="38.1" text-anchor="end" style="fill:var(--color-muted)">1.00</text><rect x="62.7" y="45.9" width="122.7" height="26.0" rx="3" style="fill:var(--color-muted);opacity:0.18"/><text x="62.7" y="87.9" style="fill:var(--color-muted-strong)">Top 6 under the null</text><circle cx="70.7" cy="34.1" r="6" style="fill:var(--color-accent)"><title>KH0324</title></circle><circle cx="92.0" cy="34.1" r="6" style="fill:var(--color-accent)"><title>KH0327</title></circle><circle cx="113.3" cy="34.1" r="4" style="fill:var(--color-muted);opacity:0.6"><title>KH0109</title></circle><circle cx="134.7" cy="34.1" r="6" style="fill:var(--color-accent)"><title>KH0328</title></circle><circle cx="156.0" cy="38.1" r="6" style="fill:var(--color-accent)"><title>KH0325</title></circle><circle cx="177.3" cy="58.3" r="6" style="fill:var(--color-accent)"><title>KH0323</title></circle><circle cx="198.7" cy="59.9" r="4" style="fill:var(--color-muted);opacity:0.6"><title>KH0384</title></circle><circle cx="220.0" cy="71.6" r="4" style="fill:var(--color-muted);opacity:0.6"><title>KH0630</title></circle><circle cx="241.3" cy="87.2" r="4" style="fill:var(--color-muted);opacity:0.6"><title>KH0488</title></circle><circle cx="262.7" cy="92.9" r="4" style="fill:var(--color-muted);opacity:0.6"><title>KH0527</title></circle><circle cx="284.0" cy="105.1" r="4" style="fill:var(--color-muted);opacity:0.6"><title>KH0055</title></circle><circle cx="305.3" cy="119.2" r="4" style="fill:var(--color-muted);opacity:0.6"><title>KH0469</title></circle><circle cx="326.7" cy="145.4" r="4" style="fill:var(--color-muted);opacity:0.6"><title>KH0092</title></circle><circle cx="348.0" cy="146.4" r="4" style="fill:var(--color-muted);opacity:0.6"><title>KH0272</title></circle><circle cx="369.3" cy="151.8" r="4" style="fill:var(--color-muted);opacity:0.6"><title>KH0098</title></circle><circle cx="390.7" cy="163.5" r="4" style="fill:var(--color-muted);opacity:0.6"><title>KH0448</title></circle><circle cx="412.0" cy="176.7" r="4" style="fill:var(--color-muted);opacity:0.6"><title>KH0436</title></circle><circle cx="433.3" cy="178.9" r="4" style="fill:var(--color-muted);opacity:0.6"><title>KH0162</title></circle><circle cx="454.7" cy="198.8" r="4" style="fill:var(--color-muted);opacity:0.6"><title>KH0062</title></circle><circle cx="476.0" cy="198.8" r="4" style="fill:var(--color-muted);opacity:0.6"><title>KH0316</title></circle><circle cx="497.3" cy="216.1" r="4" style="fill:var(--color-muted);opacity:0.6"><title>KH0364</title></circle><circle cx="518.7" cy="221.3" r="4" style="fill:var(--color-muted);opacity:0.6"><title>KH0460</title></circle><circle cx="470" cy="282" r="6" style="fill:var(--color-accent)"/><text x="482" y="286" style="fill:var(--color-text)">Santa Valley khipu</text><circle cx="66" cy="282" r="4" style="fill:var(--color-muted);opacity:0.6"/><text x="76" y="286" style="fill:var(--color-text)">Other khipus</text><text x="380" y="262" text-anchor="middle" style="fill:var(--color-muted)">Rank among 328 khipus</text></svg>
 
 <figcaption>The 30 best matches for the Santa Valley pattern. Green dots are Santa Valley khipus. The grey band is where the top 6 would land if each khipu's values were shuffled.</figcaption></figure>
+
+## For the Hackatón Global del Quipu 2026
+
+The [Hackatón Global del Quipu 2026](https://hackatonquipu.com/) (Cusco and online, 27 to 29 November) asks three questions. Question 3 is the one khipu-null was built for: how to show that a correspondence is a verifiable regularity and not a coincidence. Question 2, choosing the five best candidates, is what its top-k test checks.
+
+| Hackathon question | What khipu-null gives you |
+|---|---|
+| 1. Which quipus match the model? | A score per khipu for the features you write in a YAML pattern |
+| 2. Which five quipus best represent it? | `--top 5` and a test of whether that top five beats five picked from null versions of every khipu |
+| 3. Is it a regularity or a coincidence? | A permutation p and a Benjamini-Hochberg q per khipu, with nulls that keep groups, positions and levels fixed |
+
+The challenge corpus is derived from the Open Khipu Repository 2.1.0, the same source khipu-null imports. The challenge CSV maps to khipu-null's input in one step; the column mapping is in the [khipu-null README](https://github.com/crafter-research/khipu-null#hackatón-global-del-quipu-2026). khipu-null is a public library and ships no Huánuco pattern: under the event rules your team writes its own pattern during the hackathon and declares the tool in its README.
 
 ## What stands and what is next
 

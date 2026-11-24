@@ -2,11 +2,13 @@
 import PostArticle from "../../../components/PostArticle.astro";
 import type { Lang } from "../../../i18n/ui";
 import Layout from "../../../layouts/Layout.astro";
+import { getAuthor } from "../../../lib/authors";
 import {
 	getEntryNeighbors,
 	getEntryWithFallback,
 	getSlugs,
 } from "../../../lib/collections";
+import { researchJsonLd, researchKeywords } from "../../../lib/seo";
 
 export async function getStaticPaths() {
 	const langs = ["es", "pt", "zh"] as Lang[];
@@ -21,12 +23,29 @@ const { slug } = Astro.params;
 const resolved = await getEntryWithFallback("research", lang, slug!);
 if (!resolved) return Astro.redirect(`/${lang}/research`);
 const { prev, next } = await getEntryNeighbors("research", lang, slug!);
+const data = resolved.entry.data;
+const site = Astro.site ?? new URL("https://crafter.ing");
+const ogImage = `/og/research/${data.lang}-${data.urlSlug}.png`;
+const jsonLd = researchJsonLd(
+	resolved.entry,
+	lang,
+	new URL(Astro.url.pathname, site).href,
+	new URL(ogImage, site).href,
+);
+const article = {
+	publishedTime: data.date,
+	author: getAuthor(data.author).name,
+	tags: data.tags,
+};
 ---
 
 <Layout
 	title={`${resolved.entry.data.title} · Crafter Research`}
 	description={resolved.entry.data.description}
 	lang={lang}
+	keywords={researchKeywords(resolved.entry)}
+	article={article}
+	jsonLd={jsonLd}
 	ogImage={`/og/research/${resolved.entry.data.lang}-${resolved.entry.data.urlSlug}.png`}
 >
 	<PostArticle
