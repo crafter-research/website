@@ -85,17 +85,17 @@ uvx khipu-null rank okr.csv santa-valley.yaml -o out --top 6
 
 <figcaption>The 30 best matches for the Santa Valley pattern. Green dots are Santa Valley khipus. The grey band is where the top 6 would land if each khipu's values were shuffled.</figcaption></figure>
 
-## For the Hackatón Global del Quipu 2026
+## Three questions khipu-null answers
 
-The [Hackatón Global del Quipu 2026](https://hackatonquipu.com/) (Cusco and online, 27 to 29 November) asks three questions. Question 3 is the one khipu-null was built for: how to show that a correspondence is a verifiable regularity and not a coincidence. Question 2, choosing the five best candidates, is what its top-k test checks.
+Most work that compares khipus (quipus) with a model comes down to three questions. khipu-null was built to answer them with the same nulls used above.
 
-| Hackathon question | What khipu-null gives you |
+| Question | What khipu-null gives you |
 |---|---|
-| 1. Which quipus match the model? | A score per khipu for the features you write in a YAML pattern |
-| 2. Which five quipus best represent it? | `--top 5` and a test of whether that top five beats five picked from null versions of every khipu |
-| 3. Is it a regularity or a coincidence? | A permutation p and a Benjamini-Hochberg q per khipu, with nulls that keep groups, positions and levels fixed |
+| Which khipus match a model? | A score per khipu for the features you write in a YAML pattern |
+| Which five khipus best represent it? | `--top 5` and a test of whether that top five beats five picked from null versions of every khipu |
+| Is the match a regularity or a coincidence? | A permutation p and a Benjamini-Hochberg q per khipu, with nulls that keep groups, positions and levels fixed |
 
-The challenge corpus is derived from the Open Khipu Repository 2.1.0, the same source khipu-null imports. The challenge CSV maps to khipu-null's input in one step; the column mapping is in the [khipu-null README](https://github.com/crafter-research/khipu-null#hackatón-global-del-quipu-2026). khipu-null is a public library and ships no Huánuco pattern: under the event rules your team writes its own pattern during the hackathon and declares the tool in its README.
+It reads any CSV with one row per cord, including exports of the Open Khipu Repository 2.1.0 with Spanish column names (`codigo_kh`, `posicion`, `color`, `valor`). The column mapping is in the [khipu-null README](https://github.com/crafter-research/khipu-null#spanish-column-csvs).
 
 ## What stands and what is next
 
