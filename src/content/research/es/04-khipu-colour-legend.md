@@ -1,6 +1,6 @@
 ---
-title: "Colores y números en los khipus: una medición, una auditoría de datos y una herramienta"
-description: "Una medición preregistrada de cuánto dice el color de una cuerda sobre los números de un khipu, una auditoría del Open Khipu Repository y khipu-null, una herramienta abierta para poner a prueba patrones en khipus frente al azar."
+title: "Colores y números en los khipus (quipus): una medición, una auditoría de datos y una herramienta"
+description: "Una medición preregistrada de cuánto dice el color de una cuerda sobre los números de un khipu (quipu), una auditoría del Open Khipu Repository y khipu-null, una herramienta abierta para poner a prueba patrones en quipus frente al azar."
 abstract: |
   Medimos cuánto dice el color de una cuerda de khipu sobre el número anudado en ella. Dentro de un mismo khipu, el color aporta 0,016 bits por cuerda sobre el tamaño del número cuando se controla la disposición de las cuerdas, en las dos grandes colecciones publicadas. Eso queda por debajo del umbral de 0,02 que fijamos para una leyenda de colores, así que esa afirmación se retira.
 
@@ -11,10 +11,10 @@ urlSlug: khipu-colour-legend
 lang: es
 project: khipu
 author: railly
-tags: [khipu, desciframiento, preregistro, codigo-abierto, peru]
+tags: [khipu, quipu, desciframiento, preregistro, codigo-abierto, peru]
 ---
 
-<figure class="research-hero"><img src="/research/khipu/kh0326.svg" alt="Un khipu dibujado a partir de sus registros, con cerca de cien cuerdas de colores colgando de una cuerda principal horizontal y nudos blancos a lo largo de ellas" width="850" height="558"><figcaption>KH0326, uno de los seis khipus del valle de Santa, dibujado a partir de sus registros. Cada línea es una cuerda en su color registrado, a escala. Los puntos de arriba son decenas y las barras de abajo son unidades, así que una cuerda con un punto y una barra de cinco vueltas se lee 15.</figcaption></figure>
+<figure class="research-hero"><img src="/research/khipu/kh0326.svg" alt="Un khipu (quipu) dibujado a partir de sus registros, con cerca de cien cuerdas de colores colgando de una cuerda principal horizontal y nudos blancos a lo largo de ellas" width="850" height="558"><figcaption>KH0326, uno de los seis khipus del valle de Santa, dibujado a partir de sus registros. Cada línea es una cuerda en su color registrado, a escala. Los puntos de arriba son decenas y las barras de abajo son unidades, así que una cuerda con un punto y una barra de cinco vueltas se lee 15.</figcaption></figure>
 
 ## La respuesta corta
 
@@ -22,7 +22,7 @@ El color aporta 0,016 bits por cuerda sobre el número de una cuerda, en las dos
 
 ## Cómo guarda números un khipu
 
-Los khipus son los cordeles anudados con los que el Estado inca llevaba sus registros. Desde el trabajo de Leland Locke en 1912 sabemos leer la mayoría de sus números. La posición del nudo en la cuerda da su lugar decimal y el tipo de nudo da el dígito. El dibujo de arriba lo muestra: una fila de puntos para las decenas y una fila de barras para las unidades.
+Los khipus (también escritos quipus) son los cordeles anudados con los que el Estado inca llevaba sus registros. Desde el trabajo de Leland Locke en 1912 sabemos leer la mayoría de sus números. La posición del nudo en la cuerda da su lugar decimal y el tipo de nudo da el dígito. El dibujo de arriba lo muestra: una fila de puntos para las decenas y una fila de barras para las unidades.
 
 Lo que nadie sabe leer es el resto. Cada cuerda también tiene un color, una torsión y un lado del que cuelga. Los cronistas españoles escribieron que había especialistas que leían historias y leyes en ellos. No sobrevivió ningún khipu con una traducción confiable.
 
@@ -84,6 +84,18 @@ uvx khipu-null rank okr.csv santa-valley.yaml -o out --top 6
 <figure class="research-figure"><svg viewBox="0 0 720 300" role="img" aria-label="Puntaje de coincidencia" style="width:100%;height:auto;font-family:var(--font-sans);font-size:13px"><line x1="60" x2="700" y1="198.8" y2="198.8" style="stroke:var(--color-border)"/><text x="52" y="202.8" text-anchor="end" style="fill:var(--color-muted)">0,80</text><line x1="60" x2="700" y1="116.5" y2="116.5" style="stroke:var(--color-border)"/><text x="52" y="120.5" text-anchor="end" style="fill:var(--color-muted)">0,90</text><line x1="60" x2="700" y1="34.1" y2="34.1" style="stroke:var(--color-border)"/><text x="52" y="38.1" text-anchor="end" style="fill:var(--color-muted)">1,00</text><rect x="62.7" y="45.9" width="122.7" height="26.0" rx="3" style="fill:var(--color-muted);opacity:0.18"/><text x="62.7" y="87.9" style="fill:var(--color-muted-strong)">Top 6 bajo el nulo</text><circle cx="70.7" cy="34.1" r="6" style="fill:var(--color-accent)"><title>KH0324</title></circle><circle cx="92.0" cy="34.1" r="6" style="fill:var(--color-accent)"><title>KH0327</title></circle><circle cx="113.3" cy="34.1" r="4" style="fill:var(--color-muted);opacity:0.6"><title>KH0109</title></circle><circle cx="134.7" cy="34.1" r="6" style="fill:var(--color-accent)"><title>KH0328</title></circle><circle cx="156.0" cy="38.1" r="6" style="fill:var(--color-accent)"><title>KH0325</title></circle><circle cx="177.3" cy="58.3" r="6" style="fill:var(--color-accent)"><title>KH0323</title></circle><circle cx="198.7" cy="59.9" r="4" style="fill:var(--color-muted);opacity:0.6"><title>KH0384</title></circle><circle cx="220.0" cy="71.6" r="4" style="fill:var(--color-muted);opacity:0.6"><title>KH0630</title></circle><circle cx="241.3" cy="87.2" r="4" style="fill:var(--color-muted);opacity:0.6"><title>KH0488</title></circle><circle cx="262.7" cy="92.9" r="4" style="fill:var(--color-muted);opacity:0.6"><title>KH0527</title></circle><circle cx="284.0" cy="105.1" r="4" style="fill:var(--color-muted);opacity:0.6"><title>KH0055</title></circle><circle cx="305.3" cy="119.2" r="4" style="fill:var(--color-muted);opacity:0.6"><title>KH0469</title></circle><circle cx="326.7" cy="145.4" r="4" style="fill:var(--color-muted);opacity:0.6"><title>KH0092</title></circle><circle cx="348.0" cy="146.4" r="4" style="fill:var(--color-muted);opacity:0.6"><title>KH0272</title></circle><circle cx="369.3" cy="151.8" r="4" style="fill:var(--color-muted);opacity:0.6"><title>KH0098</title></circle><circle cx="390.7" cy="163.5" r="4" style="fill:var(--color-muted);opacity:0.6"><title>KH0448</title></circle><circle cx="412.0" cy="176.7" r="4" style="fill:var(--color-muted);opacity:0.6"><title>KH0436</title></circle><circle cx="433.3" cy="178.9" r="4" style="fill:var(--color-muted);opacity:0.6"><title>KH0162</title></circle><circle cx="454.7" cy="198.8" r="4" style="fill:var(--color-muted);opacity:0.6"><title>KH0062</title></circle><circle cx="476.0" cy="198.8" r="4" style="fill:var(--color-muted);opacity:0.6"><title>KH0316</title></circle><circle cx="497.3" cy="216.1" r="4" style="fill:var(--color-muted);opacity:0.6"><title>KH0364</title></circle><circle cx="518.7" cy="221.3" r="4" style="fill:var(--color-muted);opacity:0.6"><title>KH0460</title></circle><circle cx="470" cy="282" r="6" style="fill:var(--color-accent)"/><text x="482" y="286" style="fill:var(--color-text)">Khipu del valle de Santa</text><circle cx="66" cy="282" r="4" style="fill:var(--color-muted);opacity:0.6"/><text x="76" y="286" style="fill:var(--color-text)">Otros khipus</text><text x="380" y="262" text-anchor="middle" style="fill:var(--color-muted)">Puesto entre 328 khipus</text></svg>
 
 <figcaption>Las 30 mejores coincidencias con el patrón del valle de Santa. Los puntos verdes son khipus del valle de Santa. La banda gris es donde quedaría el top 6 si se barajaran los valores de cada khipu.</figcaption></figure>
+
+## Para el Hackatón Global del Quipu 2026
+
+El [Hackatón Global del Quipu 2026](https://hackatonquipu.com/) (Cusco y online, 27 al 29 de noviembre) plantea tres preguntas. La pregunta 3 es justo para la que se hizo khipu-null: cómo demostrar que una correspondencia es una regularidad verificable y no una coincidencia. La pregunta 2, elegir los cinco mejores candidatos, es lo que revisa su prueba top-k.
+
+| Pregunta del hackatón | Qué te da khipu-null |
+|---|---|
+| 1. ¿Qué quipus son compatibles con el modelo? | Un puntaje por khipu para las características que escribas en un patrón YAML |
+| 2. ¿Cuáles son los cinco quipus que mejor lo representan? | `--top 5` y una prueba de si ese top 5 le gana a cinco elegidos de versiones nulas de cada khipu |
+| 3. ¿Regularidad o coincidencia? | Un p de permutación y un q de Benjamini-Hochberg por khipu, con nulos que mantienen fijos grupos, posiciones y niveles |
+
+El corpus del reto deriva del Open Khipu Repository 2.1.0, la misma fuente que importa khipu-null. El CSV del reto se convierte a la entrada de khipu-null en un paso; el mapeo de columnas está en el [README de khipu-null](https://github.com/crafter-research/khipu-null#hackatón-global-del-quipu-2026). khipu-null es una librería pública y no trae un patrón de Huánuco: según las bases, tu equipo escribe su propio patrón durante el hackatón y declara la herramienta en su README.
 
 ## Qué queda en pie y qué sigue
 
