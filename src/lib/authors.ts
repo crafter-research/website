@@ -9,6 +9,7 @@ export interface Author {
 	name: string;
 	avatar: string;
 	github: string;
+	personId?: string;
 }
 
 export const authors: Record<AuthorId, Author> = {
@@ -17,6 +18,7 @@ export const authors: Record<AuthorId, Author> = {
 		name: "Railly Hugo",
 		avatar: "/user/railly.jpg",
 		github: "https://github.com/Railly",
+		personId: "https://www.railly.dev/#person",
 	},
 	shiarauzo: {
 		id: "shiarauzo",

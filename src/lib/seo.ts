@@ -3,15 +3,39 @@ import type { Lang } from "../i18n/ui";
 import { getAuthor } from "./authors";
 
 const SITE = "https://crafter.ing";
+const CRAFTER_STATION_ID = "https://crafter.run/#organization";
+const ORGANIZATION_ID = `${SITE}/#organization`;
+const WEBSITE_ID = `${SITE}/#website`;
+
+const crafterStation = {
+	"@type": "Organization",
+	"@id": CRAFTER_STATION_ID,
+	name: "Crafter Station",
+	url: "https://crafter.run",
+};
 
 const organization = {
 	"@type": "ResearchOrganization",
-	"@id": `${SITE}/#org`,
+	"@id": ORGANIZATION_ID,
 	name: "Crafter Research",
 	url: SITE,
 	logo: `${SITE}/crafter-glyph.svg`,
 	location: "Lima, Peru",
 	sameAs: ["https://github.com/crafter-research"],
+	parentOrganization: { "@id": CRAFTER_STATION_ID },
+};
+
+const website = {
+	"@type": "WebSite",
+	"@id": WEBSITE_ID,
+	name: "Crafter Research",
+	url: SITE,
+	publisher: { "@id": ORGANIZATION_ID },
+};
+
+export const siteJsonLd: Record<string, unknown> = {
+	"@context": "https://schema.org",
+	"@graph": [crafterStation, organization, website],
 };
 
 interface ProjectSeo {
@@ -65,7 +89,7 @@ const projectSeo: Record<string, ProjectSeo> = {
 				license: "https://opensource.org/licenses/MIT",
 				keywords:
 					"khipu, quipu, permutation test, null model, Inka, Peru, digital humanities",
-				author: { "@id": `${SITE}/#org` },
+				author: { "@id": ORGANIZATION_ID },
 			},
 		],
 		isBasedOn: [
@@ -94,6 +118,12 @@ export function researchJsonLd(
 	const seo = projectSeo[d.project];
 	const researchIndex =
 		lang === "en" ? `${SITE}/research` : `${SITE}/${lang}/research`;
+	const authorNode = {
+		"@type": "Person",
+		...(author.personId ? { "@id": author.personId } : {}),
+		name: author.name,
+		url: author.github,
+	};
 	const article = {
 		"@context": "https://schema.org",
 		"@type": "ScholarlyArticle",
@@ -106,11 +136,8 @@ export function researchJsonLd(
 		mainEntityOfPage: url,
 		image: imageUrl,
 		keywords: researchKeywords(entry).join(", "),
-		author: [
-			{ "@type": "Person", name: author.name, url: author.github },
-			{ "@id": `${SITE}/#org` },
-		],
-		publisher: organization,
+		author: [authorNode, { "@id": ORGANIZATION_ID }],
+		publisher: { "@id": ORGANIZATION_ID },
 		isAccessibleForFree: true,
 		...(seo?.about ? { about: seo.about } : {}),
 		...(seo?.software ? { mentions: seo.software } : {}),
